@@ -1,25 +1,44 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
 --
--- Base de datos: sagisena
+-- Servidor: 127.0.0.1:3306
+-- Tiempo de generación: 22-09-2026 a las 18:42:03
+-- Versión del servidor: 10.4.32-MariaDB
+-- Versión de PHP: 8.2.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Base de datos: `sagisena`
 --
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla accxuser
+-- Estructura de tabla para la tabla `accxuser`
 --
 
-CREATE TABLE accxuser (
-  idacc int(11) NOT NULL,
-  idusu bigint(20) NOT NULL,
-  idpag bigint(20) NOT NULL,
-  orden int(11) DEFAULT 0
+CREATE TABLE `accxuser` (
+  `idacc` int(11) NOT NULL,
+  `idusu` bigint(20) NOT NULL,
+  `idpag` bigint(20) NOT NULL,
+  `orden` int(11) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Volcado de datos para la tabla accxuser
+-- Volcado de datos para la tabla `accxuser`
 --
 
-INSERT INTO accxuser (idacc, idusu, idpag, orden) VALUES
+INSERT INTO `accxuser` (`idacc`, `idusu`, `idpag`, `orden`) VALUES
 (2, 27897, 1405, 1),
 (5, 27970, 1405, 1),
 (6, 27984, 1405, 1),
@@ -134,68 +153,68 @@ INSERT INTO accxuser (idacc, idusu, idpag, orden) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla acta
+-- Estructura de tabla para la tabla `acta`
 --
 
-CREATE TABLE acta (
-  idact bigint(20) NOT NULL,
-  nac int(11) NOT NULL,
-  tipact int(11) NOT NULL,
-  fecact datetime NOT NULL,
-  conact text NOT NULL,
-  idusu bigint(20) NOT NULL,
-  coorusu bigint(20) NOT NULL
+CREATE TABLE `acta` (
+  `idact` bigint(20) NOT NULL,
+  `nac` int(11) NOT NULL,
+  `tipact` int(11) NOT NULL,
+  `fecact` datetime NOT NULL,
+  `conact` text NOT NULL,
+  `idusu` bigint(20) NOT NULL,
+  `coorusu` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla acta_cierre
+-- Estructura de tabla para la tabla `acta_cierre`
 --
 
-CREATE TABLE acta_cierre (
-  idactdc int(11) NOT NULL,
-  idusu int(11) NOT NULL,
-  idfic int(11) NOT NULL,
-  numact int(11) NOT NULL,
-  fecregdec datetime NOT NULL
+CREATE TABLE `acta_cierre` (
+  `idactdc` int(11) NOT NULL,
+  `idusu` int(11) NOT NULL,
+  `idfic` int(11) NOT NULL,
+  `numact` int(11) NOT NULL,
+  `fecregdec` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla actdec
+-- Estructura de tabla para la tabla `actdec`
 --
 
-CREATE TABLE actdec (
-  idacde bigint(20) NOT NULL,
-  idact bigint(20) NOT NULL,
-  desacde text NOT NULL,
-  fecacde date NOT NULL,
-  idusu bigint(20) NOT NULL
+CREATE TABLE `actdec` (
+  `idacde` bigint(20) NOT NULL,
+  `idact` bigint(20) NOT NULL,
+  `desacde` text NOT NULL,
+  `fecacde` date NOT NULL,
+  `idusu` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla actividad
+-- Estructura de tabla para la tabla `actividad`
 --
 
-CREATE TABLE actividad (
-  idact bigint(20) NOT NULL,
-  idses bigint(20) NOT NULL,
-  nomact text NOT NULL,
-  desact text NOT NULL,
-  duract int(11) NOT NULL,
-  tipact int(11) NOT NULL,
-  ordact int(11) NOT NULL
+CREATE TABLE `actividad` (
+  `idact` bigint(20) NOT NULL,
+  `idses` bigint(20) NOT NULL,
+  `nomact` text NOT NULL,
+  `desact` text NOT NULL,
+  `duract` int(11) NOT NULL,
+  `tipact` int(11) NOT NULL,
+  `ordact` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla actividad
+-- Volcado de datos para la tabla `actividad`
 --
 
-INSERT INTO actividad (idact, idses, nomact, desact, duract, tipact, ordact) VALUES
+INSERT INTO `actividad` (`idact`, `idses`, `nomact`, `desact`, `duract`, `tipact`, `ordact`) VALUES
 (1, 1, 'BIenvenida', 'Servidores de desarrollo y producción Servidores de desarrollo y producción Servidores de desarrollo y producción Servidores de desarrollo y producción Servidores de desarrollo y producción Servidores de desarrollo y producción ', 30, 1, 1),
 (2, 1, 'Servidores de desarrollo y producción', 'Servidores de desarrollo y producción Servidores de desarrollo y producción Servidores de desarrollo y producción Servidores de desarrollo y producción Servidores de desarrollo y producción Servidores de desarrollo y producción Servidores de desarrollo y producción', 2400, 1, 2),
 (3, 1, 'Despedida', 'Servidores de desarrollo y producción Servidores de desarrollo y producción Servidores de desarrollo y producción Servidores de desarrollo y producción Servidores de desarrollo y producción Servidores de desarrollo y producción Servidores de desarrollo y producción ', 30, 1, 3);
@@ -203,25 +222,25 @@ INSERT INTO actividad (idact, idses, nomact, desact, duract, tipact, ordact) VAL
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla actividades
+-- Estructura de tabla para la tabla `actividades`
 --
 
-CREATE TABLE actividades (
-  idactividad int(11) NOT NULL,
-  idbitacora int(11) NOT NULL,
-  descripcion_actividad text NOT NULL,
-  fecha_inicio_act date DEFAULT NULL,
-  fecha_fin_act date DEFAULT NULL,
-  evidencia_cumplimiento text NOT NULL,
-  observaciones text DEFAULT NULL,
-  archivo_evidencia varchar(255) DEFAULT NULL
+CREATE TABLE `actividades` (
+  `idactividad` int(11) NOT NULL,
+  `idbitacora` int(11) NOT NULL,
+  `descripcion_actividad` text NOT NULL,
+  `fecha_inicio_act` date DEFAULT NULL,
+  `fecha_fin_act` date DEFAULT NULL,
+  `evidencia_cumplimiento` text NOT NULL,
+  `observaciones` text DEFAULT NULL,
+  `archivo_evidencia` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla actividades
+-- Volcado de datos para la tabla `actividades`
 --
 
-INSERT INTO actividades (idactividad, idbitacora, descripcion_actividad, fecha_inicio_act, fecha_fin_act, evidencia_cumplimiento, observaciones, archivo_evidencia) VALUES
+INSERT INTO `actividades` (`idactividad`, `idbitacora`, `descripcion_actividad`, `fecha_inicio_act`, `fecha_fin_act`, `evidencia_cumplimiento`, `observaciones`, `archivo_evidencia`) VALUES
 (16, 28, 'Desarrollar el modulo bitacoras', '2025-05-14', '2025-05-28', 'Codigo', NULL, NULL),
 (17, 28, 'Desarrollar el modulo bitacoras', '2025-05-28', '2025-06-04', 'Codigo', NULL, NULL),
 (18, 28, 'Desarrollar el modulo bitacoras', '2025-06-04', '2025-06-11', 'Codigo', NULL, NULL),
@@ -240,38 +259,38 @@ INSERT INTO actividades (idactividad, idbitacora, descripcion_actividad, fecha_i
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla agenda
+-- Estructura de tabla para la tabla `agenda`
 --
 
-CREATE TABLE agenda (
-  idage bigint(20) NOT NULL,
-  fas varchar(255) DEFAULT NULL COMMENT 'Fase del proyecto',
-  actpro varchar(255) DEFAULT NULL COMMENT 'Actividad del proyecto',
-  idcom bigint(20) DEFAULT NULL COMMENT 'ID de competencia (FK)',
-  idfic varchar(20) DEFAULT NULL,
-  fecini date DEFAULT NULL COMMENT 'Fecha de inicio',
-  fecfin date DEFAULT NULL COMMENT 'Fecha de fin',
-  idusu bigint(20) DEFAULT NULL,
-  idres bigint(20) DEFAULT NULL,
-  horcom int(11) DEFAULT NULL COMMENT 'Horas',
-  idins bigint(20) DEFAULT NULL COMMENT 'ID numérico del instructor (FK)',
-  hor varchar(50) DEFAULT NULL COMMENT 'Horario',
-  lun tinyint(1) DEFAULT 0 COMMENT 'Día Lunes',
-  mar tinyint(1) DEFAULT 0 COMMENT 'Día Martes',
-  mie tinyint(1) DEFAULT 0 COMMENT 'Día Miércoles',
-  jue tinyint(1) DEFAULT 0 COMMENT 'Día Jueves',
-  vie tinyint(1) DEFAULT 0 COMMENT 'Día Viernes',
-  sab tinyint(1) DEFAULT 0 COMMENT 'Día Sábado',
-  fchinc date DEFAULT NULL,
-  fchfnl date DEFAULT NULL,
-  acti varchar(50) DEFAULT NULL
+CREATE TABLE `agenda` (
+  `idage` bigint(20) NOT NULL,
+  `fas` varchar(255) DEFAULT NULL COMMENT 'Fase del proyecto',
+  `actpro` varchar(255) DEFAULT NULL COMMENT 'Actividad del proyecto',
+  `idcom` bigint(20) DEFAULT NULL COMMENT 'ID de competencia (FK)',
+  `idfic` varchar(20) DEFAULT NULL,
+  `fecini` date DEFAULT NULL COMMENT 'Fecha de inicio',
+  `fecfin` date DEFAULT NULL COMMENT 'Fecha de fin',
+  `idusu` bigint(20) DEFAULT NULL,
+  `idres` bigint(20) DEFAULT NULL,
+  `horcom` int(11) DEFAULT NULL COMMENT 'Horas',
+  `idins` bigint(20) DEFAULT NULL COMMENT 'ID numérico del instructor (FK)',
+  `hor` varchar(50) DEFAULT NULL COMMENT 'Horario',
+  `lun` tinyint(1) DEFAULT 0 COMMENT 'Día Lunes',
+  `mar` tinyint(1) DEFAULT 0 COMMENT 'Día Martes',
+  `mie` tinyint(1) DEFAULT 0 COMMENT 'Día Miércoles',
+  `jue` tinyint(1) DEFAULT 0 COMMENT 'Día Jueves',
+  `vie` tinyint(1) DEFAULT 0 COMMENT 'Día Viernes',
+  `sab` tinyint(1) DEFAULT 0 COMMENT 'Día Sábado',
+  `fchinc` date DEFAULT NULL,
+  `fchfnl` date DEFAULT NULL,
+  `acti` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla agenda
+-- Volcado de datos para la tabla `agenda`
 --
 
-INSERT INTO agenda (idage, fas, actpro, idcom, idfic, fecini, fecfin, idusu, idres, horcom, idins, hor, lun, mar, mie, jue, vie, sab, fchinc, fchfnl, acti) VALUES
+INSERT INTO `agenda` (`idage`, `fas`, `actpro`, `idcom`, `idfic`, `fecini`, `fecfin`, `idusu`, `idres`, `horcom`, `idins`, `hor`, `lun`, `mar`, `mie`, `jue`, `vie`, `sab`, `fchinc`, `fchfnl`, `acti`) VALUES
 (2, NULL, NULL, NULL, '2773071B', NULL, NULL, 1, 21010105102, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, '2024-07-16', '2024-07-31', NULL),
 (7, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, '2024-07-17', '2024-07-18', NULL),
 (8, NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, NULL, NULL, NULL),
@@ -573,7 +592,7 @@ INSERT INTO agenda (idage, fas, actpro, idcom, idfic, fecini, fecfin, idusu, idr
 (304, 'PLANEACION', 'DEFINIR EL PROTOCOLO DE CONTRATACION Y MECANISMOS DE CONTROL, PARA LOS SISTEMAS INFORMATICOS', 260102022, '2557475A', '2025-10-23', '2025-11-23', NULL, 26010201320, 6, 40530, 'L -V 13:00 A 18:00', 1, 0, 0, 0, 0, 0, NULL, NULL, NULL),
 (305, 'PLANEACION', 'DEFINIR EL PROTOCOLO DE CONTRATACION Y MECANISMOS DE CONTROL, PARA LOS SISTEMAS INFORMATICOS', 260102022, '2557475A', '2025-10-23', '2025-11-23', NULL, 26010201321, 6, 40531, 'L -V 13:00 A 18:00', 1, 0, 0, 0, 0, 0, NULL, NULL, NULL),
 (306, 'PLANEACION', 'DEFINIR EL PROTOCOLO DE CONTRATACION Y MECANISMOS DE CONTROL, PARA LOS SISTEMAS INFORMATICOS', 260102015, '2557475A', '2025-10-23', '2025-11-23', NULL, 26010201322, 36, 40532, 'L -V 13:00 A 18:00', 1, 0, 0, 0, 0, 0, NULL, NULL, NULL);
-INSERT INTO agenda (idage, fas, actpro, idcom, idfic, fecini, fecfin, idusu, idres, horcom, idins, hor, lun, mar, mie, jue, vie, sab, fchinc, fchfnl, acti) VALUES
+INSERT INTO `agenda` (`idage`, `fas`, `actpro`, `idcom`, `idfic`, `fecini`, `fecfin`, `idusu`, `idres`, `horcom`, `idins`, `hor`, `lun`, `mar`, `mie`, `jue`, `vie`, `sab`, `fchinc`, `fchfnl`, `acti`) VALUES
 (307, 'PLANEACION', 'DEFINIR EL PROTOCOLO DE CONTRATACION Y MECANISMOS DE CONTROL, PARA LOS SISTEMAS INFORMATICOS', 260102023, '2557475A', '2025-10-23', '2025-11-23', NULL, 23010150702, 6, 40533, 'L -V 13:00 A 18:00', 1, 0, 0, 0, 0, 0, NULL, NULL, NULL),
 (308, 'PLANEACION', 'DEFINIR EL PROTOCOLO DE CONTRATACION Y MECANISMOS DE CONTROL, PARA LOS SISTEMAS INFORMATICOS', 260102023, '2557475A', '2025-10-23', '2025-11-23', NULL, 593120, 6, 40534, 'L -V 13:00 A 18:00', 1, 0, 0, 0, 0, 0, NULL, NULL, NULL),
 (309, 'EJECUCIÓN', 'DESARROLLAR LA ESTRUCTURA DE DATOS Y LA INTERFAZ DE USUARIO DEL SOFTWARE.', 220501096, '2557475A', '2025-10-23', '2025-11-23', NULL, 26010201323, 114, 40535, 'L -V 13:00 A 18:00', 0, 0, 0, 0, 0, 0, NULL, NULL, NULL),
@@ -648,23 +667,23 @@ INSERT INTO agenda (idage, fas, actpro, idcom, idfic, fecini, fecfin, idusu, idr
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla aprobacion_resultado
+-- Estructura de tabla para la tabla `aprobacion_resultado`
 --
 
-CREATE TABLE aprobacion_resultado (
-  idaprob bigint(20) NOT NULL,
-  idfic varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  idres bigint(20) NOT NULL,
-  idinstructor bigint(20) NOT NULL,
-  estado enum('aprobado','no aprobado','pendiente') NOT NULL DEFAULT 'pendiente',
-  fecha_aprobacion datetime DEFAULT NULL
+CREATE TABLE `aprobacion_resultado` (
+  `idaprob` bigint(20) NOT NULL,
+  `idfic` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `idres` bigint(20) NOT NULL,
+  `idinstructor` bigint(20) NOT NULL,
+  `estado` enum('aprobado','no aprobado','pendiente') NOT NULL DEFAULT 'pendiente',
+  `fecha_aprobacion` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Volcado de datos para la tabla aprobacion_resultado
+-- Volcado de datos para la tabla `aprobacion_resultado`
 --
 
-INSERT INTO aprobacion_resultado (idaprob, idfic, idres, idinstructor, estado, fecha_aprobacion) VALUES
+INSERT INTO `aprobacion_resultado` (`idaprob`, `idfic`, `idres`, `idinstructor`, `estado`, `fecha_aprobacion`) VALUES
 (1, '2773071A', 21010102902, 17584, 'aprobado', '2025-05-29 10:15:00'),
 (2, '2773071A', 21010102901, 17584, 'no aprobado', '2025-05-29 10:15:00'),
 (3, '2773071A', 21010102903, 17584, '', '2025-05-29 10:15:00'),
@@ -738,20 +757,20 @@ INSERT INTO aprobacion_resultado (idaprob, idfic, idres, idinstructor, estado, f
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla area
+-- Estructura de tabla para la tabla `area`
 --
 
-CREATE TABLE area (
-  idare int(11) NOT NULL,
-  nomare varchar(100) DEFAULT NULL,
-  idusu bigint(20) DEFAULT NULL
+CREATE TABLE `area` (
+  `idare` int(11) NOT NULL,
+  `nomare` varchar(100) DEFAULT NULL,
+  `idusu` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla area
+-- Volcado de datos para la tabla `area`
 --
 
-INSERT INTO area (idare, nomare, idusu) VALUES
+INSERT INTO `area` (`idare`, `nomare`, `idusu`) VALUES
 (1, 'Sistemas', 1),
 (2, 'Logística', 1),
 (8, 'Sin area asignada', 1);
@@ -759,52 +778,52 @@ INSERT INTO area (idare, nomare, idusu) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla asistente
+-- Estructura de tabla para la tabla `asistente`
 --
 
-CREATE TABLE asistente (
-  idasi bigint(20) NOT NULL,
-  idact bigint(20) NOT NULL,
-  idusu bigint(20) NOT NULL,
-  fecasi datetime DEFAULT NULL
+CREATE TABLE `asistente` (
+  `idasi` bigint(20) NOT NULL,
+  `idact` bigint(20) NOT NULL,
+  `idusu` bigint(20) NOT NULL,
+  `fecasi` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla aspirante
+-- Estructura de tabla para la tabla `aspirante`
 --
 
-CREATE TABLE aspirante (
-  idasp bigint(15) NOT NULL,
-  idusu bigint(20) DEFAULT NULL,
-  idnorad bigint(15) DEFAULT NULL
+CREATE TABLE `aspirante` (
+  `idasp` bigint(15) NOT NULL,
+  `idusu` bigint(20) DEFAULT NULL,
+  `idnorad` bigint(15) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla aula
+-- Estructura de tabla para la tabla `aula`
 --
 
-CREATE TABLE aula (
-  idaul int(11) NOT NULL,
-  nomaul varchar(255) DEFAULT NULL,
-  piso varchar(50) DEFAULT NULL,
-  codubi bigint(20) DEFAULT NULL,
-  idcen int(11) NOT NULL,
-  bloqau int(11) DEFAULT NULL,
-  taula int(11) DEFAULT NULL,
-  esaula varchar(255) DEFAULT NULL,
-  desaula varchar(255) DEFAULT NULL,
-  tipaul tinyint(1) NOT NULL
+CREATE TABLE `aula` (
+  `idaul` int(11) NOT NULL,
+  `nomaul` varchar(255) DEFAULT NULL,
+  `piso` varchar(50) DEFAULT NULL,
+  `codubi` bigint(20) DEFAULT NULL,
+  `idcen` int(11) NOT NULL,
+  `bloqau` int(11) DEFAULT NULL,
+  `taula` int(11) DEFAULT NULL,
+  `esaula` varchar(255) DEFAULT NULL,
+  `desaula` varchar(255) DEFAULT NULL,
+  `tipaul` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla aula
+-- Volcado de datos para la tabla `aula`
 --
 
-INSERT INTO aula (idaul, nomaul, piso, codubi, idcen, bloqau, taula, esaula, desaula, tipaul) VALUES
+INSERT INTO `aula` (`idaul`, `nomaul`, `piso`, `codubi`, `idcen`, `bloqau`, `taula`, `esaula`, `desaula`, `tipaul`) VALUES
 (101, '101', '1', 1, 951310, 4, 4, '1', '', 1),
 (102, '102', '1', 1, 951310, 5, 2, '1', '', 1),
 (103, '103', '1', 1, 951310, 5, 2, '1', '', 1),
@@ -860,64 +879,64 @@ INSERT INTO aula (idaul, nomaul, piso, codubi, idcen, bloqau, taula, esaula, des
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla bitacora
+-- Estructura de tabla para la tabla `bitacora`
 --
 
-CREATE TABLE bitacora (
-  idbitacora int(11) NOT NULL,
-  idaprendiz bigint(20) DEFAULT NULL,
-  idjefe bigint(20) DEFAULT NULL,
-  idinstructor bigint(20) DEFAULT NULL,
-  nombre_empresa varchar(100) NOT NULL,
-  nit varchar(25) NOT NULL,
-  numero_bitacora int(11) NOT NULL,
-  fecha_inicio date DEFAULT NULL,
-  fecha_fin date DEFAULT NULL,
-  fecha_entrega date DEFAULT NULL,
-  idaltep int(11) DEFAULT NULL,
-  estado enum('Pendiente','Rechazado','Aprobado','') NOT NULL DEFAULT 'Pendiente',
-  observación text NOT NULL,
-  idsubaltep int(11) DEFAULT NULL,
-  archivo_evidencia varchar(255) DEFAULT NULL,
-  link_evidencia text DEFAULT NULL,
-  nvlarl enum('1','2','3','4','5') NOT NULL DEFAULT '1'
+CREATE TABLE `bitacora` (
+  `idbitacora` int(11) NOT NULL,
+  `idaprendiz` bigint(20) DEFAULT NULL,
+  `idjefe` bigint(20) DEFAULT NULL,
+  `idinstructor` bigint(20) DEFAULT NULL,
+  `nombre_empresa` varchar(100) NOT NULL,
+  `nit` varchar(25) NOT NULL,
+  `numero_bitacora` int(11) NOT NULL,
+  `fecha_inicio` date DEFAULT NULL,
+  `fecha_fin` date DEFAULT NULL,
+  `fecha_entrega` date DEFAULT NULL,
+  `idaltep` int(11) DEFAULT NULL,
+  `estado` enum('Pendiente','Rechazado','Aprobado','') NOT NULL DEFAULT 'Pendiente',
+  `observación` text NOT NULL,
+  `idsubaltep` int(11) DEFAULT NULL,
+  `archivo_evidencia` varchar(255) DEFAULT NULL,
+  `link_evidencia` text DEFAULT NULL,
+  `nvlarl` enum('1','2','3','4','5') NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla calcri
+-- Estructura de tabla para la tabla `calcri`
 --
 
-CREATE TABLE calcri (
-  idcal bigint(20) NOT NULL,
-  idcri bigint(20) DEFAULT NULL,
-  idusu bigint(20) DEFAULT NULL,
-  calif int(3) DEFAULT NULL
+CREATE TABLE `calcri` (
+  `idcal` bigint(20) NOT NULL,
+  `idcri` bigint(20) DEFAULT NULL,
+  `idusu` bigint(20) DEFAULT NULL,
+  `calif` int(3) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla calendario_academico
+-- Estructura de tabla para la tabla `calendario_academico`
 --
 
-CREATE TABLE calendario_academico (
-  id int(11) NOT NULL,
-  titulo varchar(255) NOT NULL,
-  descripcion text DEFAULT NULL,
-  fecha_inicio date NOT NULL,
-  fecha_fin date NOT NULL,
-  tipo_evento enum('inicio_clases','receso','examen','festivo','evento','trimestre','alistamiento','balance') DEFAULT 'evento',
-  anio int(11) DEFAULT year(curdate()),
-  trimestre varchar(50) DEFAULT NULL
+CREATE TABLE `calendario_academico` (
+  `id` int(11) NOT NULL,
+  `titulo` varchar(255) NOT NULL,
+  `descripcion` text DEFAULT NULL,
+  `fecha_inicio` date NOT NULL,
+  `fecha_fin` date NOT NULL,
+  `tipo_evento` enum('inicio_clases','receso','examen','festivo','evento','trimestre','alistamiento','balance') DEFAULT 'evento',
+  `anio` int(11) DEFAULT year(curdate()),
+  `trimestre` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla calendario_academico
+-- Volcado de datos para la tabla `calendario_academico`
 --
 
-INSERT INTO calendario_academico (id, titulo, descripcion, fecha_inicio, fecha_fin, tipo_evento, anio, trimestre) VALUES
+INSERT INTO `calendario_academico` (`id`, `titulo`, `descripcion`, `fecha_inicio`, `fecha_fin`, `tipo_evento`, `anio`, `trimestre`) VALUES
 (1, 'Alistamiento de procesos y programas para la vigencia 2025', 'Preparación de procesos y programas para el año académico 2025', '2025-02-03', '2025-02-08', 'alistamiento', 2025, 'Primer Trimestre'),
 (2, 'Alistamiento para el segundo trimestre', 'Preparación para el inicio del segundo trimestre', '2025-04-26', '2025-04-28', 'alistamiento', 2025, 'Primer Trimestre'),
 (3, 'Alistamiento para el tercer trimestre', 'Preparación para el inicio del tercer trimestre', '2025-07-21', '2025-07-24', 'alistamiento', 2025, 'Segundo Trimestre'),
@@ -930,111 +949,111 @@ INSERT INTO calendario_academico (id, titulo, descripcion, fecha_inicio, fecha_f
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla cargueplaneacion
+-- Estructura de tabla para la tabla `cargueplaneacion`
 --
 
-CREATE TABLE cargueplaneacion (
-  col1 varchar(255) NOT NULL,
-  col2 varchar(255) NOT NULL,
-  col3 varchar(255) NOT NULL,
-  col4 varchar(255) NOT NULL,
-  col5 varchar(255) NOT NULL,
-  col6 varchar(255) NOT NULL,
-  col7 varchar(255) NOT NULL,
-  col8 varchar(255) NOT NULL,
-  col9 varchar(255) NOT NULL,
-  col10 varchar(255) NOT NULL,
-  col11 varchar(255) NOT NULL,
-  col12 varchar(255) NOT NULL,
-  col13 varchar(255) NOT NULL,
-  col14 varchar(255) NOT NULL,
-  col15 varchar(255) NOT NULL,
-  col16 varchar(255) NOT NULL
+CREATE TABLE `cargueplaneacion` (
+  `col1` varchar(255) NOT NULL,
+  `col2` varchar(255) NOT NULL,
+  `col3` varchar(255) NOT NULL,
+  `col4` varchar(255) NOT NULL,
+  `col5` varchar(255) NOT NULL,
+  `col6` varchar(255) NOT NULL,
+  `col7` varchar(255) NOT NULL,
+  `col8` varchar(255) NOT NULL,
+  `col9` varchar(255) NOT NULL,
+  `col10` varchar(255) NOT NULL,
+  `col11` varchar(255) NOT NULL,
+  `col12` varchar(255) NOT NULL,
+  `col13` varchar(255) NOT NULL,
+  `col14` varchar(255) NOT NULL,
+  `col15` varchar(255) NOT NULL,
+  `col16` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla centro
+-- Estructura de tabla para la tabla `centro`
 --
 
-CREATE TABLE centro (
-  idcen int(11) NOT NULL,
-  nomcen varchar(70) NOT NULL,
-  dircen varchar(100) NOT NULL,
-  telcen varchar(10) NOT NULL,
-  imgcen varchar(255) DEFAULT NULL,
-  descen text NOT NULL,
-  fiicancen datetime NOT NULL,
-  fficancen datetime NOT NULL,
-  fiprocen datetime NOT NULL,
-  ffprocen datetime NOT NULL,
-  fivotcen datetime NOT NULL,
-  ffvotcen datetime NOT NULL
+CREATE TABLE `centro` (
+  `idcen` int(11) NOT NULL,
+  `nomcen` varchar(70) NOT NULL,
+  `dircen` varchar(100) NOT NULL,
+  `telcen` varchar(10) NOT NULL,
+  `imgcen` varchar(255) DEFAULT NULL,
+  `descen` text NOT NULL,
+  `fiicancen` datetime NOT NULL,
+  `fficancen` datetime NOT NULL,
+  `fiprocen` datetime NOT NULL,
+  `ffprocen` datetime NOT NULL,
+  `fivotcen` datetime NOT NULL,
+  `ffvotcen` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla centro
+-- Volcado de datos para la tabla `centro`
 --
 
-INSERT INTO centro (idcen, nomcen, dircen, telcen, imgcen, descen, fiicancen, fficancen, fiprocen, ffprocen, fivotcen, ffvotcen) VALUES
-(951310, 'CENTRO DE DESARROLLO AGROEMPRESARIAL CHÃA', 'Vereda BojacÃ¡, Carrera 11, Sector el DariÃ©n, Lt. 1, ChÃ­a Cundinamarca', '6018844545', NULL, 'Conmutador Nacional (57 1) 5461500 AtenciÃ³n telefÃ³nica: ', '2024-03-01 12:00:00', '2024-03-04 11:59:00', '2024-03-05 12:00:00', '2024-03-09 11:59:00', '2024-03-10 06:00:00', '2024-03-11 09:00:00');
+INSERT INTO `centro` (`idcen`, `nomcen`, `dircen`, `telcen`, `imgcen`, `descen`, `fiicancen`, `fficancen`, `fiprocen`, `ffprocen`, `fivotcen`, `ffvotcen`) VALUES
+(951310, 'CENTRO DE DESARROLLO AGROEMPRESARIAL CHÃA', 'Vereda BojacÃ¡, Carrera 11, Sector el DariÃ©n, Lt. 1, ChÃ­a Cundinamarca', '6018844545', NULL, 'Conmutador Nacional (57 1) 5461500 AtenciÃ³n telefÃ³nica: ', '2024-03-01 12:00:00', '2024-03-04 11:59:00', '2024-03-05 12:00:00', '2024-03-09 11:59:00', '2026-09-17 06:00:00', '2026-09-17 06:15:00');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla certificaciones
+-- Estructura de tabla para la tabla `certificaciones`
 --
 
-CREATE TABLE certificaciones (
-  idcertificacion int(11) NOT NULL,
-  idaprendiz bigint(20) NOT NULL,
-  nombre_certificacion varchar(255) NOT NULL,
-  descripcion text DEFAULT NULL,
-  fecha_obtencion date DEFAULT NULL,
-  fecha_vencimiento date DEFAULT NULL,
-  entidad_emisora varchar(255) DEFAULT NULL,
-  numero_certificacion varchar(100) DEFAULT NULL,
-  imagen_certificacion varchar(255) DEFAULT NULL,
-  archivo_certificacion varchar(255) DEFAULT NULL,
-  estado varchar(20) DEFAULT 'activo',
-  tipo_certificacion varchar(100) DEFAULT NULL,
-  fecha_creacion datetime DEFAULT current_timestamp(),
-  fecha_actualizacion datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
+CREATE TABLE `certificaciones` (
+  `idcertificacion` int(11) NOT NULL,
+  `idaprendiz` bigint(20) NOT NULL,
+  `nombre_certificacion` varchar(255) NOT NULL,
+  `descripcion` text DEFAULT NULL,
+  `fecha_obtencion` date DEFAULT NULL,
+  `fecha_vencimiento` date DEFAULT NULL,
+  `entidad_emisora` varchar(255) DEFAULT NULL,
+  `numero_certificacion` varchar(100) DEFAULT NULL,
+  `imagen_certificacion` varchar(255) DEFAULT NULL,
+  `archivo_certificacion` varchar(255) DEFAULT NULL,
+  `estado` varchar(20) DEFAULT 'activo',
+  `tipo_certificacion` varchar(100) DEFAULT NULL,
+  `fecha_creacion` datetime DEFAULT current_timestamp(),
+  `fecha_actualizacion` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla cmr
+-- Estructura de tabla para la tabla `cmr`
 --
 
-CREATE TABLE cmr (
-  idcmr int(11) NOT NULL COMMENT 'ID único',
-  descom text NOT NULL COMMENT 'Competencia',
-  nomres text NOT NULL COMMENT 'Resultado de aprendizaje',
-  duract varchar(50) DEFAULT NULL COMMENT 'Duración de la actividad'
+CREATE TABLE `cmr` (
+  `idcmr` int(11) NOT NULL COMMENT 'ID único',
+  `descom` text NOT NULL COMMENT 'Competencia',
+  `nomres` text NOT NULL COMMENT 'Resultado de aprendizaje',
+  `duract` varchar(50) DEFAULT NULL COMMENT 'Duración de la actividad'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla competencia
+-- Estructura de tabla para la tabla `competencia`
 --
 
-CREATE TABLE competencia (
-  idcom bigint(20) NOT NULL,
-  descom text DEFAULT NULL,
-  vercom int(11) DEFAULT NULL,
-  horcom int(11) DEFAULT NULL,
-  idval int(11) NOT NULL
+CREATE TABLE `competencia` (
+  `idcom` bigint(20) NOT NULL,
+  `descom` text DEFAULT NULL,
+  `vercom` int(11) DEFAULT NULL,
+  `horcom` int(11) DEFAULT NULL,
+  `idval` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla competencia
+-- Volcado de datos para la tabla `competencia`
 --
 
-INSERT INTO competencia (idcom, descom, vercom, horcom, idval) VALUES
+INSERT INTO `competencia` (`idcom`, `descom`, `vercom`, `horcom`, `idval`) VALUES
 (2, 'RESULTADOS DE APRENDIZAJE ETAPA PRACTICA', 1, 40, 1),
 (36180, 'Enrique Low Murtra-Interactuar en el contexto productivo y social de acuerdo con principios  éticos para la construcción de una cultura de paz.', 1, 40, 1),
 (36182, 'Resultado de Aprendizaje de la Inducción.', 1, 40, 1),
@@ -1105,72 +1124,72 @@ INSERT INTO competencia (idcom, descom, vercom, horcom, idval) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla compromiso
+-- Estructura de tabla para la tabla `compromiso`
 --
 
-CREATE TABLE compromiso (
-  idcom bigint(15) NOT NULL,
-  idval int(11) DEFAULT NULL,
-  p1com varchar(500) DEFAULT NULL,
-  p2com varchar(500) DEFAULT NULL
+CREATE TABLE `compromiso` (
+  `idcom` bigint(15) NOT NULL,
+  `idval` int(11) DEFAULT NULL,
+  `p1com` varchar(500) DEFAULT NULL,
+  `p2com` varchar(500) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla configuracion
+-- Estructura de tabla para la tabla `configuracion`
 --
 
-CREATE TABLE configuracion (
-  idcof int(11) NOT NULL,
-  logcof varchar(255) NOT NULL,
-  titcof varchar(100) NOT NULL,
-  descof varchar(255) DEFAULT NULL,
-  foocof varchar(500) NOT NULL,
-  versoft varchar(10) DEFAULT '1.0',
-  actsoft varchar(50) DEFAULT 'Sin confirmar'
+CREATE TABLE `configuracion` (
+  `idcof` int(11) NOT NULL,
+  `logcof` varchar(255) NOT NULL,
+  `titcof` varchar(100) NOT NULL,
+  `descof` varchar(255) DEFAULT NULL,
+  `foocof` varchar(500) NOT NULL,
+  `versoft` varchar(10) DEFAULT '1.0',
+  `actsoft` varchar(50) DEFAULT 'Sin confirmar'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla configuracion
+-- Volcado de datos para la tabla `configuracion`
 --
 
-INSERT INTO configuracion (idcof, logcof, titcof, descof, foocof, versoft, actsoft) VALUES
-(1, 'sena.png', 'Sagi CDA', 'Explora más funciones pensadas para hacer de tu experiencia en el SENA más sencilla y eficiente.', 'SAGI CDA - Centro de Desarrollo Agroempresarial - SENA Chía.', '2.0', 'Octubre 2026');
+INSERT INTO `configuracion` (`idcof`, `logcof`, `titcof`, `descof`, `foocof`, `versoft`, `actsoft`) VALUES
+(1, 'logoSena.png', 'Sagi CDA', 'Explora más funciones pensadas para hacer de tu experiencia en el SENA más sencilla y eficiente.', 'SAGI CDA - Centro de Desarrollo Agroempresarial - SENA Chía.', '2.0', 'Octubre 2026');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla criterio
+-- Estructura de tabla para la tabla `criterio`
 --
 
-CREATE TABLE criterio (
-  idcri bigint(20) NOT NULL,
-  nomcri varchar(255) DEFAULT NULL,
-  vscum int(10) DEFAULT NULL,
-  vpar int(10) DEFAULT NULL,
-  vncum int(10) DEFAULT 0,
-  idins bigint(20) DEFAULT NULL,
-  idusu bigint(20) DEFAULT NULL
+CREATE TABLE `criterio` (
+  `idcri` bigint(20) NOT NULL,
+  `nomcri` varchar(255) DEFAULT NULL,
+  `vscum` int(10) DEFAULT NULL,
+  `vpar` int(10) DEFAULT NULL,
+  `vncum` int(10) DEFAULT 0,
+  `idins` bigint(20) DEFAULT NULL,
+  `idusu` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla dependencias
+-- Estructura de tabla para la tabla `dependencias`
 --
 
-CREATE TABLE dependencias (
-  id_dependencia bigint(20) NOT NULL,
-  nombre varchar(100) NOT NULL,
-  descripcion text DEFAULT NULL
+CREATE TABLE `dependencias` (
+  `id_dependencia` bigint(20) NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `descripcion` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla dependencias
+-- Volcado de datos para la tabla `dependencias`
 --
 
-INSERT INTO dependencias (id_dependencia, nombre, descripcion) VALUES
+INSERT INTO `dependencias` (`id_dependencia`, `nombre`, `descripcion`) VALUES
 (1, 'Gestión de TIC', 'Administración de tecnologías de la información y soporte técnico institucional.'),
 (2, 'Administración de documentos', 'Organización y custodia de archivos físicos y digitales.'),
 (3, 'Entrega carne Secretaría General', 'Emisión y control de carnés institucionales para personal y aprendices.'),
@@ -1185,119 +1204,119 @@ INSERT INTO dependencias (id_dependencia, nombre, descripcion) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla desercion
+-- Estructura de tabla para la tabla `desercion`
 --
 
-CREATE TABLE desercion (
-  iddec bigint(20) NOT NULL,
-  idact bigint(20) NOT NULL,
-  idusu bigint(20) NOT NULL,
-  idfic varchar(20) NOT NULL,
-  fecregdec datetime NOT NULL,
-  obsdec text NOT NULL
+CREATE TABLE `desercion` (
+  `iddec` bigint(20) NOT NULL,
+  `idact` bigint(20) NOT NULL,
+  `idusu` bigint(20) NOT NULL,
+  `idfic` varchar(20) NOT NULL,
+  `fecregdec` datetime NOT NULL,
+  `obsdec` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla detallesps
+-- Estructura de tabla para la tabla `detallesps`
 --
 
-CREATE TABLE detallesps (
-  iddetalle int(11) NOT NULL,
-  idpaz int(11) NOT NULL,
-  idusu bigint(20) NOT NULL,
-  calificacion tinyint(1) DEFAULT 0,
-  observacion text DEFAULT NULL,
-  fechayhora datetime DEFAULT current_timestamp()
+CREATE TABLE `detallesps` (
+  `iddetalle` int(11) NOT NULL,
+  `idpaz` int(11) NOT NULL,
+  `idusu` bigint(20) NOT NULL,
+  `calificacion` tinyint(1) DEFAULT 0,
+  `observacion` text DEFAULT NULL,
+  `fechayhora` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla detalle_soporte
+-- Estructura de tabla para la tabla `detalle_soporte`
 --
 
-CREATE TABLE detalle_soporte (
-  iddet bigint(20) NOT NULL COMMENT 'id detalle soporte',
-  idsop bigint(20) NOT NULL COMMENT 'ID del soporte relacionado',
-  idusu bigint(20) NOT NULL COMMENT 'ID del usuario que realiza el seguimiento',
-  detest int(11) NOT NULL COMMENT 'estado',
-  fecseg datetime NOT NULL COMMENT 'Fecha y hora del seguimiento',
-  detcom text NOT NULL COMMENT 'comentario',
-  detevi varchar(255) DEFAULT NULL COMMENT 'evidencia'
+CREATE TABLE `detalle_soporte` (
+  `iddet` bigint(20) NOT NULL COMMENT 'id detalle soporte',
+  `idsop` bigint(20) NOT NULL COMMENT 'ID del soporte relacionado',
+  `idusu` bigint(20) NOT NULL COMMENT 'ID del usuario que realiza el seguimiento',
+  `detest` int(11) NOT NULL COMMENT 'estado',
+  `fecseg` datetime NOT NULL COMMENT 'Fecha y hora del seguimiento',
+  `detcom` text NOT NULL COMMENT 'comentario',
+  `detevi` varchar(255) DEFAULT NULL COMMENT 'evidencia'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla detcom
+-- Estructura de tabla para la tabla `detcom`
 --
 
-CREATE TABLE detcom (
-  iddtc bigint(15) NOT NULL,
-  idcom bigint(15) DEFAULT NULL,
-  desdtc text DEFAULT NULL,
-  detfech date DEFAULT NULL
+CREATE TABLE `detcom` (
+  `iddtc` bigint(15) NOT NULL,
+  `idcom` bigint(15) DEFAULT NULL,
+  `desdtc` text DEFAULT NULL,
+  `detfech` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla docmat
+-- Estructura de tabla para la tabla `docmat`
 --
 
-CREATE TABLE docmat (
-  iddcma bigint(15) NOT NULL,
-  nomdcma varchar(50) DEFAULT NULL,
-  iduxf bigint(15) DEFAULT NULL,
-  iddocp bigint(15) DEFAULT NULL,
-  rutdcma varchar(255) DEFAULT NULL,
-  fecdcma datetime DEFAULT NULL,
-  aprdcma tinyint(1) DEFAULT NULL
+CREATE TABLE `docmat` (
+  `iddcma` bigint(15) NOT NULL,
+  `nomdcma` varchar(50) DEFAULT NULL,
+  `iduxf` bigint(15) DEFAULT NULL,
+  `iddocp` bigint(15) DEFAULT NULL,
+  `rutdcma` varchar(255) DEFAULT NULL,
+  `fecdcma` datetime DEFAULT NULL,
+  `aprdcma` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla docped
+-- Estructura de tabla para la tabla `docped`
 --
 
-CREATE TABLE docped (
-  iddocp bigint(15) NOT NULL,
-  nomdocp varchar(200) DEFAULT NULL,
-  tipdocp int(11) DEFAULT NULL,
-  act tinyint(1) NOT NULL DEFAULT 1
+CREATE TABLE `docped` (
+  `iddocp` bigint(15) NOT NULL,
+  `nomdocp` varchar(200) DEFAULT NULL,
+  `tipdocp` int(11) DEFAULT NULL,
+  `act` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla documento
+-- Estructura de tabla para la tabla `documento`
 --
 
-CREATE TABLE documento (
-  iddoc bigint(15) NOT NULL,
-  nomdoc varchar(200) NOT NULL,
-  idnorad bigint(15) DEFAULT NULL
+CREATE TABLE `documento` (
+  `iddoc` bigint(15) NOT NULL,
+  `nomdoc` varchar(200) NOT NULL,
+  `idnorad` bigint(15) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla dominio
+-- Estructura de tabla para la tabla `dominio`
 --
 
-CREATE TABLE dominio (
-  iddom int(11) NOT NULL,
-  nomdom varchar(255) NOT NULL
+CREATE TABLE `dominio` (
+  `iddom` int(11) NOT NULL,
+  `nomdom` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla dominio
+-- Volcado de datos para la tabla `dominio`
 --
 
-INSERT INTO dominio (iddom, nomdom) VALUES
+INSERT INTO `dominio` (`iddom`, `nomdom`) VALUES
 (1, 'Jornada '),
 (2, 'Condiciones'),
 (3, 'Valores propuesta'),
@@ -1331,97 +1350,97 @@ INSERT INTO dominio (iddom, nomdom) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla elemento
+-- Estructura de tabla para la tabla `elemento`
 --
 
-CREATE TABLE elemento (
-  idele bigint(20) NOT NULL,
-  idusu bigint(20) NOT NULL,
-  nomele varchar(255) NOT NULL,
-  nidele varchar(255) NOT NULL,
-  marele varchar(255) NOT NULL,
-  tipele int(11) NOT NULL,
-  noplasena bigint(20) DEFAULT NULL,
-  desele text NOT NULL,
-  preele tinyint(1) NOT NULL DEFAULT 1
+CREATE TABLE `elemento` (
+  `idele` bigint(20) NOT NULL,
+  `idusu` bigint(20) NOT NULL,
+  `nomele` varchar(255) NOT NULL,
+  `nidele` varchar(255) NOT NULL,
+  `marele` varchar(255) NOT NULL,
+  `tipele` int(11) NOT NULL,
+  `noplasena` bigint(20) DEFAULT NULL,
+  `desele` text NOT NULL,
+  `preele` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla empresa
+-- Estructura de tabla para la tabla `empresa`
 --
 
-CREATE TABLE empresa (
-  idemp bigint(15) NOT NULL,
-  numdocemp int(11) DEFAULT NULL,
-  nomemp varchar(50) DEFAULT NULL,
-  diremp varchar(50) DEFAULT NULL,
-  codubi int(11) DEFAULT NULL,
-  nomconemp varchar(50) DEFAULT NULL,
-  telemp varchar(15) DEFAULT NULL,
-  usucre bigint(20) DEFAULT NULL,
-  feccre datetime DEFAULT NULL,
-  usuapr bigint(20) DEFAULT NULL,
-  fecapr datetime DEFAULT NULL
+CREATE TABLE `empresa` (
+  `idemp` bigint(15) NOT NULL,
+  `numdocemp` int(11) DEFAULT NULL,
+  `nomemp` varchar(50) DEFAULT NULL,
+  `diremp` varchar(50) DEFAULT NULL,
+  `codubi` int(11) DEFAULT NULL,
+  `nomconemp` varchar(50) DEFAULT NULL,
+  `telemp` varchar(15) DEFAULT NULL,
+  `usucre` bigint(20) DEFAULT NULL,
+  `feccre` datetime DEFAULT NULL,
+  `usuapr` bigint(20) DEFAULT NULL,
+  `fecapr` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Volcado de datos para la tabla empresa
+-- Volcado de datos para la tabla `empresa`
 --
 
-INSERT INTO empresa (idemp, numdocemp, nomemp, diremp, codubi, nomconemp, telemp, usucre, feccre, usuapr, fecapr) VALUES
+INSERT INTO `empresa` (`idemp`, `numdocemp`, `nomemp`, `diremp`, `codubi`, `nomconemp`, `telemp`, `usucre`, `feccre`, `usuapr`, `fecapr`) VALUES
 (1, 2147483647, 'Guantes el mocho', 'Dg. 61c #26-35, Bogotá', 11001, 'Zoila Bacca', '3105555556', 1, '2025-08-06 13:32:36', NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla evases
+-- Estructura de tabla para la tabla `evases`
 --
 
-CREATE TABLE evases (
-  ideva bigint(20) NOT NULL,
-  idses bigint(20) NOT NULL,
-  idusu bigint(20) NOT NULL,
-  comeva text NOT NULL,
-  valeva int(11) NOT NULL
+CREATE TABLE `evases` (
+  `ideva` bigint(20) NOT NULL,
+  `idses` bigint(20) NOT NULL,
+  `idusu` bigint(20) NOT NULL,
+  `comeva` text NOT NULL,
+  `valeva` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla evidencia
+-- Estructura de tabla para la tabla `evidencia`
 --
 
-CREATE TABLE evidencia (
-  evid bigint(20) NOT NULL,
-  iddec bigint(20) NOT NULL,
-  imgurl varchar(255) NOT NULL
+CREATE TABLE `evidencia` (
+  `evid` bigint(20) NOT NULL,
+  `iddec` bigint(20) NOT NULL,
+  `imgurl` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla ficha
+-- Estructura de tabla para la tabla `ficha`
 --
 
-CREATE TABLE ficha (
-  idfic varchar(20) NOT NULL,
-  nomfic varchar(200) NOT NULL,
-  codpro bigint(20) NOT NULL DEFAULT 228118,
-  idusu bigint(20) DEFAULT NULL,
-  jornada int(11) NOT NULL,
-  idcen int(11) NOT NULL,
-  mun varchar(255) DEFAULT NULL,
-  finific date NOT NULL DEFAULT '2022-07-18',
-  ffinfic date NOT NULL DEFAULT '2024-10-17'
+CREATE TABLE `ficha` (
+  `idfic` varchar(20) NOT NULL,
+  `nomfic` varchar(200) NOT NULL,
+  `codpro` bigint(20) NOT NULL DEFAULT 228118,
+  `idusu` bigint(20) DEFAULT NULL,
+  `jornada` int(11) NOT NULL,
+  `idcen` int(11) NOT NULL,
+  `mun` varchar(255) DEFAULT NULL,
+  `finific` date NOT NULL DEFAULT '2022-07-18',
+  `ffinfic` date NOT NULL DEFAULT '2024-10-17'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla ficha
+-- Volcado de datos para la tabla `ficha`
 --
 
-INSERT INTO ficha (idfic, nomfic, codpro, idusu, jornada, idcen, mun, finific, ffinfic) VALUES
+INSERT INTO `ficha` (`idfic`, `nomfic`, `codpro`, `idusu`, `jornada`, `idcen`, `mun`, `finific`, `ffinfic`) VALUES
 ('100001', 'Contratistas', 1, NULL, 1, 951310, '25175', '2025-08-11', '2025-12-31'),
 ('111', 'Voto blanco CDA M', 1, NULL, 1, 951310, '25899', '2022-07-18', '2024-10-17'),
 ('112', 'Voto blanco CDA T', 1, NULL, 2, 951310, '', '2022-07-18', '2024-10-17'),
@@ -1896,7 +1915,7 @@ INSERT INTO ficha (idfic, nomfic, codpro, idusu, jornada, idcen, mun, finific, f
 ('2817775', 'PROMOTORIA EN MANEJO AMBIENTAL', 1, NULL, 4, 951310, '25269', '2024-03-10', '2024-03-10'),
 ('2817776', 'PROMOTORIA EN MANEJO AMBIENTAL', 1, NULL, 4, 951310, '25269', '2024-03-10', '2024-03-10'),
 ('2817777', 'PROMOTORIA EN MANEJO AMBIENTAL', 1, NULL, 4, 951310, '25269', '2024-03-10', '2024-03-10');
-INSERT INTO ficha (idfic, nomfic, codpro, idusu, jornada, idcen, mun, finific, ffinfic) VALUES
+INSERT INTO `ficha` (`idfic`, `nomfic`, `codpro`, `idusu`, `jornada`, `idcen`, `mun`, `finific`, `ffinfic`) VALUES
 ('2817778', 'PROMOTORIA EN MANEJO AMBIENTAL', 1, NULL, 4, 951310, '25269', '2024-03-10', '2024-03-10'),
 ('2817779', 'PROMOTORIA EN MANEJO AMBIENTAL', 1, NULL, 4, 951310, '25269', '2024-03-10', '2024-03-10'),
 ('2817780', 'PROMOTORIA EN MANEJO AMBIENTAL', 1, NULL, 4, 951310, '25269', '2024-03-10', '2024-03-10'),
@@ -2374,7 +2393,7 @@ INSERT INTO ficha (idfic, nomfic, codpro, idusu, jornada, idcen, mun, finific, f
 ('3402027', 'TRATAMIENTO DE AGUA', 1, NULL, 1, 951310, '25175', '2026-02-04', '2028-02-04'),
 ('3402037', 'CONSTRUCCION DE EDIFICACIONES', 1, NULL, 1, 951310, '25175', '2026-02-04', '2028-02-04'),
 ('3402038', 'CONSTRUCCION DE EDIFICACIONES', 1, NULL, 1, 951310, '25175', '2026-02-04', '2028-02-04');
-INSERT INTO ficha (idfic, nomfic, codpro, idusu, jornada, idcen, mun, finific, ffinfic) VALUES
+INSERT INTO `ficha` (`idfic`, `nomfic`, `codpro`, `idusu`, `jornada`, `idcen`, `mun`, `finific`, `ffinfic`) VALUES
 ('3409959', 'GESTIÓN EMPRESARIAL', 1, NULL, 1, 951310, '25175', '2026-02-03', '2028-02-03'),
 ('3409981', 'GESTIÓN EMPRESARIAL', 1, NULL, 1, 951310, '25175', '2026-03-05', '2028-03-05'),
 ('3409982', 'GESTIÓN EMPRESARIAL', 1, NULL, 1, 951310, '25175', '2026-02-04', '2028-02-04'),
@@ -2497,127 +2516,127 @@ INSERT INTO ficha (idfic, nomfic, codpro, idusu, jornada, idcen, mun, finific, f
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla filhor
+-- Estructura de tabla para la tabla `filhor`
 --
 
-CREATE TABLE filhor (
-  idusu bigint(20) NOT NULL,
-  idare int(11) NOT NULL
+CREATE TABLE `filhor` (
+  `idusu` bigint(20) NOT NULL,
+  `idare` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla filhor
+-- Volcado de datos para la tabla `filhor`
 --
 
-INSERT INTO filhor (idusu, idare) VALUES
+INSERT INTO `filhor` (`idusu`, `idare`) VALUES
 (1, 1);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla flujo
+-- Estructura de tabla para la tabla `flujo`
 --
 
-CREATE TABLE flujo (
-  idflu bigint(15) NOT NULL,
-  nomflu varchar(100) DEFAULT NULL,
-  fluacti tinyint(1) DEFAULT NULL
+CREATE TABLE `flujo` (
+  `idflu` bigint(15) NOT NULL,
+  `nomflu` varchar(100) DEFAULT NULL,
+  `fluacti` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Volcado de datos para la tabla flujo
+-- Volcado de datos para la tabla `flujo`
 --
 
-INSERT INTO flujo (idflu, nomflu, fluacti) VALUES
+INSERT INTO `flujo` (`idflu`, `nomflu`, `fluacti`) VALUES
 (1, 'nuevo flujo', 1);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla fotdec
+-- Estructura de tabla para la tabla `fotdec`
 --
 
-CREATE TABLE fotdec (
-  idfdc bigint(20) NOT NULL,
-  iddec bigint(20) NOT NULL,
-  imgdc varchar(250) NOT NULL,
-  fcrfdc datetime NOT NULL
+CREATE TABLE `fotdec` (
+  `idfdc` bigint(20) NOT NULL,
+  `iddec` bigint(20) NOT NULL,
+  `imgdc` varchar(250) NOT NULL,
+  `fcrfdc` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla foto
+-- Estructura de tabla para la tabla `foto`
 --
 
-CREATE TABLE foto (
-  idfot bigint(20) NOT NULL,
-  idele bigint(20) NOT NULL,
-  rutfot varchar(512) NOT NULL
+CREATE TABLE `foto` (
+  `idfot` bigint(20) NOT NULL,
+  `idele` bigint(20) NOT NULL,
+  `rutfot` varchar(512) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla hdtxusu
+-- Estructura de tabla para la tabla `hdtxusu`
 --
 
-CREATE TABLE hdtxusu (
-  idnorad bigint(15) DEFAULT NULL,
-  idusu bigint(15) DEFAULT NULL
+CREATE TABLE `hdtxusu` (
+  `idnorad` bigint(15) DEFAULT NULL,
+  `idusu` bigint(15) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla hojatra
+-- Estructura de tabla para la tabla `hojatra`
 --
 
-CREATE TABLE hojatra (
-  idnorad bigint(15) NOT NULL,
-  codpro bigint(20) NOT NULL,
-  idemp bigint(15) NOT NULL,
-  codproesp int(11) NOT NULL,
-  codslem varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  feclini date DEFAULT NULL,
-  feclin date DEFAULT NULL,
-  cupo int(11) DEFAULT NULL,
-  jornada varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  idfic varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  convht varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
+CREATE TABLE `hojatra` (
+  `idnorad` bigint(15) NOT NULL,
+  `codpro` bigint(20) NOT NULL,
+  `idemp` bigint(15) NOT NULL,
+  `codproesp` int(11) NOT NULL,
+  `codslem` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `feclini` date DEFAULT NULL,
+  `feclin` date DEFAULT NULL,
+  `cupo` int(11) DEFAULT NULL,
+  `jornada` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `idfic` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `convht` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla horario
+-- Estructura de tabla para la tabla `horario`
 --
 
-CREATE TABLE horario (
-  idhor bigint(20) NOT NULL COMMENT 'ID único del horario',
-  idfic varchar(20) NOT NULL COMMENT 'ID de la ficha',
-  idaul int(11) DEFAULT NULL COMMENT 'ID del aula',
-  idusu bigint(20) NOT NULL COMMENT 'ID del usuario',
-  iddia int(11) NOT NULL COMMENT 'ID del día de la semana',
-  idnorad bigint(15) NOT NULL,
-  hinihor time NOT NULL COMMENT 'Hora de inicio del horario',
-  hfinhor time NOT NULL COMMENT 'Hora de fin del horario',
-  es_otros tinyint(1) DEFAULT 0 COMMENT 'Indica si es horario de "otros" (0=normal, 1=otros)',
-  actividad varchar(100) DEFAULT NULL COMMENT 'Nombre de la actividad',
-  horas_otros int(11) DEFAULT NULL COMMENT 'Horas asignadas para actividades otros',
-  fecha_inicio date DEFAULT NULL COMMENT 'Fecha de inicio del horario',
-  fecha_fin date DEFAULT NULL COMMENT 'Fecha de fin del horario',
-  es_transversal tinyint(1) DEFAULT 0 COMMENT 'Indica si es horario transversal (0=normal, 1=transversal)',
-  nombre_transversal varchar(100) DEFAULT NULL COMMENT 'Nombre del horario transversal',
-  fecha_especifica date DEFAULT NULL COMMENT 'Fecha específica del horario',
-  es_formacion_directa tinyint(1) DEFAULT 1 COMMENT 'Indica si las actividades especiales cuentan como formación directa (1=otros, 2=formación directa)'
+CREATE TABLE `horario` (
+  `idhor` bigint(20) NOT NULL COMMENT 'ID único del horario',
+  `idfic` varchar(20) NOT NULL COMMENT 'ID de la ficha',
+  `idaul` int(11) DEFAULT NULL COMMENT 'ID del aula',
+  `idusu` bigint(20) NOT NULL COMMENT 'ID del usuario',
+  `iddia` int(11) NOT NULL COMMENT 'ID del día de la semana',
+  `idnorad` bigint(15) NOT NULL,
+  `hinihor` time NOT NULL COMMENT 'Hora de inicio del horario',
+  `hfinhor` time NOT NULL COMMENT 'Hora de fin del horario',
+  `es_otros` tinyint(1) DEFAULT 0 COMMENT 'Indica si es horario de "otros" (0=normal, 1=otros)',
+  `actividad` varchar(100) DEFAULT NULL COMMENT 'Nombre de la actividad',
+  `horas_otros` int(11) DEFAULT NULL COMMENT 'Horas asignadas para actividades otros',
+  `fecha_inicio` date DEFAULT NULL COMMENT 'Fecha de inicio del horario',
+  `fecha_fin` date DEFAULT NULL COMMENT 'Fecha de fin del horario',
+  `es_transversal` tinyint(1) DEFAULT 0 COMMENT 'Indica si es horario transversal (0=normal, 1=transversal)',
+  `nombre_transversal` varchar(100) DEFAULT NULL COMMENT 'Nombre del horario transversal',
+  `fecha_especifica` date DEFAULT NULL COMMENT 'Fecha específica del horario',
+  `es_formacion_directa` tinyint(1) DEFAULT 1 COMMENT 'Indica si las actividades especiales cuentan como formación directa (1=otros, 2=formación directa)'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla horario
+-- Volcado de datos para la tabla `horario`
 --
 
-INSERT INTO horario (idhor, idfic, idaul, idusu, iddia, idnorad, hinihor, hfinhor, es_otros, actividad, horas_otros, fecha_inicio, fecha_fin, es_transversal, nombre_transversal, fecha_especifica, es_formacion_directa) VALUES
+INSERT INTO `horario` (`idhor`, `idfic`, `idaul`, `idusu`, `iddia`, `idnorad`, `hinihor`, `hfinhor`, `es_otros`, `actividad`, `horas_otros`, `fecha_inicio`, `fecha_fin`, `es_transversal`, `nombre_transversal`, `fecha_especifica`, `es_formacion_directa`) VALUES
 (1, '2996491', 123, 1, 1044, 0, '00:00:00', '00:00:00', NULL, '', 0, '2025-08-01', '2025-08-31', NULL, '', '2025-08-06', 1),
 (2, '2996491', 123, 1, 1044, 0, '00:00:00', '00:00:00', NULL, '', 0, '2025-08-01', '2025-08-31', NULL, '', '2025-08-13', 1),
 (3, '2996491', 123, 1, 1044, 0, '00:00:00', '00:00:00', NULL, '', 0, '2025-08-01', '2025-08-31', NULL, '', '2025-08-20', 1),
@@ -2676,86 +2695,86 @@ INSERT INTO horario (idhor, idfic, idaul, idusu, iddia, idnorad, hinihor, hfinho
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla horas_mensuales
+-- Estructura de tabla para la tabla `horas_mensuales`
 --
 
-CREATE TABLE horas_mensuales (
-  id int(11) NOT NULL,
-  id_instructor bigint(20) NOT NULL,
-  mes int(11) NOT NULL,
-  año int(11) NOT NULL,
-  horas_totales int(11) DEFAULT 0,
-  fecha_calculo timestamp NULL DEFAULT current_timestamp(),
-  fecha_actualizacion timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+CREATE TABLE `horas_mensuales` (
+  `id` int(11) NOT NULL,
+  `id_instructor` bigint(20) NOT NULL,
+  `mes` int(11) NOT NULL,
+  `año` int(11) NOT NULL,
+  `horas_totales` int(11) DEFAULT 0,
+  `fecha_calculo` timestamp NULL DEFAULT current_timestamp(),
+  `fecha_actualizacion` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla imagen_usuario
+-- Estructura de tabla para la tabla `imagen_usuario`
 --
 
-CREATE TABLE imagen_usuario (
-  idimg bigint(20) NOT NULL,
-  idusu bigint(20) NOT NULL,
-  nomimg varchar(255) NOT NULL,
-  fecha datetime NOT NULL DEFAULT current_timestamp()
+CREATE TABLE `imagen_usuario` (
+  `idimg` bigint(20) NOT NULL,
+  `idusu` bigint(20) NOT NULL,
+  `nomimg` varchar(255) NOT NULL,
+  `fecha` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla inasistencia
+-- Estructura de tabla para la tabla `inasistencia`
 --
 
-CREATE TABLE inasistencia (
-  idina bigint(20) NOT NULL,
-  idusu bigint(20) NOT NULL,
-  fecina date NOT NULL,
-  fecreg datetime NOT NULL,
-  horasina int(11) NOT NULL,
-  idfic varchar(20) NOT NULL,
-  comina varchar(530) NOT NULL
+CREATE TABLE `inasistencia` (
+  `idina` bigint(20) NOT NULL,
+  `idusu` bigint(20) NOT NULL,
+  `fecina` date NOT NULL,
+  `fecreg` datetime NOT NULL,
+  `horasina` int(11) NOT NULL,
+  `idfic` varchar(20) NOT NULL,
+  `comina` varchar(530) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla inseva
+-- Estructura de tabla para la tabla `inseva`
 --
 
-CREATE TABLE inseva (
-  idins bigint(20) NOT NULL,
-  nomins varchar(255) DEFAULT NULL,
-  idres bigint(20) DEFAULT NULL,
-  idusu bigint(20) DEFAULT NULL,
-  idfic varchar(20) DEFAULT NULL
+CREATE TABLE `inseva` (
+  `idins` bigint(20) NOT NULL,
+  `nomins` varchar(255) DEFAULT NULL,
+  `idres` bigint(20) DEFAULT NULL,
+  `idusu` bigint(20) DEFAULT NULL,
+  `idfic` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Volcado de datos para la tabla inseva
+-- Volcado de datos para la tabla `inseva`
 --
 
-INSERT INTO inseva (idins, nomins, idres, idusu, idfic) VALUES
+INSERT INTO `inseva` (`idins`, `nomins`, `idres`, `idusu`, `idfic`) VALUES
 (1, 'gua gus', 24020250101, NULL, '3174011'),
 (3, 'palanca', 24020250101, NULL, '3174011');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla insseg
+-- Estructura de tabla para la tabla `insseg`
 --
 
-CREATE TABLE insseg (
-  idusu bigint(20) NOT NULL,
-  idficha varchar(20) NOT NULL
+CREATE TABLE `insseg` (
+  `idusu` bigint(20) NOT NULL,
+  `idficha` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla insseg
+-- Volcado de datos para la tabla `insseg`
 --
 
-INSERT INTO insseg (idusu, idficha) VALUES
+INSERT INTO `insseg` (`idusu`, `idficha`) VALUES
 (25878, '2996494'),
 (25879, '111'),
 (25879, '2773071A'),
@@ -2769,28 +2788,28 @@ INSERT INTO insseg (idusu, idficha) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla juicio
+-- Estructura de tabla para la tabla `juicio`
 --
 
-CREATE TABLE juicio (
-  idjui int(11) NOT NULL COMMENT 'ID único del juicio',
-  idusu int(11) NOT NULL COMMENT 'ID del usuario que realizó el juicio',
-  idfic int(11) NOT NULL COMMENT 'ID de la ficha',
-  idres int(11) NOT NULL COMMENT 'ID del resultado de aprendizaje',
-  caljui varchar(50) DEFAULT NULL,
-  ndocins varchar(20) NOT NULL COMMENT 'Número de documento del instructor',
-  fecha_reporte date NOT NULL COMMENT 'Fecha del reporte',
-  fecha_importacion datetime DEFAULT current_timestamp() COMMENT 'Fecha y hora de importación',
-  archivo_correlativo varchar(50) DEFAULT NULL COMMENT 'Correlativo del archivo de importación',
-  fecjuieva date DEFAULT NULL COMMENT 'Fecha de evaluación del juicio',
-  idcom int(11) NOT NULL COMMENT 'ID de la competencia'
+CREATE TABLE `juicio` (
+  `idjui` int(11) NOT NULL COMMENT 'ID único del juicio',
+  `idusu` int(11) NOT NULL COMMENT 'ID del usuario que realizó el juicio',
+  `idfic` int(11) NOT NULL COMMENT 'ID de la ficha',
+  `idres` int(11) NOT NULL COMMENT 'ID del resultado de aprendizaje',
+  `caljui` varchar(50) DEFAULT NULL,
+  `ndocins` varchar(20) NOT NULL COMMENT 'Número de documento del instructor',
+  `fecha_reporte` date NOT NULL COMMENT 'Fecha del reporte',
+  `fecha_importacion` datetime DEFAULT current_timestamp() COMMENT 'Fecha y hora de importación',
+  `archivo_correlativo` varchar(50) DEFAULT NULL COMMENT 'Correlativo del archivo de importación',
+  `fecjuieva` date DEFAULT NULL COMMENT 'Fecha de evaluación del juicio',
+  `idcom` int(11) NOT NULL COMMENT 'ID de la competencia'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Volcado de datos para la tabla juicio
+-- Volcado de datos para la tabla `juicio`
 --
 
-INSERT INTO juicio (idjui, idusu, idfic, idres, caljui, ndocins, fecha_reporte, fecha_importacion, archivo_correlativo, fecjuieva, idcom) VALUES
+INSERT INTO `juicio` (`idjui`, `idusu`, `idfic`, `idres`, `caljui`, `ndocins`, `fecha_reporte`, `fecha_importacion`, `archivo_correlativo`, `fecjuieva`, `idcom`) VALUES
 (1, 17389, 2996491, 593147, '0.00', '35535677', '2025-07-29', '2025-10-14 16:47:32', 'Reporte de Juicios Evaluativos ADSO 2996491.xls', '2024-09-01', 36180),
 (2, 17389, 2996491, 593148, '0.00', '1018414222', '2025-07-29', '2025-10-14 16:47:32', 'Reporte de Juicios Evaluativos ADSO 2996491.xls', '2025-05-12', 36180),
 (3, 17389, 2996491, 593149, '0.00', '35535677', '2025-07-29', '2025-10-14 16:47:32', 'Reporte de Juicios Evaluativos ADSO 2996491.xls', '2024-09-01', 36180),
@@ -3105,7 +3124,7 @@ INSERT INTO juicio (idjui, idusu, idfic, idres, caljui, ndocins, fecha_reporte, 
 (312, 25462, 2996491, 593343, '0.00', '35198674', '2025-07-29', '2025-10-14 16:47:32', 'Reporte de Juicios Evaluativos ADSO 2996491.xls', '2024-09-23', 36182),
 (313, 25462, 2996491, 593151, '0.00', '35198674', '2025-07-29', '2025-10-14 16:47:32', 'Reporte de Juicios Evaluativos ADSO 2996491.xls', '2024-09-20', 37371),
 (314, 25462, 2996491, 593152, '0.00', '35198674', '2025-07-29', '2025-10-14 16:47:32', 'Reporte de Juicios Evaluativos ADSO 2996491.xls', '2024-09-20', 37371);
-INSERT INTO juicio (idjui, idusu, idfic, idres, caljui, ndocins, fecha_reporte, fecha_importacion, archivo_correlativo, fecjuieva, idcom) VALUES
+INSERT INTO `juicio` (`idjui`, `idusu`, `idfic`, `idres`, `caljui`, `ndocins`, `fecha_reporte`, `fecha_importacion`, `archivo_correlativo`, `fecjuieva`, `idcom`) VALUES
 (315, 25462, 2996491, 593153, '0.00', '35198674', '2025-07-29', '2025-10-14 16:47:32', 'Reporte de Juicios Evaluativos ADSO 2996491.xls', '2024-09-20', 37371),
 (316, 25462, 2996491, 593154, '0.00', '35198674', '2025-07-29', '2025-10-14 16:47:32', 'Reporte de Juicios Evaluativos ADSO 2996491.xls', '2024-09-20', 37371),
 (317, 25462, 2996491, 593155, '0.00', '39804924', '2025-07-29', '2025-10-14 16:47:32', 'Reporte de Juicios Evaluativos ADSO 2996491.xls', '2024-11-20', 37799),
@@ -3420,7 +3439,7 @@ INSERT INTO juicio (idjui, idusu, idfic, idres, caljui, ndocins, fecha_reporte, 
 (626, 25476, 2996491, 593149, '0.00', '35535677', '2025-07-29', '2025-10-14 16:47:33', 'Reporte de Juicios Evaluativos ADSO 2996491.xls', '2024-09-01', 36180),
 (627, 25476, 2996491, 593150, '0.00', '35535677', '2025-07-29', '2025-10-14 16:47:33', 'Reporte de Juicios Evaluativos ADSO 2996491.xls', '2024-09-01', 36180),
 (628, 25476, 2996491, 593343, '0.00', '35198674', '2025-07-29', '2025-10-14 16:47:33', 'Reporte de Juicios Evaluativos ADSO 2996491.xls', '2024-09-23', 36182);
-INSERT INTO juicio (idjui, idusu, idfic, idres, caljui, ndocins, fecha_reporte, fecha_importacion, archivo_correlativo, fecjuieva, idcom) VALUES
+INSERT INTO `juicio` (`idjui`, `idusu`, `idfic`, `idres`, `caljui`, `ndocins`, `fecha_reporte`, `fecha_importacion`, `archivo_correlativo`, `fecjuieva`, `idcom`) VALUES
 (629, 25476, 2996491, 593151, '0.00', '35198674', '2025-07-29', '2025-10-14 16:47:33', 'Reporte de Juicios Evaluativos ADSO 2996491.xls', '2024-09-20', 37371),
 (630, 25476, 2996491, 593152, '0.00', '35198674', '2025-07-29', '2025-10-14 16:47:33', 'Reporte de Juicios Evaluativos ADSO 2996491.xls', '2024-09-20', 37371),
 (631, 25476, 2996491, 593153, '0.00', '35198674', '2025-07-29', '2025-10-14 16:47:33', 'Reporte de Juicios Evaluativos ADSO 2996491.xls', '2024-09-20', 37371),
@@ -3735,7 +3754,7 @@ INSERT INTO juicio (idjui, idusu, idfic, idres, caljui, ndocins, fecha_reporte, 
 (940, 25480, 2996491, 593107, '0.00', '80546098', '2025-07-29', '2025-10-14 16:47:33', 'Reporte de Juicios Evaluativos ADSO 2996491.xls', '2025-07-21', 38368),
 (941, 25480, 2996491, 592373, '0.00', '80546098', '2025-07-29', '2025-10-14 16:47:33', 'Reporte de Juicios Evaluativos ADSO 2996491.xls', '2024-12-04', 38376),
 (942, 25480, 2996491, 592374, '0.00', '80546098', '2025-07-29', '2025-10-14 16:47:33', 'Reporte de Juicios Evaluativos ADSO 2996491.xls', '2024-12-04', 38376);
-INSERT INTO juicio (idjui, idusu, idfic, idres, caljui, ndocins, fecha_reporte, fecha_importacion, archivo_correlativo, fecjuieva, idcom) VALUES
+INSERT INTO `juicio` (`idjui`, `idusu`, `idfic`, `idres`, `caljui`, `ndocins`, `fecha_reporte`, `fecha_importacion`, `archivo_correlativo`, `fecjuieva`, `idcom`) VALUES
 (943, 25480, 2996491, 592375, '0.00', '80546098', '2025-07-29', '2025-10-14 16:47:33', 'Reporte de Juicios Evaluativos ADSO 2996491.xls', '2024-12-04', 38376),
 (944, 25480, 2996491, 592376, '0.00', '80546098', '2025-07-29', '2025-10-14 16:47:33', 'Reporte de Juicios Evaluativos ADSO 2996491.xls', '2024-12-04', 38376),
 (945, 25480, 2996491, 593344, '0.00', '1077967599', '2025-07-29', '2025-10-14 16:47:33', 'Reporte de Juicios Evaluativos ADSO 2996491.xls', '2024-09-25', 38392),
@@ -4048,7 +4067,7 @@ INSERT INTO juicio (idjui, idusu, idfic, idres, caljui, ndocins, fecha_reporte, 
 (1252, 25454, 2996491, 593160, '0.00', '1018414222', '2025-07-29', '2025-10-14 16:47:33', 'Reporte de Juicios Evaluativos ADSO 2996491.xls', '2025-05-12', 37801),
 (1253, 25454, 2996491, 593161, '0.00', '1018414222', '2025-07-29', '2025-10-14 16:47:33', 'Reporte de Juicios Evaluativos ADSO 2996491.xls', '2025-05-12', 37801),
 (1254, 25454, 2996491, 593162, '0.00', '1018414222', '2025-07-29', '2025-10-14 16:47:33', 'Reporte de Juicios Evaluativos ADSO 2996491.xls', '2025-05-12', 37801);
-INSERT INTO juicio (idjui, idusu, idfic, idres, caljui, ndocins, fecha_reporte, fecha_importacion, archivo_correlativo, fecjuieva, idcom) VALUES
+INSERT INTO `juicio` (`idjui`, `idusu`, `idfic`, `idres`, `caljui`, `ndocins`, `fecha_reporte`, `fecha_importacion`, `archivo_correlativo`, `fecjuieva`, `idcom`) VALUES
 (1255, 25454, 2996491, 593235, '0.00', '2986086', '2025-07-29', '2025-10-14 16:47:33', 'Reporte de Juicios Evaluativos ADSO 2996491.xls', '2025-04-08', 38199),
 (1256, 25454, 2996491, 593236, '0.00', '2986086', '2025-07-29', '2025-10-14 16:47:33', 'Reporte de Juicios Evaluativos ADSO 2996491.xls', '2025-04-08', 38199),
 (1257, 25454, 2996491, 593237, '0.00', '2986086', '2025-07-29', '2025-10-14 16:47:33', 'Reporte de Juicios Evaluativos ADSO 2996491.xls', '2025-04-08', 38199),
@@ -4317,62 +4336,62 @@ INSERT INTO juicio (idjui, idusu, idfic, idres, caljui, ndocins, fecha_reporte, 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla llamado
+-- Estructura de tabla para la tabla `llamado`
 --
 
-CREATE TABLE llamado (
-  idllam int(11) NOT NULL,
-  idusu bigint(20) DEFAULT NULL,
-  tipllam tinyint(1) DEFAULT NULL,
-  obsllam varchar(255) DEFAULT NULL,
-  fecllam datetime DEFAULT current_timestamp(),
-  firma tinyint(1) NOT NULL,
-  idinst bigint(20) NOT NULL
+CREATE TABLE `llamado` (
+  `idllam` int(11) NOT NULL,
+  `idusu` bigint(20) DEFAULT NULL,
+  `tipllam` tinyint(1) DEFAULT NULL,
+  `obsllam` varchar(255) DEFAULT NULL,
+  `fecllam` datetime DEFAULT current_timestamp(),
+  `firma` tinyint(1) NOT NULL,
+  `idinst` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla minuta
+-- Estructura de tabla para la tabla `minuta`
 --
 
-CREATE TABLE minuta (
-  nummin bigint(20) NOT NULL,
-  idusu bigint(20) NOT NULL,
-  fechos datetime NOT NULL,
-  tipmin varchar(1) NOT NULL,
-  hij bigint(20) NOT NULL,
-  fhlle datetime DEFAULT NULL,
-  obs text DEFAULT NULL,
-  ideles varchar(255) DEFAULT NULL
+CREATE TABLE `minuta` (
+  `nummin` bigint(20) NOT NULL,
+  `idusu` bigint(20) NOT NULL,
+  `fechos` datetime NOT NULL,
+  `tipmin` varchar(1) NOT NULL,
+  `hij` bigint(20) NOT NULL,
+  `fhlle` datetime DEFAULT NULL,
+  `obs` text DEFAULT NULL,
+  `ideles` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla modulo
+-- Estructura de tabla para la tabla `modulo`
 --
 
-CREATE TABLE modulo (
-  idmod int(11) NOT NULL,
-  nommod varchar(200) NOT NULL,
-  imgmod varchar(255) DEFAULT NULL,
-  actmod tinyint(1) NOT NULL,
-  idper int(11) DEFAULT NULL,
-  ordmod tinyint(99) NOT NULL,
-  mosmod tinyint(1) NOT NULL DEFAULT 1,
-  desmod text NOT NULL
+CREATE TABLE `modulo` (
+  `idmod` int(11) NOT NULL,
+  `nommod` varchar(200) NOT NULL,
+  `imgmod` varchar(255) DEFAULT NULL,
+  `actmod` tinyint(1) NOT NULL,
+  `idper` int(11) DEFAULT NULL,
+  `ordmod` tinyint(99) NOT NULL,
+  `mosmod` tinyint(1) NOT NULL DEFAULT 1,
+  `desmod` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla modulo
+-- Volcado de datos para la tabla `modulo`
 --
 
-INSERT INTO modulo (idmod, nommod, imgmod, actmod, idper, ordmod, mosmod, desmod) VALUES
-(1, 'Votasena', 'fa-solid fa-users-rectangle', 2, 4, 8, 1, 'Participa en la elección de tu representante con un solo clic.'),
+INSERT INTO `modulo` (`idmod`, `nommod`, `imgmod`, `actmod`, `idper`, `ordmod`, `mosmod`, `desmod`) VALUES
+(1, 'Votasena', 'fa-solid fa-users-rectangle', 1, 4, 8, 1, 'Participa en la elección de tu representante con un solo clic.'),
 (2, 'E/S', 'fa-solid fa-clipboard-check', 1, 8, 1, 1, 'Administra el registro de entradas y salidas de personas dentro del centro de formación, controlando en tiempo real quién se encuentra dentro o fuera del lugar.'),
 (3, 'Configuración', 'fa-solid fa-gear', 1, 1, 19, 2, ''),
-(4, 'Datos Personales', 'fa-solid fa-bullhorn', 2, 5, 20, 1, 'Administra y actualiza la información personal de los usuarios del centro de formación.'),
+(4, 'Datos Personales', 'fa-solid fa-bullhorn', 1, 5, 20, 1, 'Administra y actualiza la información personal de los usuarios del centro de formación.'),
 (5, 'Deserciones y Llamados', 'fa-solid fa-bullhorn', 1, 1, 2, 1, 'Registra y gestiona los casos de abandono de formación para llevar un control claro y prevenir futuras deserciones.'),
 (6, 'Préstamos', 'fa-solid fa-laptop', 1, 1, 6, 1, ''),
 (7, 'Administrativo', 'fa-solid fa-suitcase', 1, 1, 10, 1, 'Centraliza los procesos administrativos del centro para una gestión eficiente de recursos y usuarios.'),
@@ -4386,53 +4405,56 @@ INSERT INTO modulo (idmod, nommod, imgmod, actmod, idper, ordmod, mosmod, desmod
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla pagina
+-- Estructura de tabla para la tabla `pagina`
 --
 
-CREATE TABLE pagina (
-  idpag bigint(20) NOT NULL,
-  nompag varchar(255) NOT NULL,
-  rutpag varchar(255) NOT NULL,
-  mospas tinyint(1) NOT NULL,
-  ordpag int(11) NOT NULL,
-  icopag varchar(255) NOT NULL,
-  idmod int(11) NOT NULL,
-  despag varchar(500) DEFAULT NULL,
-  accpag tinyint(2) NOT NULL DEFAULT 2
+CREATE TABLE `pagina` (
+  `idpag` bigint(20) NOT NULL,
+  `nompag` varchar(255) NOT NULL,
+  `rutpag` varchar(255) NOT NULL,
+  `mospas` tinyint(1) NOT NULL,
+  `ordpag` int(11) NOT NULL,
+  `icopag` varchar(255) NOT NULL,
+  `idmod` int(11) NOT NULL,
+  `despag` varchar(500) DEFAULT NULL,
+  `accpag` tinyint(2) NOT NULL DEFAULT 2
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Volcado de datos para la tabla pagina
+-- Volcado de datos para la tabla `pagina`
 --
 
-INSERT INTO pagina (idpag, nompag, rutpag, mospas, ordpag, icopag, idmod, despag, accpag) VALUES
-(1102, 'Datos personales', 'views/votvdpe.php', 2, 1, 'fa fa-solid fa-user', 1, 'El módulo Datos Personales permite al aprendiz consultar su información básica\r\nregistrada en el sistema, así como realizar el proceso de votación para elegir\r\nrepresentante y vocero del centro de formación.\r\n', 2),
+INSERT INTO `pagina` (`idpag`, `nompag`, `rutpag`, `mospas`, `ordpag`, `icopag`, `idmod`, `despag`, `accpag`) VALUES
+(1102, 'Datos personales', 'views/votvdpe.php', 1, 1, 'fa fa-solid fa-user', 1, 'El módulo Datos Personales permite al aprendiz consultar su información básica\r\nregistrada en el sistema, así como realizar el proceso de votación para elegir\r\nrepresentante y vocero del centro de formación.\r\n', 2),
 (1111, 'Página', 'views/convpag.php', 1, 42, 'fa fa-solid fa-file-lines', 3, '', 2),
 (1112, 'Perfil', 'views/usuvpef.php', 1, 43, 'fa fa-solid fa-address-card', 9, '', 2),
 (1113, 'Usuarios', 'views/usuvusu.php', 1, 21, 'fa fa-solid fa-users', 9, '', 2),
 (1114, 'Configuración', 'views/convcon.php', 1, 46, 'fa fa-solid fa-gear', 3, '', 2),
 (1115, 'Dominio', 'views/convdom.php', 1, 44, 'fa fa-brands fa-dochub', 3, '', 2),
 (1116, 'Valor', 'views/convval.php', 1, 45, 'fa fa-solid fa-box-archive', 3, '', 2),
-(1117, 'Eleccion Vocero', 'views/votvecv.php', 2, 4, 'fa fas fa-vote-yea', 1, '', 2),
+(1117, 'Eleccion Vocero', 'views/votvecv.php', 1, 4, 'fa fas fa-vote-yea', 1, '', 2),
 (1120, 'Módulo', 'views/convmod.php', 1, 2, 'fa fa-solid fa-boxes-stacked', 3, '', 2),
-(1200, 'Certificados Vocero', 'views/votvcvh.php', 2, 15, 'fa fa-solid fa-file-lines', 1, '', 2),
-(1202, 'Votación Vocero', 'views/votvvvc.php', 2, 14, 'fa fa-solid fa-file-lines', 1, '', 2),
-(1203, 'Votación', 'views/votvvot.php', 2, 2, 'fa fa-solid fa-check-to-slot ', 1, '', 2),
-(1204, 'Visualizar propuesta', 'views/votvvpr.php', 2, 73, 'fa fa-regular fa-eye', 1, '', 2),
+(1200, 'Certificados Vocero', 'views/votvcvh.php', 1, 15, 'fa fa-solid fa-file-lines', 1, '', 2),
+(1202, 'Votación Vocero', 'views/votvvvc.php', 1, 14, 'fa fa-solid fa-file-lines', 1, '', 2),
+(1203, 'Votación', 'views/votvvot.php', 1, 2, 'fa fa-solid fa-check-to-slot ', 1, '', 2),
+(1204, 'Visualizar propuesta', 'views/votvvpr.php', 1, 73, 'fa fa-regular fa-eye', 1, '', 2),
 (1205, 'Certificado', 'views/votvcer.php', 1, 3, 'fa fa-solid fa-print', 1, 'El módulo Certificado Representante permite al aprendiz generar e imprimir el\r\ncertificado que valida su participación en la votación de representantes de aprendices\r\ndel SENA.<br>\r\nDesde este apartado el usuario puede visualizar sus datos personales y del centro de\r\nformación, así como descargar o imprimir el documento oficial del evento.\r\n', 2),
-(1206, 'Candidato', 'views/votvcdt.php', 2, 1, 'fa fa-solid fa-user-tie', 1, '', 2),
-(1207, 'Propuesta', 'views/votvpro.php', 2, 12, 'fa fa-regular fa-clipboard', 1, '', 2),
+(1206, 'Candidato', 'views/votvcdt.php', 1, 1, 'fa fa-solid fa-user-tie', 1, '', 2),
+(1207, 'Propuesta', 'views/votvpro.php', 1, 12, 'fa fa-regular fa-clipboard', 1, '', 2),
 (1208, 'Resultados', 'views/votvrvo.php', 1, 3, 'fa fa-solid fa-square-poll-vertical', 1, 'El módulo Resultados permite consultar los votos obtenidos por cada candidato en el\r\nproceso electoral de Representantes de Aprendices. <br>Desde este apartado, el usuario\r\npuede filtrar los datos por jornada y centro de formación, visualizar la lista completa de\r\ncandidatos junto con sus votos, e imprimir documentos como el acta general o el listado\r\nde votantes.', 2),
 (1209, 'Centro', 'views/convcen.php', 1, 41, 'fa fa-solid fa-industry', 3, '', 2),
 (1210, 'Ficha', 'views/usuvfic.php', 1, 22, 'fa fa-solid fa-hashtag', 9, '', 2),
-(1211, 'Candidato Vocero', 'views/votvcav.php', 2, 5, 'fa fa-solid fa-user', 1, '', 2),
-(1212, 'No votantes Vocero', 'views/votvnvv.php', 2, 6, 'fa fa-solid fa-print', 1, '', 2),
-(1213, 'Resultados Vocero', 'views/votvrcv.php', 2, 7, '	fa fa-solid fa-user-tie', 1, '', 2),
-(1217, 'Acta Resultados Votaciones', 'views/votract.php', 2, 71, 'fa fa-solid fa-file', 1, '', 2),
-(1218, 'Formato de propuesta', 'views/votvfpro.php', 2, 72, 'fa fa-solid fa-file-contract', 1, '', 2),
+(1211, 'Candidato Vocero', 'views/votvcav.php', 1, 5, 'fa fa-solid fa-user', 1, '', 2),
+(1212, 'No votantes Vocero', 'views/votvnvv.php', 1, 6, 'fa fa-solid fa-print', 1, '', 2),
+(1213, 'Resultados Vocero', 'views/votvrcv.php', 1, 7, '	fa fa-solid fa-user-tie', 1, '', 2),
+(1217, 'Acta Resultados Votaciones', 'views/votract.php', 1, 71, 'fa fa-solid fa-file', 1, '', 2),
+(1218, 'Formato de propuesta', 'views/votvfpro.php', 1, 72, 'fa fa-solid fa-file-contract', 1, '', 2),
 (1219, 'Carga masiva usuarios - fichas', 'views/usuvcusu.php', 1, 24, 'fa fa-solid fa-download', 9, '', 2),
 (1220, 'Visualizar Propuestas Voceros', 'views/votvpvs.php', 2, 74, 'fas fa fa-regular fa-eye', 1, '', 2),
 (1221, 'Propuesta Vocero', 'views/votvprov.php', 2, 75, 'fas fa fa-regular fa-clipboard', 1, '', 2),
+(1222, 'Candidato Representante', 'views/votvcdt.php', 1, 10, 'fa fa-solid fa-user-tie', 1, 'Módulo para gestionar candidatos a representante de aprendices', 2),
+(1223, 'Candidato Vocero', 'views/votvcav.php', 1, 11, 'fa fa-solid fa-user', 1, 'Módulo para gestionar candidatos a vocero por ficha', 2),
+(1224, 'Cartón Electoral', 'views/votvctele.php', 1, 12, 'fa fa-solid fa-poll', 1, 'Módulo para visualizar el cartón electoral con candidatos a representante y vocero', 2),
 (1311, 'Reporte Inasistencia', 'views/desrins.php', 1, 4, 'fa fa fa-regular fa-calendar-days', 5, 'El módulo Generar Inasistencia permite al administrador o instructor registrar y\r\ngestionar la asistencia de los aprendices pertenecientes a una ficha de formación. <br>\r\nDesde esta vista se pueden marcar aprendices como asistentes, inasistentes,\r\npendientes o con novedades, además de generar actas, registrar llamados de atención,\r\nagregar novedades o revisar el historial individual.\r\n', 2),
 (1323, 'No votantes', 'views/votvnvot.php', 1, 2, 'fa fa fa-regular fa-calendar-days', 1, 'El módulo No Votantes permite visualizar de manera clara cuántos usuarios participaron\r\nen la votación y cuántos no lo hicieron. Además, muestra una tabla detallada con cada\r\nusuario, su perfil, datos personales y una indicación visual que muestra si votó o no.\r\nTambién incluye un gráfico estadístico para facilitar la interpretación de los resultados.', 2),
 (1324, 'Datos Personales', 'views/datvdp.php', 1, 1, 'fa fa-solid fa-user-tie  ', 4, '', 2),
@@ -4565,28 +4587,25 @@ INSERT INTO pagina (idpag, nompag, rutpag, mospas, ordpag, icopag, idmod, despag
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla pagper
+-- Estructura de tabla para la tabla `pagper`
 --
 
-CREATE TABLE pagper (
-  idpag bigint(20) NOT NULL,
-  idper int(11) NOT NULL
+CREATE TABLE `pagper` (
+  `idpag` bigint(20) NOT NULL,
+  `idper` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Volcado de datos para la tabla pagper
+-- Volcado de datos para la tabla `pagper`
 --
 
-INSERT INTO pagper (idpag, idper) VALUES
+INSERT INTO `pagper` (`idpag`, `idper`) VALUES
 (1324, 5),
 (1113, 17),
 (1113, 18),
 (1210, 18),
 (1102, 19),
 (1405, 20),
-(1102, 3),
-(1203, 3),
-(1205, 3),
 (1506, 22),
 (1508, 22),
 (1509, 22),
@@ -4739,8 +4758,6 @@ INSERT INTO pagper (idpag, idper) VALUES
 (1404, 6),
 (1405, 6),
 (1405, 12),
-(1102, 4),
-(1205, 4),
 (1405, 10),
 (2004, 42),
 (2010, 42),
@@ -4755,59 +4772,71 @@ INSERT INTO pagper (idpag, idper) VALUES
 (2410, 36),
 (1325, 7),
 (1405, 7),
-(2418, 47);
+(2418, 47),
+(1222, 1),
+(1222, 2),
+(1223, 1),
+(1223, 2),
+(1224, 1),
+(1224, 2),
+(1102, 3),
+(1203, 3),
+(1205, 3),
+(1102, 4),
+(1203, 4),
+(1205, 4);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla paso
+-- Estructura de tabla para la tabla `paso`
 --
 
-CREATE TABLE paso (
-  idpas bigint(15) NOT NULL,
-  idflu bigint(15) DEFAULT NULL,
-  descpas varchar(255) DEFAULT NULL,
-  idper int(11) DEFAULT NULL
+CREATE TABLE `paso` (
+  `idpas` bigint(15) NOT NULL,
+  `idflu` bigint(15) DEFAULT NULL,
+  `descpas` varchar(255) DEFAULT NULL,
+  `idper` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Volcado de datos para la tabla paso
+-- Volcado de datos para la tabla `paso`
 --
 
-INSERT INTO paso (idpas, idflu, descpas, idper) VALUES
+INSERT INTO `paso` (`idpas`, `idflu`, `descpas`, `idper`) VALUES
 (2, 1, 'Solictud instr', 42);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla pazysalvo
+-- Estructura de tabla para la tabla `pazysalvo`
 --
 
-CREATE TABLE pazysalvo (
-  idpaz int(11) NOT NULL,
-  idusu bigint(20) NOT NULL,
-  fecha datetime DEFAULT current_timestamp()
+CREATE TABLE `pazysalvo` (
+  `idpaz` int(11) NOT NULL,
+  `idusu` bigint(20) NOT NULL,
+  `fecha` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla perfil
+-- Estructura de tabla para la tabla `perfil`
 --
 
-CREATE TABLE perfil (
-  idper int(11) NOT NULL,
-  nomper varchar(70) NOT NULL,
-  pagprin bigint(20) NOT NULL,
-  idpag bigint(20) NOT NULL,
-  idmod int(11) NOT NULL
+CREATE TABLE `perfil` (
+  `idper` int(11) NOT NULL,
+  `nomper` varchar(70) NOT NULL,
+  `pagprin` bigint(20) NOT NULL,
+  `idpag` bigint(20) NOT NULL,
+  `idmod` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla perfil
+-- Volcado de datos para la tabla `perfil`
 --
 
-INSERT INTO perfil (idper, nomper, pagprin, idpag, idmod) VALUES
+INSERT INTO `perfil` (`idper`, `nomper`, `pagprin`, `idpag`, `idmod`) VALUES
 (1, 'Funcionario        ', 1113, 1113, 3),
 (2, 'Administrador Centro    ', 1208, 1208, 1),
 (3, 'Candidato Votación', 1102, 1102, 1),
@@ -4854,73 +4883,73 @@ INSERT INTO perfil (idper, nomper, pagprin, idpag, idmod) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla planeacion_p
+-- Estructura de tabla para la tabla `planeacion_p`
 --
 
-CREATE TABLE planeacion_p (
-  id int(11) NOT NULL COMMENT 'Identificador único',
-  comp text DEFAULT NULL COMMENT 'Competencia',
-  ra text DEFAULT NULL COMMENT 'Resultados de aprendizaje',
-  tip varchar(50) DEFAULT NULL COMMENT 'Tipo',
-  scp text DEFAULT NULL COMMENT 'Saberes de conceptos y principios',
-  sp text DEFAULT NULL COMMENT 'Saberes de proceso',
-  ce text DEFAULT NULL COMMENT 'Criterios de evaluación',
-  aa text DEFAULT NULL COMMENT 'Actividades de aprendizaje a desarrollar',
-  hr int(11) DEFAULT NULL COMMENT 'Horas por RAP',
-  htd int(11) DEFAULT NULL COMMENT 'Horas trabajo directo',
-  hti int(11) DEFAULT NULL COMMENT 'Horas trabajo independiente',
-  dea text DEFAULT NULL COMMENT 'Descripción de la evidencia de aprendizaje',
-  eda text DEFAULT NULL COMMENT 'Estrategias didácticas activas',
-  amb text DEFAULT NULL COMMENT 'Ambiente',
-  mf text DEFAULT NULL COMMENT 'Materiales de formación',
-  ir text DEFAULT NULL COMMENT 'Instructores responsables',
-  obs text DEFAULT NULL COMMENT 'Observaciones'
+CREATE TABLE `planeacion_p` (
+  `id` int(11) NOT NULL COMMENT 'Identificador único',
+  `comp` text DEFAULT NULL COMMENT 'Competencia',
+  `ra` text DEFAULT NULL COMMENT 'Resultados de aprendizaje',
+  `tip` varchar(50) DEFAULT NULL COMMENT 'Tipo',
+  `scp` text DEFAULT NULL COMMENT 'Saberes de conceptos y principios',
+  `sp` text DEFAULT NULL COMMENT 'Saberes de proceso',
+  `ce` text DEFAULT NULL COMMENT 'Criterios de evaluación',
+  `aa` text DEFAULT NULL COMMENT 'Actividades de aprendizaje a desarrollar',
+  `hr` int(11) DEFAULT NULL COMMENT 'Horas por RAP',
+  `htd` int(11) DEFAULT NULL COMMENT 'Horas trabajo directo',
+  `hti` int(11) DEFAULT NULL COMMENT 'Horas trabajo independiente',
+  `dea` text DEFAULT NULL COMMENT 'Descripción de la evidencia de aprendizaje',
+  `eda` text DEFAULT NULL COMMENT 'Estrategias didácticas activas',
+  `amb` text DEFAULT NULL COMMENT 'Ambiente',
+  `mf` text DEFAULT NULL COMMENT 'Materiales de formación',
+  `ir` text DEFAULT NULL COMMENT 'Instructores responsables',
+  `obs` text DEFAULT NULL COMMENT 'Observaciones'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla planses
+-- Estructura de tabla para la tabla `planses`
 --
 
-CREATE TABLE planses (
-  idplan bigint(20) NOT NULL,
-  idfic varchar(20) NOT NULL COMMENT 'ID de la ficha',
-  idres bigint(20) NOT NULL COMMENT 'ID del resultado de aprendizaje',
-  fas enum('INICIO','DESARROLLO','CIERRE') NOT NULL COMMENT 'Fase de la sesión',
-  actapr text NOT NULL COMMENT 'Actividad de aprendizaje',
-  tmp int(11) NOT NULL COMMENT 'Tiempo en minutos',
-  cont text DEFAULT NULL COMMENT 'Contenido de la actividad',
-  matfor text DEFAULT NULL COMMENT 'Material de formación',
-  numses int(11) NOT NULL COMMENT 'Número de sesión (1, 2, 3...)',
-  titulo_sesion varchar(255) DEFAULT NULL COMMENT 'Título de la sesión',
-  fecha_programada date DEFAULT NULL COMMENT 'Fecha programada',
-  estado enum('PENDIENTE','EN_CURSO','COMPLETADA') DEFAULT 'PENDIENTE',
-  fecha_creacion timestamp NULL DEFAULT current_timestamp(),
-  fecha_modificacion timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+CREATE TABLE `planses` (
+  `idplan` bigint(20) NOT NULL,
+  `idfic` varchar(20) NOT NULL COMMENT 'ID de la ficha',
+  `idres` bigint(20) NOT NULL COMMENT 'ID del resultado de aprendizaje',
+  `fas` enum('INICIO','DESARROLLO','CIERRE') NOT NULL COMMENT 'Fase de la sesión',
+  `actapr` text NOT NULL COMMENT 'Actividad de aprendizaje',
+  `tmp` int(11) NOT NULL COMMENT 'Tiempo en minutos',
+  `cont` text DEFAULT NULL COMMENT 'Contenido de la actividad',
+  `matfor` text DEFAULT NULL COMMENT 'Material de formación',
+  `numses` int(11) NOT NULL COMMENT 'Número de sesión (1, 2, 3...)',
+  `titulo_sesion` varchar(255) DEFAULT NULL COMMENT 'Título de la sesión',
+  `fecha_programada` date DEFAULT NULL COMMENT 'Fecha programada',
+  `estado` enum('PENDIENTE','EN_CURSO','COMPLETADA') DEFAULT 'PENDIENTE',
+  `fecha_creacion` timestamp NULL DEFAULT current_timestamp(),
+  `fecha_modificacion` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla presaula
+-- Estructura de tabla para la tabla `presaula`
 --
 
-CREATE TABLE presaula (
-  idpres bigint(20) NOT NULL,
-  idaul int(11) NOT NULL,
-  idusu bigint(20) NOT NULL,
-  jornada int(11) NOT NULL,
-  estado varchar(255) NOT NULL,
-  fechin datetime NOT NULL,
-  fechfin datetime NOT NULL
+CREATE TABLE `presaula` (
+  `idpres` bigint(20) NOT NULL,
+  `idaul` int(11) NOT NULL,
+  `idusu` bigint(20) NOT NULL,
+  `jornada` int(11) NOT NULL,
+  `estado` varchar(255) NOT NULL,
+  `fechin` datetime NOT NULL,
+  `fechfin` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla presaula
+-- Volcado de datos para la tabla `presaula`
 --
 
-INSERT INTO presaula (idpres, idaul, idusu, jornada, estado, fechin, fechfin) VALUES
+INSERT INTO `presaula` (`idpres`, `idaul`, `idusu`, `jornada`, `estado`, `fechin`, `fechfin`) VALUES
 (3, 101, 1, 1, 'Liberado', '2024-08-21 13:24:30', '2024-08-21 13:27:08'),
 (4, 118, 17803, 1, 'Liberado', '2024-08-21 13:24:47', '2024-08-21 13:25:02'),
 (6, 118, 17803, 1, 'Se llevo la llave', '2024-08-21 13:28:11', '2024-08-21 13:28:23'),
@@ -4958,24 +4987,24 @@ INSERT INTO presaula (idpres, idaul, idusu, jornada, estado, fechin, fechfin) VA
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla presele
+-- Estructura de tabla para la tabla `presele`
 --
 
-CREATE TABLE presele (
-  idprele bigint(20) NOT NULL,
-  idele bigint(20) NOT NULL,
-  idusu bigint(20) NOT NULL,
-  fhpre datetime NOT NULL,
-  estpre tinyint(1) NOT NULL,
-  fhent datetime DEFAULT NULL,
-  whopre bigint(20) NOT NULL
+CREATE TABLE `presele` (
+  `idprele` bigint(20) NOT NULL,
+  `idele` bigint(20) NOT NULL,
+  `idusu` bigint(20) NOT NULL,
+  `fhpre` datetime NOT NULL,
+  `estpre` tinyint(1) NOT NULL,
+  `fhent` datetime DEFAULT NULL,
+  `whopre` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla presele
+-- Volcado de datos para la tabla `presele`
 --
 
-INSERT INTO presele (idprele, idele, idusu, fhpre, estpre, fhent, whopre) VALUES
+INSERT INTO `presele` (`idprele`, `idele`, `idusu`, `fhpre`, `estpre`, `fhent`, `whopre`) VALUES
 (1, 669, 17593, '2025-10-09 15:58:44', 2, '2025-10-09 15:58:47', 1),
 (2, 250, 17593, '2025-10-09 16:12:53', 2, '2025-10-09 16:12:58', 1),
 (3, 250, 25950, '2025-11-06 14:58:27', 2, '2025-11-06 15:02:30', 1);
@@ -4983,27 +5012,27 @@ INSERT INTO presele (idprele, idele, idusu, fhpre, estpre, fhent, whopre) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla presesp
+-- Estructura de tabla para la tabla `presesp`
 --
 
-CREATE TABLE presesp (
-  idpresp bigint(20) NOT NULL,
-  idaul int(11) NOT NULL,
-  idusu bigint(20) NOT NULL,
-  apresp tinyint(1) NOT NULL DEFAULT 2,
-  whoapr bigint(20) DEFAULT NULL,
-  fecini date NOT NULL,
-  fecfin date DEFAULT NULL,
-  horini time NOT NULL,
-  horfin time DEFAULT NULL,
-  incpre tinyint(1) NOT NULL
+CREATE TABLE `presesp` (
+  `idpresp` bigint(20) NOT NULL,
+  `idaul` int(11) NOT NULL,
+  `idusu` bigint(20) NOT NULL,
+  `apresp` tinyint(1) NOT NULL DEFAULT 2,
+  `whoapr` bigint(20) DEFAULT NULL,
+  `fecini` date NOT NULL,
+  `fecfin` date DEFAULT NULL,
+  `horini` time NOT NULL,
+  `horfin` time DEFAULT NULL,
+  `incpre` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla presesp
+-- Volcado de datos para la tabla `presesp`
 --
 
-INSERT INTO presesp (idpresp, idaul, idusu, apresp, whoapr, fecini, fecfin, horini, horfin, incpre) VALUES
+INSERT INTO `presesp` (`idpresp`, `idaul`, `idusu`, `apresp`, `whoapr`, `fecini`, `fecfin`, `horini`, `horfin`, `incpre`) VALUES
 (6, 227, 17593, 0, 1, '2025-10-02', '2025-10-30', '16:00:00', '18:00:00', 0),
 (7, 227, 17593, 0, 1, '2025-10-09', '2025-10-20', '16:00:00', '18:00:00', 0),
 (8, 227, 17593, 0, 1, '2025-10-09', '2025-10-26', '18:59:00', '21:59:00', 1),
@@ -5013,31 +5042,31 @@ INSERT INTO presesp (idpresp, idaul, idusu, apresp, whoapr, fecini, fecfin, hori
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla programa
+-- Estructura de tabla para la tabla `programa`
 --
 
-CREATE TABLE programa (
-  codpro bigint(20) NOT NULL,
-  nompro varchar(255) DEFAULT NULL,
-  despro text DEFAULT NULL,
-  verpro int(11) DEFAULT NULL,
-  horlpro int(11) DEFAULT NULL,
-  horppro int(11) DEFAULT NULL,
-  crelpro int(11) DEFAULT NULL,
-  creppro int(11) DEFAULT NULL,
-  tippro int(11) DEFAULT NULL,
-  just text DEFAULT NULL,
-  redcon varchar(255) DEFAULT NULL,
-  reqing text DEFAULT NULL,
-  reqcer text DEFAULT NULL,
-  idare int(11) NOT NULL
+CREATE TABLE `programa` (
+  `codpro` bigint(20) NOT NULL,
+  `nompro` varchar(255) DEFAULT NULL,
+  `despro` text DEFAULT NULL,
+  `verpro` int(11) DEFAULT NULL,
+  `horlpro` int(11) DEFAULT NULL,
+  `horppro` int(11) DEFAULT NULL,
+  `crelpro` int(11) DEFAULT NULL,
+  `creppro` int(11) DEFAULT NULL,
+  `tippro` int(11) DEFAULT NULL,
+  `just` text DEFAULT NULL,
+  `redcon` varchar(255) DEFAULT NULL,
+  `reqing` text DEFAULT NULL,
+  `reqcer` text DEFAULT NULL,
+  `idare` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla programa
+-- Volcado de datos para la tabla `programa`
 --
 
-INSERT INTO programa (codpro, nompro, despro, verpro, horlpro, horppro, crelpro, creppro, tippro, just, redcon, reqing, reqcer, idare) VALUES
+INSERT INTO `programa` (`codpro`, `nompro`, `despro`, `verpro`, `horlpro`, `horppro`, `crelpro`, `creppro`, `tippro`, `just`, `redcon`, `reqing`, `reqcer`, `idare`) VALUES
 (1, 'Sin programa', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0),
 (121523, 'COORDINACION DE PROCESOS LOGISTICOS', 'COORDINAN, ASIGNAN Y SUPERVISAN LAS ACTIVIDADES DE EMPLEADOS QUE REALIZAN FUNCIONES DE\r\nDESPACHO, RECEPCION, ALMACENAMIENTO, DISTRIBUCION Y MANTENIMIENTO DE INVENTARIOS, MATERIALES, REPUESTOS Y/O PRODUCTOS, TRAMITE DE COMPRAS Y PROGRAMACION DE ITINERARIOS Y PERSONAL; U OPERACION DE RAMPAS DEL AEROPUERTO PARA EL SERVICIO VEHICULAR Y OTRAS ACTIVIDADES. ESTAN EMPLEADOS POR EMPRESAS DEL SECTOR PUBLICO O PRIVADO.', 2, 3120, 864, 0, 0, 1051, 'Las empresas interpretan la globalización de la economía, los mercados sin fronteras y la apertura económica como fenómenos económicos a escala mundial que ofrecen una oportunidad para dinamizar los mercados entre países y su éxito se relaciona con el alto desempeño logístico, que busca satisfacer las necesidades de las partes interesadas, en el momento oportuno, con la calidad esperada y costos óptimos.', 'RED DE CONOCIMIENTO EN LOGÍSTICA Y GESTIÓN DE LA  PRODUCCIÓN', 'Presentar resultado de la prueba o examen de estado de la educación media', 'N/A', 2),
 (228118, 'ANALISIS Y DESARROLLO DE SOFTWARE', 'El programa de formación tecnológica en Análisis y Desarrollo de Software, está enfocado en el desarrollo de habilidades alrededor de las actividades inherentes al proceso de creación de aplicaciones informáticas, de acuerdo con los requerimientos funcionales y técnicos para una solución de negocio, estableciendo métodos de trabajo individual y en equipo, potenciando los valores éticos, profesionales y personales, en beneficio de la sociedad y de la competitividad del país.', 1, 3120, 864, 65, 18, 1051, 'Los flujos de nuevas tecnologías llegan al país a un ritmo sin precedentes, haciendo que la demanda interna y las expectativas por nuevos productos y servicios se transformen con similar rapidez. De esta forma, la prospectiva de la industria TIC de los países menos desarrollados debe partir de la ubicación de la oferta nacional en el eje definido por las tensiones entre el mercado global y el mercado local, que\r\noperan como dos polos frente al tema. Esto significa identificar los focos tecnológicos prioritarios tanto a escala nacional como internacional, a partir de las fortalezas y debilidades del sector, con el fin de establecer el mercado objetivo. Teniendo en cuenta que estos evolucionan y se transforman continua y rápidamente, el talento humano en Colombia, formado en áreas de TI, se convierte en el determinante para afrontar los retos propuestos para el corto, mediano y largo plazo.', 'RED DE CONOCIMIENTO INFORMÁTICA, DISEÑO Y DESARROLLO DE  SOFTWARE', 'Académicos: Grado Once aprobado. Superar prueba de aptitud, motivación, interés y competencias mínimas de ingreso.', 'Aprobar la totalidad de las competencias establecidas en el programa de Formación ANÁLISIS Y DESARROLLO DE SOFTWARE.', 1),
@@ -5046,32 +5075,32 @@ INSERT INTO programa (codpro, nompro, despro, verpro, horlpro, horppro, crelpro,
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla propuesta
+-- Estructura de tabla para la tabla `propuesta`
 --
 
-CREATE TABLE propuesta (
-  npro int(11) NOT NULL,
-  idusu bigint(20) NOT NULL,
-  texpro text NOT NULL,
-  idval int(11) NOT NULL
+CREATE TABLE `propuesta` (
+  `npro` int(11) NOT NULL,
+  `idusu` bigint(20) NOT NULL,
+  `texpro` text NOT NULL,
+  `idval` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla proxcom
+-- Estructura de tabla para la tabla `proxcom`
 --
 
-CREATE TABLE proxcom (
-  codpro bigint(20) DEFAULT NULL,
-  idcom bigint(20) DEFAULT NULL
+CREATE TABLE `proxcom` (
+  `codpro` bigint(20) DEFAULT NULL,
+  `idcom` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla proxcom
+-- Volcado de datos para la tabla `proxcom`
 --
 
-INSERT INTO proxcom (codpro, idcom) VALUES
+INSERT INTO `proxcom` (`codpro`, `idcom`) VALUES
 (121523, 220201501),
 (121523, 240201529),
 (228118, 240202501),
@@ -5138,34 +5167,34 @@ INSERT INTO proxcom (codpro, idcom) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla registro
+-- Estructura de tabla para la tabla `registro`
 --
 
-CREATE TABLE registro (
-  iduxf bigint(15) NOT NULL,
-  idusu bigint(20) DEFAULT NULL,
-  idfic varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  fecreg datetime DEFAULT NULL
+CREATE TABLE `registro` (
+  `iduxf` bigint(15) NOT NULL,
+  `idusu` bigint(20) DEFAULT NULL,
+  `idfic` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `fecreg` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla resultado
+-- Estructura de tabla para la tabla `resultado`
 --
 
-CREATE TABLE resultado (
-  idres bigint(20) NOT NULL,
-  nomres text DEFAULT NULL,
-  idcom bigint(20) DEFAULT NULL,
-  ndeses int(11) DEFAULT NULL
+CREATE TABLE `resultado` (
+  `idres` bigint(20) NOT NULL,
+  `nomres` text DEFAULT NULL,
+  `idcom` bigint(20) DEFAULT NULL,
+  `ndeses` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla resultado
+-- Volcado de datos para la tabla `resultado`
 --
 
-INSERT INTO resultado (idres, nomres, idcom, ndeses) VALUES
+INSERT INTO `resultado` (`idres`, `nomres`, `idcom`, `ndeses`) VALUES
 (590803, 'APLICAR EN LA RESOLUCIÓN DE PROBLEMAS REALES DEL SECTOR PRODUCTIVO, LOS CONOCIMIENTOS, HABILIDADES Y DESTREZAS PERTINENTES A LAS COMPETENCIAS DEL PROGRAMA DE FORMACIÓN ASUMIENDO ESTRATEGIAS Y METODOLOGÍAS DE AUTOGESTIÓN', 2, 1),
 (592373, '02  MODELAR LAS FUNCIONES DEL SOFTWARE DE ACUERDO CON EL INFORME DE REQUISITOS.', 38376, 1),
 (592374, '04  VERIFICAR LOS MODELOS REALIZADOS EN LA FASE DE ANÁLISIS DE ACUERDO CON LO ESTABLECIDO EN EL INFORME DE REQUISITOS.', 38376, 1),
@@ -5443,119 +5472,119 @@ INSERT INTO resultado (idres, nomres, idcom, ndeses) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla resxins
+-- Estructura de tabla para la tabla `resxins`
 --
 
-CREATE TABLE resxins (
-  idres bigint(20) DEFAULT NULL,
-  idusu bigint(20) DEFAULT NULL
+CREATE TABLE `resxins` (
+  `idres` bigint(20) DEFAULT NULL,
+  `idusu` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla sesion
+-- Estructura de tabla para la tabla `sesion`
 --
 
-CREATE TABLE sesion (
-  idses bigint(20) NOT NULL,
-  idage bigint(20) NOT NULL,
-  fecses date NOT NULL
+CREATE TABLE `sesion` (
+  `idses` bigint(20) NOT NULL,
+  `idage` bigint(20) NOT NULL,
+  `fecses` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla sesion
+-- Volcado de datos para la tabla `sesion`
 --
 
-INSERT INTO sesion (idses, idage, fecses) VALUES
+INSERT INTO `sesion` (`idses`, `idage`, `fecses`) VALUES
 (1, 2, '2024-07-16'),
 (2, 2, '2024-07-17');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla solicicerti
+-- Estructura de tabla para la tabla `solicicerti`
 --
 
-CREATE TABLE solicicerti (
-  id int(11) NOT NULL,
-  idusu bigint(20) NOT NULL,
-  tipo_certificacion varchar(100) NOT NULL,
-  idfic int(11) DEFAULT NULL,
-  motivo text NOT NULL,
-  fecha_solicitud datetime NOT NULL,
-  estado enum('pendiente','aprobada_coordinacion','completada','rechazada') DEFAULT 'pendiente',
-  respuesta_coordinacion text DEFAULT NULL,
-  fecha_respuesta_coordinacion datetime DEFAULT NULL,
-  firma_subdirector tinyint(1) DEFAULT 0,
-  fecha_firma_subdirector datetime DEFAULT NULL,
-  observaciones_finales text DEFAULT NULL
+CREATE TABLE `solicicerti` (
+  `id` int(11) NOT NULL,
+  `idusu` bigint(20) NOT NULL,
+  `tipo_certificacion` varchar(100) NOT NULL,
+  `idfic` int(11) DEFAULT NULL,
+  `motivo` text NOT NULL,
+  `fecha_solicitud` datetime NOT NULL,
+  `estado` enum('pendiente','aprobada_coordinacion','completada','rechazada') DEFAULT 'pendiente',
+  `respuesta_coordinacion` text DEFAULT NULL,
+  `fecha_respuesta_coordinacion` datetime DEFAULT NULL,
+  `firma_subdirector` tinyint(1) DEFAULT 0,
+  `fecha_firma_subdirector` datetime DEFAULT NULL,
+  `observaciones_finales` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla soporte
+-- Estructura de tabla para la tabla `soporte`
 --
 
-CREATE TABLE soporte (
-  idsop bigint(20) NOT NULL COMMENT 'id soporte',
-  idusu bigint(20) DEFAULT NULL COMMENT 'id usuario',
-  idusu2 bigint(20) DEFAULT NULL COMMENT 'Id Usuario 2',
-  falrep int(11) NOT NULL COMMENT 'falla reportada',
-  carper int(11) NOT NULL COMMENT 'cargo persona',
-  fecserini datetime NOT NULL COMMENT 'fecha inicio servicio',
-  fecserfin datetime DEFAULT NULL COMMENT 'fecha fin servicio',
-  nomper varchar(100) NOT NULL COMMENT 'nombre persona',
-  desser text NOT NULL COMMENT 'descripcion servicio',
-  evisop varchar(255) DEFAULT NULL COMMENT 'evidencia soporte'
+CREATE TABLE `soporte` (
+  `idsop` bigint(20) NOT NULL COMMENT 'id soporte',
+  `idusu` bigint(20) DEFAULT NULL COMMENT 'id usuario',
+  `idusu2` bigint(20) DEFAULT NULL COMMENT 'Id Usuario 2',
+  `falrep` int(11) NOT NULL COMMENT 'falla reportada',
+  `carper` int(11) NOT NULL COMMENT 'cargo persona',
+  `fecserini` datetime NOT NULL COMMENT 'fecha inicio servicio',
+  `fecserfin` datetime DEFAULT NULL COMMENT 'fecha fin servicio',
+  `nomper` varchar(100) NOT NULL COMMENT 'nombre persona',
+  `desser` text NOT NULL COMMENT 'descripcion servicio',
+  `evisop` varchar(255) DEFAULT NULL COMMENT 'evidencia soporte'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla trazacom
+-- Estructura de tabla para la tabla `trazacom`
 --
 
-CREATE TABLE trazacom (
-  idtrht bigint(15) NOT NULL,
-  idnorad bigint(15) DEFAULT NULL,
-  idpas bigint(15) DEFAULT NULL,
-  idusu bigint(20) DEFAULT NULL,
-  fectrac datetime DEFAULT NULL
+CREATE TABLE `trazacom` (
+  `idtrht` bigint(15) NOT NULL,
+  `idnorad` bigint(15) DEFAULT NULL,
+  `idpas` bigint(15) DEFAULT NULL,
+  `idusu` bigint(20) DEFAULT NULL,
+  `fectrac` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla trazamat
+-- Estructura de tabla para la tabla `trazamat`
 --
 
-CREATE TABLE trazamat (
-  idtrm bigint(15) NOT NULL,
-  idpas bigint(15) DEFAULT NULL,
-  iduxf bigint(15) DEFAULT NULL,
-  fecreg datetime DEFAULT NULL,
-  obstrm text DEFAULT NULL
+CREATE TABLE `trazamat` (
+  `idtrm` bigint(15) NOT NULL,
+  `idpas` bigint(15) DEFAULT NULL,
+  `iduxf` bigint(15) DEFAULT NULL,
+  `fecreg` datetime DEFAULT NULL,
+  `obstrm` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla ubica
+-- Estructura de tabla para la tabla `ubica`
 --
 
-CREATE TABLE ubica (
-  codubi bigint(20) NOT NULL,
-  nomubi varchar(50) NOT NULL,
-  depubi bigint(20) DEFAULT NULL
+CREATE TABLE `ubica` (
+  `codubi` bigint(20) NOT NULL,
+  `nomubi` varchar(50) NOT NULL,
+  `depubi` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla ubica
+-- Volcado de datos para la tabla `ubica`
 --
 
-INSERT INTO ubica (codubi, nomubi, depubi) VALUES
+INSERT INTO `ubica` (`codubi`, `nomubi`, `depubi`) VALUES
 (1, 'VIRTUAL CHIA', 25),
 (5, 'ANTIOQUIA', 0),
 (8, 'ATLANTICO', 0),
@@ -6719,38 +6748,38 @@ INSERT INTO ubica (codubi, nomubi, depubi) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla usuario
+-- Estructura de tabla para la tabla `usuario`
 --
 
-CREATE TABLE usuario (
-  idusu bigint(20) NOT NULL,
-  ndocusu bigint(20) NOT NULL,
-  nomusu varchar(70) NOT NULL,
-  idper int(11) NOT NULL,
-  pasusu varchar(70) NOT NULL,
-  emausu varchar(70) DEFAULT NULL,
-  idcen int(11) NOT NULL,
-  actusu tinyint(1) NOT NULL,
-  fotcan varchar(255) DEFAULT NULL,
-  telcan varchar(15) DEFAULT NULL,
-  noca varchar(3) DEFAULT NULL,
-  colfon varchar(6) NOT NULL DEFAULT '666666',
-  coltex varchar(50) NOT NULL DEFAULT '000000',
-  fecsol datetime DEFAULT NULL,
-  keyolv varchar(255) DEFAULT NULL,
-  bloqkey tinyint(1) NOT NULL DEFAULT 1,
-  fecini date DEFAULT NULL,
-  fecfin date DEFAULT NULL,
-  rhusu int(11) NOT NULL DEFAULT 2007,
-  tdousu int(11) NOT NULL DEFAULT 1801,
-  genusu int(11) NOT NULL DEFAULT 2009
+CREATE TABLE `usuario` (
+  `idusu` bigint(20) NOT NULL,
+  `ndocusu` bigint(20) NOT NULL,
+  `nomusu` varchar(70) NOT NULL,
+  `idper` int(11) NOT NULL,
+  `pasusu` varchar(70) NOT NULL,
+  `emausu` varchar(70) DEFAULT NULL,
+  `idcen` int(11) NOT NULL,
+  `actusu` tinyint(1) NOT NULL,
+  `fotcan` varchar(255) DEFAULT NULL,
+  `telcan` varchar(15) DEFAULT NULL,
+  `noca` varchar(3) DEFAULT NULL,
+  `colfon` varchar(6) NOT NULL DEFAULT '666666',
+  `coltex` varchar(50) NOT NULL DEFAULT '000000',
+  `fecsol` datetime DEFAULT NULL,
+  `keyolv` varchar(255) DEFAULT NULL,
+  `bloqkey` tinyint(1) NOT NULL DEFAULT 1,
+  `fecini` date DEFAULT NULL,
+  `fecfin` date DEFAULT NULL,
+  `rhusu` int(11) NOT NULL DEFAULT 2007,
+  `tdousu` int(11) NOT NULL DEFAULT 1801,
+  `genusu` int(11) NOT NULL DEFAULT 2009
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla usuario
+-- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO usuario (idusu, ndocusu, nomusu, idper, pasusu, emausu, idcen, actusu, fotcan, telcan, noca, colfon, coltex, fecsol, keyolv, bloqkey, fecini, fecfin, rhusu, tdousu, genusu) VALUES
+INSERT INTO `usuario` (`idusu`, `ndocusu`, `nomusu`, `idper`, `pasusu`, `emausu`, `idcen`, `actusu`, `fotcan`, `telcan`, `noca`, `colfon`, `coltex`, `fecsol`, `keyolv`, `bloqkey`, `fecini`, `fecfin`, `rhusu`, `tdousu`, `genusu`) VALUES
 (1, 85555555, 'ROBINSON ENRIQUE RINCON RAMIREZ', 1, '10470c3b4b1fed12c3baac014be15fac67c6e815', 'rinconrobix@gmail.com', 951310, 1, 'fcan/1.png', '3229185289', '', 'ffffff', '0000ff;font-weight: bold', '2026-09-14 14:38:06', '87d3f8ac6f5b69abb17e7a3df5e31cffa0eb52e5', 2, NULL, NULL, 2003, 1801, 2009),
 (107, 111, 'VOTO EN BLANCO', 3, '3be0ff98032936bc7f9df51c5685ee5f2dd6ccee', '', 951310, 2, 'fcan/107_.jpg', '', '999', '666666', 'ffffff', NULL, NULL, 1, NULL, NULL, 2007, 1801, 2009),
 (108, 222, 'VOTO EN BLANCO', 3, 'd9c030c9b6218410c498363f62e92e83a440e3cc', '', 951310, 2, 'fcan/108_.jpg', '', '999', '666666', 'ffffff', NULL, NULL, 1, NULL, NULL, 2007, 1801, 2009),
@@ -6858,14 +6887,14 @@ INSERT INTO usuario (idusu, ndocusu, nomusu, idper, pasusu, emausu, idcen, actus
 (27155, 1076739423, 'STEFANIA BAUTISTA PATIÑO', 8, '7aa062428d8cb172541830bda4ecf3b3c141ac7c', '', 951310, 6, NULL, '', '', '666666', '000000', NULL, NULL, 1, NULL, NULL, 2007, 1801, 2010),
 (27156, 35197998, 'TERESA GARCIA GARAVITO', 8, '9165f98d1f73c2fcc546ea1921c2cdebbfd5d4c5', 'Teresa.0723@hotmail.com ', 951310, 1, 'fcan/27156.jpg', '3108162120', '', '666666', '000000', NULL, NULL, 1, NULL, NULL, 2001, 1801, 2010),
 (27157, 1050722950, 'VALERY MACIAS DIAZ', 8, '3f542ac7fc669879e4b94c856cfd34dd5968e940', '', 951310, 1, 'fcan/27157.jpg', '', '', '666666', '000000', NULL, NULL, 1, NULL, NULL, 2001, 1801, 2010),
-(27430, 1000186204, 'ANDERSON FABIAN GIRALDO LOPEZ', 8, 'c9d809e97b31644221d44def2aafea9c5eb62b1d', '', 951310, 1, 'fcan/27430.jpg', '', '', '666666', '000000', NULL, NULL, 1, NULL, NULL, 2007, 1801, 2009),
+(27430, 1000186204, 'ANDERSON FABIAN GIRALDO LOPEZ', 8, 'c9d809e97b31644221d44def2aafea9c5eb62b1d', '', 951310, 1, NULL, '', '1', '666666', '000000', NULL, NULL, 1, NULL, NULL, 2007, 1801, 2009),
 (27431, 1076744552, 'ANDRES FELIPE ORTIZ HURTATIZ', 8, '613cd8ba71f34387f596cab08d03f189872a0ef7', '', 951310, 1, 'fcan/27431.jpeg', '', '', '666666', '000000', NULL, NULL, 1, NULL, NULL, 2007, 1801, 2009),
-(27432, 1076244080, 'CARLOS ALEXANDER HERNANDEZ USAQUEN', 8, 'a5a8ce78e1c563c7f6f53e90310da5dbca93fe5f', 'alexanderch0820@gmail.com', 951310, 1, 'fcan/27432.jpg', '3164818521', '', '666666', '000000', NULL, NULL, 1, NULL, NULL, 2007, 1801, 2009),
+(27432, 1076244080, 'CARLOS ALEXANDER HERNANDEZ USAQUEN', 8, 'a5a8ce78e1c563c7f6f53e90310da5dbca93fe5f', 'alexanderch0820@gmail.com', 951310, 1, NULL, '3164818521', '2', '666666', '000000', NULL, NULL, 1, NULL, NULL, 2007, 1801, 2009),
 (27433, 1076737887, 'CRISTIAN FELIPE RODRIGUEZ RAMIREZ', 8, 'ecdd686e3dc65954956d7da08a18b5d07000c645', NULL, 951310, 1, NULL, NULL, NULL, '666666', '000000', NULL, NULL, 1, NULL, NULL, 2007, 1801, 2009),
 (27434, 1075660334, 'DANIEL FELIPE MELO RAMIREZ', 8, 'a757428aa96888a0b9091b2c43debe4cf92e3875', '1075660334', 951310, 1, 'fcan/27434.jpg', '', '', '666666', '000000', NULL, NULL, 1, NULL, NULL, 2007, 1801, 2009),
 (27435, 1023891102, 'DARWIN STEVEN MORA BAQUERO', 8, '89b35704e3d55f6fcb7d46fab6574d5770054832', 'dstevenb@gmail.com', 951310, 1, 'fcan/27435.jpg', '3125395091', '', '666666', '000000', NULL, NULL, 1, NULL, NULL, 2003, 1801, 2009),
 (27436, 1077142218, 'EDISSON ALEXANDER SANCHEZ LOPEZ', 8, '7e85313fe173c37200f9c1ad44dd3bb9b8e512b6', '', 951310, 1, 'fcan/27436.png', '', '', '666666', '000000', NULL, NULL, 1, NULL, NULL, 2007, 1801, 2009),
-(27437, 1005646634, 'EDUARDO LUIS PASTRANA PARDO', 8, '8eb56f4e18ea35267f3c9c288e412f05a78c3a3c', 'epastrana140@gmai.com', 951310, 1, 'fcan/27437.png', '3025981211', '', '666666', '000000', NULL, NULL, 1, NULL, NULL, 2007, 1801, 2009),
+(27437, 1005646634, 'EDUARDO LUIS PASTRANA PARDO', 8, '8eb56f4e18ea35267f3c9c288e412f05a78c3a3c', 'epastrana140@gmai.com', 951310, 1, NULL, '3025981211', '3', '666666', '000000', NULL, NULL, 1, NULL, NULL, 2007, 1801, 2009),
 (27438, 1070023210, 'EISENHOWER VARGAS MACIAS', 8, '8c24bbf8ac2eb49103712c9a5f40664947a68c36', 'hawervargas999@gmail.com', 951310, 6, NULL, '', '', '666666', '000000', NULL, NULL, 1, NULL, NULL, 2007, 1801, 2009),
 (27439, 1072654167, 'HALAN GABRIEL DEFELIPE BONILLA', 8, 'ca55d0c5b33fb70f026d71a3f08a51ef9e9ee991', '', 951310, 3, 'fcan/27439.jpg', '', '', '666666', '000000', NULL, NULL, 1, NULL, NULL, 2001, 1802, 2009),
 (27440, 1055962831, 'HERMINSON DELGADO PINILLA', 8, '066c30afa5a5f417a7ea27f6e6af3cf2f717e1b0', 'herminsondelgado6@gmail.com', 951310, 1, 'fcan/27440.png', '3118546005', '', '666666', '000000', NULL, NULL, 1, NULL, NULL, 2007, 1801, 2009),
@@ -6963,7 +6992,7 @@ INSERT INTO usuario (idusu, ndocusu, nomusu, idper, pasusu, emausu, idcen, actus
 (27718, 80260765, 'ALBERTO FANDIÑO', 12, 'da1c7ce5afb762e36f26fb40a39014b93fd7c09a', NULL, 951310, 2, NULL, NULL, NULL, '666666', '000000', NULL, NULL, 1, '2026-02-02', '2026-12-15', 2007, 1801, 2009),
 (27719, 80152523, 'FREDY ALEXANDER MOSCOSO BRAVO', 12, '4dda7d9adc52e1eec28257d36a2e1083a3647364', NULL, 951310, 2, NULL, NULL, NULL, '666666', '000000', NULL, NULL, 1, '2026-02-02', '2026-12-15', 2007, 1801, 2009),
 (27720, 1022384384, 'BRAYAN STIK ORDOÑEZ CAMINO', 12, '1aa974c234070baa85e259e2a6d541a01f9e2f0b', '', 951310, 1, NULL, '1022384384', '', '666666', '000000', NULL, NULL, 1, '2026-02-02', '2026-12-15', 2007, 1801, 2009);
-INSERT INTO usuario (idusu, ndocusu, nomusu, idper, pasusu, emausu, idcen, actusu, fotcan, telcan, noca, colfon, coltex, fecsol, keyolv, bloqkey, fecini, fecfin, rhusu, tdousu, genusu) VALUES
+INSERT INTO `usuario` (`idusu`, `ndocusu`, `nomusu`, `idper`, `pasusu`, `emausu`, `idcen`, `actusu`, `fotcan`, `telcan`, `noca`, `colfon`, `coltex`, `fecsol`, `keyolv`, `bloqkey`, `fecini`, `fecfin`, `rhusu`, `tdousu`, `genusu`) VALUES
 (27721, 3100417, 'ALBERTO RUBIO BEJARANO', 12, 'c8ef3f6d93d16aa16dc99eece1ef6c4b78bbda99', NULL, 951310, 2, NULL, NULL, NULL, '666666', '000000', NULL, NULL, 1, '2026-02-02', '2026-12-15', 2007, 1801, 2009),
 (27722, 7174154, 'JAIRO ALEJANDRO ROMERO FARFAN', 12, '77c968d9c883dd21081d9d237c88470bdcaed07c', 'jaromerof@sena.edu.co', 951310, 1, 'fcan/27722.jpeg', '3204990610', '', '666666', '000000', NULL, NULL, 1, '2026-02-02', '2026-12-15', 2007, 1801, 2009),
 (27723, 1020715254, 'FELIPE ANDRES HURTADO BERNAL', 12, '590cc9ef71b66aa6401629d56677c71cd60c43e7', 'fahurtado@sena.edu.co', 951310, 1, 'fcan/27723.jpg', '3112198169', '', '666666', '000000', NULL, NULL, 1, '2026-02-02', '2026-12-15', 2007, 1801, 2009),
@@ -7181,7 +7210,7 @@ INSERT INTO usuario (idusu, ndocusu, nomusu, idper, pasusu, emausu, idcen, actus
 (27935, 52083451, 'JEANNETH RINCON TAMI', 12, '1127331861a1de04383553433ecbd6a197cb4fe2', NULL, 951310, 2, NULL, NULL, NULL, '666666', '000000', NULL, NULL, 1, '2026-02-02', '2026-12-15', 2007, 1801, 2009),
 (27936, 40079750, 'CAROLINA MONCADA FLOREZ', 12, '274653daa8bea307a0d7e0b11340fbfad8085794', NULL, 951310, 2, NULL, NULL, NULL, '666666', '000000', NULL, NULL, 1, '2026-02-02', '2026-12-15', 2007, 1801, 2009),
 (27937, 80541464, 'HUGO ARMANDO GRACIA BERNAL', 12, '0c5045d45330656cba2bedd334873c7bf730f609', NULL, 951310, 2, NULL, NULL, NULL, '666666', '000000', NULL, NULL, 1, '2026-02-02', '2026-12-15', 2007, 1801, 2009);
-INSERT INTO usuario (idusu, ndocusu, nomusu, idper, pasusu, emausu, idcen, actusu, fotcan, telcan, noca, colfon, coltex, fecsol, keyolv, bloqkey, fecini, fecfin, rhusu, tdousu, genusu) VALUES
+INSERT INTO `usuario` (`idusu`, `ndocusu`, `nomusu`, `idper`, `pasusu`, `emausu`, `idcen`, `actusu`, `fotcan`, `telcan`, `noca`, `colfon`, `coltex`, `fecsol`, `keyolv`, `bloqkey`, `fecini`, `fecfin`, `rhusu`, `tdousu`, `genusu`) VALUES
 (27938, 79169185, 'NELSON FERNANDO PAEZ CASTRO', 12, '21d6a339e076aa7ae4b91ff4d99ae85250a5a43a', NULL, 951310, 2, NULL, NULL, NULL, '666666', '000000', NULL, NULL, 1, '2026-02-02', '2026-12-15', 2007, 1801, 2009),
 (27939, 1075652582, 'OLGA LUCIA SANCHEZ BARRANTES', 12, '774a07f040f1b19856ec7b196c5d645b20f67ae4', 'osanchezb@sena.edu.co', 951310, 2, 'fcan/27939.jpg', '3195747940', '', '666666', '000000', NULL, NULL, 1, '2026-02-02', '2026-12-15', 2001, 1801, 2010),
 (27940, 79658418, 'FRANK STEWAR HERNANDEZ VANEGAS', 12, 'a58b318c90d34d17385ec043acbfa3635cd5f48a', 'fshernandez@sena.edu.co', 951310, 1, NULL, '3203626554', '', '666666', '000000', '2026-02-27 15:35:31', '8a6b1520ca623dfc84af5bf9ab1ecc691a55d498', 2, '2026-02-02', '2026-12-15', 2003, 1801, 2009),
@@ -7277,32 +7306,32 @@ INSERT INTO usuario (idusu, ndocusu, nomusu, idper, pasusu, emausu, idcen, actus
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla usucom
+-- Estructura de tabla para la tabla `usucom`
 --
 
-CREATE TABLE usucom (
-  idusu bigint(20) DEFAULT NULL,
-  idcom bigint(15) DEFAULT NULL,
-  fecuxc datetime DEFAULT NULL
+CREATE TABLE `usucom` (
+  `idusu` bigint(20) DEFAULT NULL,
+  `idcom` bigint(15) DEFAULT NULL,
+  `fecuxc` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla usufic
+-- Estructura de tabla para la tabla `usufic`
 --
 
-CREATE TABLE usufic (
-  idusu bigint(20) NOT NULL DEFAULT 0,
-  idfic varchar(20) NOT NULL,
-  actfic tinyint(1) NOT NULL DEFAULT 1
+CREATE TABLE `usufic` (
+  `idusu` bigint(20) NOT NULL DEFAULT 0,
+  `idfic` varchar(20) NOT NULL,
+  `actfic` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla usufic
+-- Volcado de datos para la tabla `usufic`
 --
 
-INSERT INTO usufic (idusu, idfic, actfic) VALUES
+INSERT INTO `usufic` (`idusu`, `idfic`, `actfic`) VALUES
 (107, '111', 1),
 (108, '112', 1),
 (109, '113', 1),
@@ -7826,19 +7855,19 @@ INSERT INTO usufic (idusu, idfic, actfic) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla usupef
+-- Estructura de tabla para la tabla `usupef`
 --
 
-CREATE TABLE usupef (
-  idusu bigint(20) NOT NULL,
-  idper int(11) NOT NULL
+CREATE TABLE `usupef` (
+  `idusu` bigint(20) NOT NULL,
+  `idper` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla usupef
+-- Volcado de datos para la tabla `usupef`
 --
 
-INSERT INTO usupef (idusu, idper) VALUES
+INSERT INTO `usupef` (`idusu`, `idper`) VALUES
 (9342, 8),
 (9543, 8),
 (9342, 5),
@@ -9319,28 +9348,32 @@ INSERT INTO usupef (idusu, idper) VALUES
 (1, 47),
 (17450, 5),
 (17450, 47),
-(17450, 8);
+(17450, 8),
+(27430, 3),
+(27432, 3),
+(27437, 3),
+(27462, 5);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla usu_dep
+-- Estructura de tabla para la tabla `usu_dep`
 --
 
-CREATE TABLE usu_dep (
-  idusu bigint(20) NOT NULL,
-  id_dependencia bigint(20) NOT NULL,
-  activo tinyint(1) DEFAULT 1,
-  fecha_contrato date DEFAULT NULL,
-  numero_contrato varchar(50) DEFAULT NULL,
-  es_lider tinyint(1) DEFAULT 0
+CREATE TABLE `usu_dep` (
+  `idusu` bigint(20) NOT NULL,
+  `id_dependencia` bigint(20) NOT NULL,
+  `activo` tinyint(1) DEFAULT 1,
+  `fecha_contrato` date DEFAULT NULL,
+  `numero_contrato` varchar(50) DEFAULT NULL,
+  `es_lider` tinyint(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla usu_dep
+-- Volcado de datos para la tabla `usu_dep`
 --
 
-INSERT INTO usu_dep (idusu, id_dependencia, activo, fecha_contrato, numero_contrato, es_lider) VALUES
+INSERT INTO `usu_dep` (`idusu`, `id_dependencia`, `activo`, `fecha_contrato`, `numero_contrato`, `es_lider`) VALUES
 (1, 4, 1, NULL, NULL, 1),
 (1, 9, 1, NULL, NULL, 1),
 (201, 1, 1, '2023-01-01', 'CONTRATO-DEP1', 0),
@@ -11111,7 +11144,7 @@ INSERT INTO usu_dep (idusu, id_dependencia, activo, fecha_contrato, numero_contr
 (27758, 7, 1, NULL, NULL, 0),
 (27758, 8, 1, NULL, NULL, 0),
 (27758, 9, 1, NULL, NULL, 0);
-INSERT INTO usu_dep (idusu, id_dependencia, activo, fecha_contrato, numero_contrato, es_lider) VALUES
+INSERT INTO `usu_dep` (`idusu`, `id_dependencia`, `activo`, `fecha_contrato`, `numero_contrato`, `es_lider`) VALUES
 (27758, 10, 1, NULL, NULL, 0),
 (27759, 1, 1, NULL, NULL, 0),
 (27759, 2, 1, NULL, NULL, 0),
@@ -12887,7 +12920,7 @@ INSERT INTO usu_dep (idusu, id_dependencia, activo, fecha_contrato, numero_contr
 (27936, 2, 1, NULL, NULL, 0),
 (27936, 3, 1, NULL, NULL, 0),
 (27936, 4, 1, NULL, NULL, 0);
-INSERT INTO usu_dep (idusu, id_dependencia, activo, fecha_contrato, numero_contrato, es_lider) VALUES
+INSERT INTO `usu_dep` (`idusu`, `id_dependencia`, `activo`, `fecha_contrato`, `numero_contrato`, `es_lider`) VALUES
 (27936, 5, 1, NULL, NULL, 0),
 (27936, 6, 1, NULL, NULL, 0),
 (27936, 7, 1, NULL, NULL, 0),
@@ -13638,24 +13671,24 @@ INSERT INTO usu_dep (idusu, id_dependencia, activo, fecha_contrato, numero_contr
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla valor
+-- Estructura de tabla para la tabla `valor`
 --
 
-CREATE TABLE valor (
-  idval int(11) NOT NULL,
-  nomval varchar(255) NOT NULL,
-  iddom int(11) NOT NULL,
-  parval varchar(255) NOT NULL,
-  act tinyint(1) NOT NULL,
-  nhora int(11) DEFAULT NULL,
-  novam varchar(255) DEFAULT NULL
+CREATE TABLE `valor` (
+  `idval` int(11) NOT NULL,
+  `nomval` varchar(255) NOT NULL,
+  `iddom` int(11) NOT NULL,
+  `parval` varchar(255) NOT NULL,
+  `act` tinyint(1) NOT NULL,
+  `nhora` int(11) DEFAULT NULL,
+  `novam` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla valor
+-- Volcado de datos para la tabla `valor`
 --
 
-INSERT INTO valor (idval, nomval, iddom, parval, act, nhora, novam) VALUES
+INSERT INTO `valor` (`idval`, `nomval`, `iddom`, `parval`, `act`, `nhora`, `novam`) VALUES
 (1, 'MaÃ±ana', 1, '18', 1, 6, NULL),
 (2, 'Tarde', 1, '18', 1, 6, NULL),
 (3, 'Noche', 1, '15', 1, 5, NULL),
@@ -13839,28 +13872,28 @@ INSERT INTO valor (idval, nomval, iddom, parval, act, nhora, novam) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla video
+-- Estructura de tabla para la tabla `video`
 --
 
-CREATE TABLE video (
-  idvid bigint(10) NOT NULL,
-  nomvid varchar(255) DEFAULT NULL,
-  rutvid varchar(300) DEFAULT NULL,
-  ordvid int(5) DEFAULT NULL,
-  feccar datetime DEFAULT NULL,
-  fecini date DEFAULT NULL,
-  fecfin date DEFAULT NULL,
-  pesvid bigint(15) DEFAULT NULL,
-  durvid time DEFAULT NULL,
-  actvid tinyint(1) DEFAULT 1,
-  idusu bigint(20) DEFAULT NULL
+CREATE TABLE `video` (
+  `idvid` bigint(10) NOT NULL,
+  `nomvid` varchar(255) DEFAULT NULL,
+  `rutvid` varchar(300) DEFAULT NULL,
+  `ordvid` int(5) DEFAULT NULL,
+  `feccar` datetime DEFAULT NULL,
+  `fecini` date DEFAULT NULL,
+  `fecfin` date DEFAULT NULL,
+  `pesvid` bigint(15) DEFAULT NULL,
+  `durvid` time DEFAULT NULL,
+  `actvid` tinyint(1) DEFAULT 1,
+  `idusu` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Volcado de datos para la tabla video
+-- Volcado de datos para la tabla `video`
 --
 
-INSERT INTO video (idvid, nomvid, rutvid, ordvid, feccar, fecini, fecfin, pesvid, durvid, actvid, idusu) VALUES
+INSERT INTO `video` (`idvid`, `nomvid`, `rutvid`, `ordvid`, `feccar`, `fecini`, `fecfin`, `pesvid`, `durvid`, `actvid`, `idusu`) VALUES
 (1, 'Video 01', 'Video20260723.mp4', 1, '2026-08-02 20:05:05', '2026-08-02', '2026-08-17', NULL, NULL, 1, 1),
 (2, 'Video 02', 'Video2026072701.mp4', 2, '2026-08-02 20:05:05', '2026-08-02', '2026-08-17', NULL, NULL, 1, 1),
 (3, 'Video 03', 'Video2026072702.mp4', 3, '2026-08-02 20:05:05', '2026-08-02', '2026-08-17', NULL, NULL, 1, 1),
@@ -13933,1309 +13966,1356 @@ INSERT INTO video (idvid, nomvid, rutvid, ordvid, feccar, fecini, fecfin, pesvid
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla voto
+-- Estructura de tabla para la tabla `voto`
 --
 
-CREATE TABLE voto (
-  id int(11) NOT NULL,
-  idusu bigint(20) NOT NULL,
-  canusu bigint(20) NOT NULL,
-  dtvot datetime NOT NULL,
-  tipo_voto enum('representante','vocero') NOT NULL
+CREATE TABLE `voto` (
+  `id` int(11) NOT NULL,
+  `idusu` bigint(20) NOT NULL,
+  `canusu` bigint(20) NOT NULL,
+  `dtvot` datetime NOT NULL,
+  `tipo_voto` enum('representante','vocero') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `voto`
+--
+
+INSERT INTO `voto` (`id`, `idusu`, `canusu`, `dtvot`, `tipo_voto`) VALUES
+(2741, 27432, 27432, '2026-09-17 08:15:00', 'representante'),
+(2742, 27431, 27432, '2026-09-17 08:23:35', 'representante'),
+(2743, 27433, 27432, '2026-09-17 08:32:10', 'representante'),
+(2744, 27434, 27432, '2026-09-17 08:40:45', 'representante'),
+(2745, 27435, 27432, '2026-09-17 08:49:20', 'representante'),
+(2746, 27436, 27432, '2026-09-17 08:57:55', 'representante'),
+(2747, 27438, 27432, '2026-09-17 09:06:30', 'representante'),
+(2748, 27439, 27432, '2026-09-17 09:15:05', 'representante'),
+(2749, 27440, 27432, '2026-09-17 09:23:40', 'representante'),
+(2750, 27441, 27432, '2026-09-17 09:32:15', 'representante'),
+(2751, 27442, 27432, '2026-09-17 09:40:50', 'representante'),
+(2752, 27443, 27432, '2026-09-17 09:49:25', 'representante'),
+(2753, 27444, 27432, '2026-09-17 09:58:00', 'representante'),
+(2754, 27445, 27432, '2026-09-17 10:06:35', 'representante'),
+(2755, 27462, 27432, '2026-09-17 10:15:10', 'representante'),
+(2756, 27463, 27432, '2026-09-17 10:23:45', 'representante'),
+(2757, 27430, 27430, '2026-09-17 10:32:20', 'representante'),
+(2758, 27446, 27430, '2026-09-17 10:40:55', 'representante'),
+(2759, 27447, 27430, '2026-09-17 10:49:30', 'representante'),
+(2760, 27448, 27430, '2026-09-17 10:58:05', 'representante'),
+(2761, 27449, 27430, '2026-09-17 11:06:40', 'representante'),
+(2762, 27450, 27430, '2026-09-17 11:15:15', 'representante'),
+(2763, 27451, 27430, '2026-09-17 11:23:50', 'representante'),
+(2764, 27452, 27430, '2026-09-17 11:32:25', 'representante'),
+(2765, 27453, 27430, '2026-09-17 11:41:00', 'representante'),
+(2766, 27455, 27430, '2026-09-17 11:49:35', 'representante'),
+(2767, 27456, 27430, '2026-09-17 11:58:10', 'representante'),
+(2768, 27437, 27437, '2026-09-17 12:06:45', 'representante'),
+(2769, 27457, 27437, '2026-09-17 12:15:20', 'representante'),
+(2770, 27458, 27437, '2026-09-17 12:23:55', 'representante'),
+(2771, 27459, 27437, '2026-09-17 12:32:30', 'representante'),
+(2772, 27460, 27437, '2026-09-17 12:41:05', 'representante'),
+(2773, 27461, 27437, '2026-09-17 12:49:40', 'representante'),
+(2774, 18064, 107, '2026-09-17 12:58:15', 'representante'),
+(2775, 27464, 107, '2026-09-17 13:06:50', 'representante'),
+(2776, 27142, 107, '2026-09-17 13:15:25', 'representante');
 
 --
 -- Índices para tablas volcadas
 --
 
 --
--- Indices de la tabla accxuser
+-- Indices de la tabla `accxuser`
 --
-ALTER TABLE accxuser
-  ADD PRIMARY KEY (idacc),
-  ADD UNIQUE KEY idusu (idusu,idpag),
-  ADD KEY fk_acc_pag (idpag);
+ALTER TABLE `accxuser`
+  ADD PRIMARY KEY (`idacc`),
+  ADD UNIQUE KEY `idusu` (`idusu`,`idpag`),
+  ADD KEY `fk_acc_pag` (`idpag`);
 
 --
--- Indices de la tabla acta
+-- Indices de la tabla `acta`
 --
-ALTER TABLE acta
-  ADD PRIMARY KEY (idact),
-  ADD KEY tipact (tipact),
-  ADD KEY idusu (idusu),
-  ADD KEY coorusu (coorusu);
+ALTER TABLE `acta`
+  ADD PRIMARY KEY (`idact`),
+  ADD KEY `tipact` (`tipact`),
+  ADD KEY `idusu` (`idusu`),
+  ADD KEY `coorusu` (`coorusu`);
 
 --
--- Indices de la tabla acta_cierre
+-- Indices de la tabla `acta_cierre`
 --
-ALTER TABLE acta_cierre
-  ADD PRIMARY KEY (idactdc),
-  ADD UNIQUE KEY uq_numact_ficha (idfic,numact);
+ALTER TABLE `acta_cierre`
+  ADD PRIMARY KEY (`idactdc`),
+  ADD UNIQUE KEY `uq_numact_ficha` (`idfic`,`numact`);
 
 --
--- Indices de la tabla actdec
+-- Indices de la tabla `actdec`
 --
-ALTER TABLE actdec
-  ADD PRIMARY KEY (idacde),
-  ADD KEY idact (idact),
-  ADD KEY idusu (idusu);
+ALTER TABLE `actdec`
+  ADD PRIMARY KEY (`idacde`),
+  ADD KEY `idact` (`idact`),
+  ADD KEY `idusu` (`idusu`);
 
 --
--- Indices de la tabla actividad
+-- Indices de la tabla `actividad`
 --
-ALTER TABLE actividad
-  ADD PRIMARY KEY (idact),
-  ADD KEY idses (idses),
-  ADD KEY tipact (tipact);
+ALTER TABLE `actividad`
+  ADD PRIMARY KEY (`idact`),
+  ADD KEY `idses` (`idses`),
+  ADD KEY `tipact` (`tipact`);
 
 --
--- Indices de la tabla actividades
+-- Indices de la tabla `actividades`
 --
-ALTER TABLE actividades
-  ADD PRIMARY KEY (idactividad),
-  ADD KEY idbitacora (idbitacora);
+ALTER TABLE `actividades`
+  ADD PRIMARY KEY (`idactividad`),
+  ADD KEY `idbitacora` (`idbitacora`);
 
 --
--- Indices de la tabla agenda
+-- Indices de la tabla `agenda`
 --
-ALTER TABLE agenda
-  ADD PRIMARY KEY (idage),
-  ADD KEY fkagfic (idfic),
-  ADD KEY fkagres (idres),
-  ADD KEY fkageus (idusu);
+ALTER TABLE `agenda`
+  ADD PRIMARY KEY (`idage`),
+  ADD KEY `fkagfic` (`idfic`),
+  ADD KEY `fkagres` (`idres`),
+  ADD KEY `fkageus` (`idusu`);
 
 --
--- Indices de la tabla aprobacion_resultado
+-- Indices de la tabla `aprobacion_resultado`
 --
-ALTER TABLE aprobacion_resultado
-  ADD PRIMARY KEY (idaprob),
-  ADD KEY fkarres (idres),
-  ADD KEY fkarusu (idinstructor),
-  ADD KEY fkarfic (idfic);
+ALTER TABLE `aprobacion_resultado`
+  ADD PRIMARY KEY (`idaprob`),
+  ADD KEY `fkarres` (`idres`),
+  ADD KEY `fkarusu` (`idinstructor`),
+  ADD KEY `fkarfic` (`idfic`);
 
 --
--- Indices de la tabla area
+-- Indices de la tabla `area`
 --
-ALTER TABLE area
-  ADD PRIMARY KEY (idare),
-  ADD KEY fkareusu (idusu);
+ALTER TABLE `area`
+  ADD PRIMARY KEY (`idare`),
+  ADD KEY `fkareusu` (`idusu`);
 
 --
--- Indices de la tabla asistente
+-- Indices de la tabla `asistente`
 --
-ALTER TABLE asistente
-  ADD PRIMARY KEY (idasi),
-  ADD KEY idact (idact),
-  ADD KEY idusu (idusu);
+ALTER TABLE `asistente`
+  ADD PRIMARY KEY (`idasi`),
+  ADD KEY `idact` (`idact`),
+  ADD KEY `idusu` (`idusu`);
 
 --
--- Indices de la tabla aspirante
+-- Indices de la tabla `aspirante`
 --
-ALTER TABLE aspirante
-  ADD PRIMARY KEY (idasp),
-  ADD KEY fkasus (idusu),
-  ADD KEY fkasht (idnorad);
+ALTER TABLE `aspirante`
+  ADD PRIMARY KEY (`idasp`),
+  ADD KEY `fkasus` (`idusu`),
+  ADD KEY `fkasht` (`idnorad`);
 
 --
--- Indices de la tabla aula
+-- Indices de la tabla `aula`
 --
-ALTER TABLE aula
-  ADD PRIMARY KEY (idaul),
-  ADD KEY fkaub (codubi),
-  ADD KEY idcen (idcen);
+ALTER TABLE `aula`
+  ADD PRIMARY KEY (`idaul`),
+  ADD KEY `fkaub` (`codubi`),
+  ADD KEY `idcen` (`idcen`);
 
 --
--- Indices de la tabla bitacora
+-- Indices de la tabla `bitacora`
 --
-ALTER TABLE bitacora
-  ADD PRIMARY KEY (idbitacora),
-  ADD KEY idaprendiz (idaprendiz),
-  ADD KEY idjefe (idjefe),
-  ADD KEY idinstructor (idinstructor),
-  ADD KEY idaltep (idaltep);
+ALTER TABLE `bitacora`
+  ADD PRIMARY KEY (`idbitacora`),
+  ADD KEY `idaprendiz` (`idaprendiz`),
+  ADD KEY `idjefe` (`idjefe`),
+  ADD KEY `idinstructor` (`idinstructor`),
+  ADD KEY `idaltep` (`idaltep`);
 
 --
--- Indices de la tabla calcri
+-- Indices de la tabla `calcri`
 --
-ALTER TABLE calcri
-  ADD PRIMARY KEY (idcal),
-  ADD KEY idcri (idcri),
-  ADD KEY idusu (idusu);
+ALTER TABLE `calcri`
+  ADD PRIMARY KEY (`idcal`),
+  ADD KEY `idcri` (`idcri`),
+  ADD KEY `idusu` (`idusu`);
 
 --
--- Indices de la tabla calendario_academico
+-- Indices de la tabla `calendario_academico`
 --
-ALTER TABLE calendario_academico
-  ADD PRIMARY KEY (id);
+ALTER TABLE `calendario_academico`
+  ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla centro
+-- Indices de la tabla `centro`
 --
-ALTER TABLE centro
-  ADD PRIMARY KEY (idcen);
+ALTER TABLE `centro`
+  ADD PRIMARY KEY (`idcen`);
 
 --
--- Indices de la tabla certificaciones
+-- Indices de la tabla `certificaciones`
 --
-ALTER TABLE certificaciones
-  ADD PRIMARY KEY (idcertificacion),
-  ADD KEY idx_idaprendiz (idaprendiz),
-  ADD KEY idx_estado (estado),
-  ADD KEY idx_tipo_certificacion (tipo_certificacion),
-  ADD KEY idx_fecha_vencimiento (fecha_vencimiento);
+ALTER TABLE `certificaciones`
+  ADD PRIMARY KEY (`idcertificacion`),
+  ADD KEY `idx_idaprendiz` (`idaprendiz`),
+  ADD KEY `idx_estado` (`estado`),
+  ADD KEY `idx_tipo_certificacion` (`tipo_certificacion`),
+  ADD KEY `idx_fecha_vencimiento` (`fecha_vencimiento`);
 
 --
--- Indices de la tabla cmr
+-- Indices de la tabla `cmr`
 --
-ALTER TABLE cmr
-  ADD PRIMARY KEY (idcmr);
+ALTER TABLE `cmr`
+  ADD PRIMARY KEY (`idcmr`);
 
 --
--- Indices de la tabla competencia
+-- Indices de la tabla `competencia`
 --
-ALTER TABLE competencia
-  ADD PRIMARY KEY (idcom),
-  ADD KEY idval (idval);
+ALTER TABLE `competencia`
+  ADD PRIMARY KEY (`idcom`),
+  ADD KEY `idval` (`idval`);
 
 --
--- Indices de la tabla compromiso
+-- Indices de la tabla `compromiso`
 --
-ALTER TABLE compromiso
-  ADD PRIMARY KEY (idcom),
-  ADD KEY fkdtccom (idval);
+ALTER TABLE `compromiso`
+  ADD PRIMARY KEY (`idcom`),
+  ADD KEY `fkdtccom` (`idval`);
 
 --
--- Indices de la tabla configuracion
+-- Indices de la tabla `configuracion`
 --
-ALTER TABLE configuracion
-  ADD PRIMARY KEY (idcof);
+ALTER TABLE `configuracion`
+  ADD PRIMARY KEY (`idcof`);
 
 --
--- Indices de la tabla criterio
+-- Indices de la tabla `criterio`
 --
-ALTER TABLE criterio
-  ADD PRIMARY KEY (idcri),
-  ADD KEY fk_criterio_inseva (idins);
+ALTER TABLE `criterio`
+  ADD PRIMARY KEY (`idcri`),
+  ADD KEY `fk_criterio_inseva` (`idins`);
 
 --
--- Indices de la tabla dependencias
+-- Indices de la tabla `dependencias`
 --
-ALTER TABLE dependencias
-  ADD PRIMARY KEY (id_dependencia);
+ALTER TABLE `dependencias`
+  ADD PRIMARY KEY (`id_dependencia`);
 
 --
--- Indices de la tabla desercion
+-- Indices de la tabla `desercion`
 --
-ALTER TABLE desercion
-  ADD PRIMARY KEY (iddec),
-  ADD KEY idusu (idusu),
-  ADD KEY idfic (idfic),
-  ADD KEY idact (idact);
+ALTER TABLE `desercion`
+  ADD PRIMARY KEY (`iddec`),
+  ADD KEY `idusu` (`idusu`),
+  ADD KEY `idfic` (`idfic`),
+  ADD KEY `idact` (`idact`);
 
 --
--- Indices de la tabla detallesps
+-- Indices de la tabla `detallesps`
 --
-ALTER TABLE detallesps
-  ADD PRIMARY KEY (iddetalle),
-  ADD KEY idpaz (idpaz),
-  ADD KEY idusu (idusu);
+ALTER TABLE `detallesps`
+  ADD PRIMARY KEY (`iddetalle`),
+  ADD KEY `idpaz` (`idpaz`),
+  ADD KEY `idusu` (`idusu`);
 
 --
--- Indices de la tabla detalle_soporte
+-- Indices de la tabla `detalle_soporte`
 --
-ALTER TABLE detalle_soporte
-  ADD PRIMARY KEY (iddet),
-  ADD KEY FK_idsop (idsop),
-  ADD KEY FK_idusu (idusu),
-  ADD KEY detest (detest);
+ALTER TABLE `detalle_soporte`
+  ADD PRIMARY KEY (`iddet`),
+  ADD KEY `FK_idsop` (`idsop`),
+  ADD KEY `FK_idusu` (`idusu`),
+  ADD KEY `detest` (`detest`);
 
 --
--- Indices de la tabla detcom
+-- Indices de la tabla `detcom`
 --
-ALTER TABLE detcom
-  ADD PRIMARY KEY (iddtc),
-  ADD KEY fkdtcom (idcom);
+ALTER TABLE `detcom`
+  ADD PRIMARY KEY (`iddtc`),
+  ADD KEY `fkdtcom` (`idcom`);
 
 --
--- Indices de la tabla docmat
+-- Indices de la tabla `docmat`
 --
-ALTER TABLE docmat
-  ADD PRIMARY KEY (iddcma),
-  ADD KEY fkuxcusu (iduxf),
-  ADD KEY fkuxccom (iddocp);
+ALTER TABLE `docmat`
+  ADD PRIMARY KEY (`iddcma`),
+  ADD KEY `fkuxcusu` (`iduxf`),
+  ADD KEY `fkuxccom` (`iddocp`);
 
 --
--- Indices de la tabla docped
+-- Indices de la tabla `docped`
 --
-ALTER TABLE docped
-  ADD PRIMARY KEY (iddocp),
-  ADD KEY fkdcval (tipdocp);
+ALTER TABLE `docped`
+  ADD PRIMARY KEY (`iddocp`),
+  ADD KEY `fkdcval` (`tipdocp`);
 
 --
--- Indices de la tabla documento
+-- Indices de la tabla `documento`
 --
-ALTER TABLE documento
-  ADD PRIMARY KEY (iddoc),
-  ADD KEY fkdocht (idnorad);
+ALTER TABLE `documento`
+  ADD PRIMARY KEY (`iddoc`),
+  ADD KEY `fkdocht` (`idnorad`);
 
 --
--- Indices de la tabla dominio
+-- Indices de la tabla `dominio`
 --
-ALTER TABLE dominio
-  ADD PRIMARY KEY (iddom);
+ALTER TABLE `dominio`
+  ADD PRIMARY KEY (`iddom`);
 
 --
--- Indices de la tabla elemento
+-- Indices de la tabla `elemento`
 --
-ALTER TABLE elemento
-  ADD PRIMARY KEY (idele),
-  ADD UNIQUE KEY nidele (nidele),
-  ADD KEY tipele (tipele),
-  ADD KEY idusu (idusu);
+ALTER TABLE `elemento`
+  ADD PRIMARY KEY (`idele`),
+  ADD UNIQUE KEY `nidele` (`nidele`),
+  ADD KEY `tipele` (`tipele`),
+  ADD KEY `idusu` (`idusu`);
 
 --
--- Indices de la tabla empresa
+-- Indices de la tabla `empresa`
 --
-ALTER TABLE empresa
-  ADD PRIMARY KEY (idemp),
-  ADD KEY usucre (usucre),
-  ADD KEY usuapr (usuapr);
+ALTER TABLE `empresa`
+  ADD PRIMARY KEY (`idemp`),
+  ADD KEY `usucre` (`usucre`),
+  ADD KEY `usuapr` (`usuapr`);
 
 --
--- Indices de la tabla evases
+-- Indices de la tabla `evases`
 --
-ALTER TABLE evases
-  ADD PRIMARY KEY (ideva),
-  ADD KEY idses (idses),
-  ADD KEY idusu (idusu);
+ALTER TABLE `evases`
+  ADD PRIMARY KEY (`ideva`),
+  ADD KEY `idses` (`idses`),
+  ADD KEY `idusu` (`idusu`);
 
 --
--- Indices de la tabla evidencia
+-- Indices de la tabla `evidencia`
 --
-ALTER TABLE evidencia
-  ADD PRIMARY KEY (evid),
-  ADD KEY iddec (iddec);
+ALTER TABLE `evidencia`
+  ADD PRIMARY KEY (`evid`),
+  ADD KEY `iddec` (`iddec`);
 
 --
--- Indices de la tabla ficha
+-- Indices de la tabla `ficha`
 --
-ALTER TABLE ficha
-  ADD PRIMARY KEY (idfic),
-  ADD KEY FK_idcen (idcen),
-  ADD KEY jornada (jornada),
-  ADD KEY codpro (codpro),
-  ADD KEY idusu (idusu);
+ALTER TABLE `ficha`
+  ADD PRIMARY KEY (`idfic`),
+  ADD KEY `FK_idcen` (`idcen`),
+  ADD KEY `jornada` (`jornada`),
+  ADD KEY `codpro` (`codpro`),
+  ADD KEY `idusu` (`idusu`);
 
 --
--- Indices de la tabla filhor
+-- Indices de la tabla `filhor`
 --
-ALTER TABLE filhor
-  ADD PRIMARY KEY (idusu,idare),
-  ADD UNIQUE KEY idusu (idusu),
-  ADD KEY idare (idare);
+ALTER TABLE `filhor`
+  ADD PRIMARY KEY (`idusu`,`idare`),
+  ADD UNIQUE KEY `idusu` (`idusu`),
+  ADD KEY `idare` (`idare`);
 
 --
--- Indices de la tabla flujo
+-- Indices de la tabla `flujo`
 --
-ALTER TABLE flujo
-  ADD PRIMARY KEY (idflu);
+ALTER TABLE `flujo`
+  ADD PRIMARY KEY (`idflu`);
 
 --
--- Indices de la tabla fotdec
+-- Indices de la tabla `fotdec`
 --
-ALTER TABLE fotdec
-  ADD PRIMARY KEY (idfdc),
-  ADD KEY iddec (iddec);
+ALTER TABLE `fotdec`
+  ADD PRIMARY KEY (`idfdc`),
+  ADD KEY `iddec` (`iddec`);
 
 --
--- Indices de la tabla foto
+-- Indices de la tabla `foto`
 --
-ALTER TABLE foto
-  ADD PRIMARY KEY (idfot),
-  ADD UNIQUE KEY idele_2 (idele),
-  ADD KEY idele (idele);
+ALTER TABLE `foto`
+  ADD PRIMARY KEY (`idfot`),
+  ADD UNIQUE KEY `idele_2` (`idele`),
+  ADD KEY `idele` (`idele`);
 
 --
--- Indices de la tabla hdtxusu
+-- Indices de la tabla `hdtxusu`
 --
-ALTER TABLE hdtxusu
-  ADD KEY fkhtus (idnorad),
-  ADD KEY fkusht (idusu);
+ALTER TABLE `hdtxusu`
+  ADD KEY `fkhtus` (`idnorad`),
+  ADD KEY `fkusht` (`idusu`);
 
 --
--- Indices de la tabla hojatra
+-- Indices de la tabla `hojatra`
 --
-ALTER TABLE hojatra
-  ADD PRIMARY KEY (idnorad),
-  ADD KEY fkhtpr (codpro),
-  ADD KEY fkhtem (idemp),
-  ADD KEY fkhtpe (codproesp),
-  ADD KEY fkhtfic (idfic);
+ALTER TABLE `hojatra`
+  ADD PRIMARY KEY (`idnorad`),
+  ADD KEY `fkhtpr` (`codpro`),
+  ADD KEY `fkhtem` (`idemp`),
+  ADD KEY `fkhtpe` (`codproesp`),
+  ADD KEY `fkhtfic` (`idfic`);
 
 --
--- Indices de la tabla horario
+-- Indices de la tabla `horario`
 --
-ALTER TABLE horario
-  ADD PRIMARY KEY (idhor),
-  ADD KEY idx_horario_idfic (idfic),
-  ADD KEY idx_horario_idaul (idaul),
-  ADD KEY idx_horario_idusu (idusu),
-  ADD KEY idx_horario_iddia (iddia),
-  ADD KEY idx_horario_es_otros (es_otros),
-  ADD KEY idx_horario_es_transversal (es_transversal),
-  ADD KEY idx_horario_formacion_directa (es_formacion_directa),
-  ADD KEY idx_horario_actividad (actividad),
-  ADD KEY idx_horario_horas_otros (horas_otros),
-  ADD KEY idx_fecha_especifica (fecha_especifica),
-  ADD KEY idx_fecha_inicio (fecha_inicio),
-  ADD KEY idx_fecha_fin (fecha_fin),
-  ADD KEY idx_rango_fechas (fecha_inicio,fecha_fin),
-  ADD KEY idx_instructor_fecha (idfic,fecha_especifica),
-  ADD KEY idx_tipo_fecha (es_otros,es_transversal,es_formacion_directa,fecha_especifica);
+ALTER TABLE `horario`
+  ADD PRIMARY KEY (`idhor`),
+  ADD KEY `idx_horario_idfic` (`idfic`),
+  ADD KEY `idx_horario_idaul` (`idaul`),
+  ADD KEY `idx_horario_idusu` (`idusu`),
+  ADD KEY `idx_horario_iddia` (`iddia`),
+  ADD KEY `idx_horario_es_otros` (`es_otros`),
+  ADD KEY `idx_horario_es_transversal` (`es_transversal`),
+  ADD KEY `idx_horario_formacion_directa` (`es_formacion_directa`),
+  ADD KEY `idx_horario_actividad` (`actividad`),
+  ADD KEY `idx_horario_horas_otros` (`horas_otros`),
+  ADD KEY `idx_fecha_especifica` (`fecha_especifica`),
+  ADD KEY `idx_fecha_inicio` (`fecha_inicio`),
+  ADD KEY `idx_fecha_fin` (`fecha_fin`),
+  ADD KEY `idx_rango_fechas` (`fecha_inicio`,`fecha_fin`),
+  ADD KEY `idx_instructor_fecha` (`idfic`,`fecha_especifica`),
+  ADD KEY `idx_tipo_fecha` (`es_otros`,`es_transversal`,`es_formacion_directa`,`fecha_especifica`);
 
 --
--- Indices de la tabla horas_mensuales
+-- Indices de la tabla `horas_mensuales`
 --
-ALTER TABLE horas_mensuales
-  ADD PRIMARY KEY (id),
-  ADD UNIQUE KEY unique_instructor_mes_año (id_instructor,mes,año),
-  ADD KEY idx_instructor (id_instructor),
-  ADD KEY idx_mes_año (mes,año);
+ALTER TABLE `horas_mensuales`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `unique_instructor_mes_año` (`id_instructor`,`mes`,`año`),
+  ADD KEY `idx_instructor` (`id_instructor`),
+  ADD KEY `idx_mes_año` (`mes`,`año`);
 
 --
--- Indices de la tabla imagen_usuario
+-- Indices de la tabla `imagen_usuario`
 --
-ALTER TABLE imagen_usuario
-  ADD PRIMARY KEY (idimg),
-  ADD KEY idusu (idusu);
+ALTER TABLE `imagen_usuario`
+  ADD PRIMARY KEY (`idimg`),
+  ADD KEY `idusu` (`idusu`);
 
 --
--- Indices de la tabla inasistencia
+-- Indices de la tabla `inasistencia`
 --
-ALTER TABLE inasistencia
-  ADD PRIMARY KEY (idina),
-  ADD KEY idusu (idusu),
-  ADD KEY idfic (idfic);
+ALTER TABLE `inasistencia`
+  ADD PRIMARY KEY (`idina`),
+  ADD KEY `idusu` (`idusu`),
+  ADD KEY `idfic` (`idfic`);
 
 --
--- Indices de la tabla inseva
+-- Indices de la tabla `inseva`
 --
-ALTER TABLE inseva
-  ADD PRIMARY KEY (idins),
-  ADD KEY fk_inseva_resultado (idres);
+ALTER TABLE `inseva`
+  ADD PRIMARY KEY (`idins`),
+  ADD KEY `fk_inseva_resultado` (`idres`);
 
 --
--- Indices de la tabla insseg
+-- Indices de la tabla `insseg`
 --
-ALTER TABLE insseg
-  ADD PRIMARY KEY (idusu,idficha),
-  ADD KEY idficha (idficha);
+ALTER TABLE `insseg`
+  ADD PRIMARY KEY (`idusu`,`idficha`),
+  ADD KEY `idficha` (`idficha`);
 
 --
--- Indices de la tabla juicio
+-- Indices de la tabla `juicio`
 --
-ALTER TABLE juicio
-  ADD PRIMARY KEY (idjui),
-  ADD KEY idx_idusu (idusu),
-  ADD KEY idx_idfic (idfic),
-  ADD KEY idx_idres (idres),
-  ADD KEY idx_idcom (idcom),
-  ADD KEY idx_fecha_reporte (fecha_reporte),
-  ADD KEY idx_ndocins (ndocins);
+ALTER TABLE `juicio`
+  ADD PRIMARY KEY (`idjui`),
+  ADD KEY `idx_idusu` (`idusu`),
+  ADD KEY `idx_idfic` (`idfic`),
+  ADD KEY `idx_idres` (`idres`),
+  ADD KEY `idx_idcom` (`idcom`),
+  ADD KEY `idx_fecha_reporte` (`fecha_reporte`),
+  ADD KEY `idx_ndocins` (`ndocins`);
 
 --
--- Indices de la tabla llamado
+-- Indices de la tabla `llamado`
 --
-ALTER TABLE llamado
-  ADD PRIMARY KEY (idllam),
-  ADD KEY idusu (idusu);
+ALTER TABLE `llamado`
+  ADD PRIMARY KEY (`idllam`),
+  ADD KEY `idusu` (`idusu`);
 
 --
--- Indices de la tabla minuta
+-- Indices de la tabla `minuta`
 --
-ALTER TABLE minuta
-  ADD PRIMARY KEY (nummin),
-  ADD KEY idusu (idusu),
-  ADD KEY hij (hij);
+ALTER TABLE `minuta`
+  ADD PRIMARY KEY (`nummin`),
+  ADD KEY `idusu` (`idusu`),
+  ADD KEY `hij` (`hij`);
 
 --
--- Indices de la tabla modulo
+-- Indices de la tabla `modulo`
 --
-ALTER TABLE modulo
-  ADD PRIMARY KEY (idmod),
-  ADD KEY idper (idper);
+ALTER TABLE `modulo`
+  ADD PRIMARY KEY (`idmod`),
+  ADD KEY `idper` (`idper`);
 
 --
--- Indices de la tabla pagina
+-- Indices de la tabla `pagina`
 --
-ALTER TABLE pagina
-  ADD PRIMARY KEY (idpag),
-  ADD KEY idmod (idmod);
+ALTER TABLE `pagina`
+  ADD PRIMARY KEY (`idpag`),
+  ADD KEY `idmod` (`idmod`);
 
 --
--- Indices de la tabla pagper
+-- Indices de la tabla `pagper`
 --
-ALTER TABLE pagper
-  ADD KEY idpag (idpag),
-  ADD KEY idper (idper);
+ALTER TABLE `pagper`
+  ADD KEY `idpag` (`idpag`),
+  ADD KEY `idper` (`idper`);
 
 --
--- Indices de la tabla paso
+-- Indices de la tabla `paso`
 --
-ALTER TABLE paso
-  ADD PRIMARY KEY (idpas),
-  ADD KEY fkpsfl (idflu),
-  ADD KEY fkpspf (idper);
+ALTER TABLE `paso`
+  ADD PRIMARY KEY (`idpas`),
+  ADD KEY `fkpsfl` (`idflu`),
+  ADD KEY `fkpspf` (`idper`);
 
 --
--- Indices de la tabla pazysalvo
+-- Indices de la tabla `pazysalvo`
 --
-ALTER TABLE pazysalvo
-  ADD PRIMARY KEY (idpaz),
-  ADD KEY idusu (idusu);
+ALTER TABLE `pazysalvo`
+  ADD PRIMARY KEY (`idpaz`),
+  ADD KEY `idusu` (`idusu`);
 
 --
--- Indices de la tabla perfil
+-- Indices de la tabla `perfil`
 --
-ALTER TABLE perfil
-  ADD PRIMARY KEY (idper),
-  ADD KEY pagprin (pagprin),
-  ADD KEY idmod (idmod);
+ALTER TABLE `perfil`
+  ADD PRIMARY KEY (`idper`),
+  ADD KEY `pagprin` (`pagprin`),
+  ADD KEY `idmod` (`idmod`);
 
 --
--- Indices de la tabla planses
+-- Indices de la tabla `planses`
 --
-ALTER TABLE planses
-  ADD PRIMARY KEY (idplan),
-  ADD KEY idx_ficha (idfic),
-  ADD KEY idx_resultado (idres),
-  ADD KEY idx_sesion (numses),
-  ADD KEY idx_fase (fas);
+ALTER TABLE `planses`
+  ADD PRIMARY KEY (`idplan`),
+  ADD KEY `idx_ficha` (`idfic`),
+  ADD KEY `idx_resultado` (`idres`),
+  ADD KEY `idx_sesion` (`numses`),
+  ADD KEY `idx_fase` (`fas`);
 
 --
--- Indices de la tabla presaula
+-- Indices de la tabla `presaula`
 --
-ALTER TABLE presaula
-  ADD PRIMARY KEY (idpres),
-  ADD KEY idaul (idaul,idusu,jornada),
-  ADD KEY fkaulxjor (jornada),
-  ADD KEY fkaulxusu (idusu);
+ALTER TABLE `presaula`
+  ADD PRIMARY KEY (`idpres`),
+  ADD KEY `idaul` (`idaul`,`idusu`,`jornada`),
+  ADD KEY `fkaulxjor` (`jornada`),
+  ADD KEY `fkaulxusu` (`idusu`);
 
 --
--- Indices de la tabla presele
+-- Indices de la tabla `presele`
 --
-ALTER TABLE presele
-  ADD PRIMARY KEY (idprele),
-  ADD KEY idele (idele,idusu,whopre);
+ALTER TABLE `presele`
+  ADD PRIMARY KEY (`idprele`),
+  ADD KEY `idele` (`idele`,`idusu`,`whopre`);
 
 --
--- Indices de la tabla presesp
+-- Indices de la tabla `presesp`
 --
-ALTER TABLE presesp
-  ADD PRIMARY KEY (idpresp),
-  ADD KEY idaul (idaul),
-  ADD KEY idusu (idusu);
+ALTER TABLE `presesp`
+  ADD PRIMARY KEY (`idpresp`),
+  ADD KEY `idaul` (`idaul`),
+  ADD KEY `idusu` (`idusu`);
 
 --
--- Indices de la tabla programa
+-- Indices de la tabla `programa`
 --
-ALTER TABLE programa
-  ADD PRIMARY KEY (codpro),
-  ADD KEY fkvalpro (tippro),
-  ADD KEY idare (idare);
+ALTER TABLE `programa`
+  ADD PRIMARY KEY (`codpro`),
+  ADD KEY `fkvalpro` (`tippro`),
+  ADD KEY `idare` (`idare`);
 
 --
--- Indices de la tabla propuesta
+-- Indices de la tabla `propuesta`
 --
-ALTER TABLE propuesta
-  ADD PRIMARY KEY (npro),
-  ADD KEY FK_idcan (idusu),
-  ADD KEY FK_idval (idval);
+ALTER TABLE `propuesta`
+  ADD PRIMARY KEY (`npro`),
+  ADD KEY `FK_idcan` (`idusu`),
+  ADD KEY `FK_idval` (`idval`);
 
 --
--- Indices de la tabla proxcom
+-- Indices de la tabla `proxcom`
 --
-ALTER TABLE proxcom
-  ADD KEY fkprocom (codpro),
-  ADD KEY fkprocod (idcom);
+ALTER TABLE `proxcom`
+  ADD KEY `fkprocom` (`codpro`),
+  ADD KEY `fkprocod` (`idcom`);
 
 --
--- Indices de la tabla registro
+-- Indices de la tabla `registro`
 --
-ALTER TABLE registro
-  ADD PRIMARY KEY (iduxf),
-  ADD KEY fkregusu (idusu),
-  ADD KEY fkregfic (idfic);
+ALTER TABLE `registro`
+  ADD PRIMARY KEY (`iduxf`),
+  ADD KEY `fkregusu` (`idusu`),
+  ADD KEY `fkregfic` (`idfic`);
 
 --
--- Indices de la tabla resultado
+-- Indices de la tabla `resultado`
 --
-ALTER TABLE resultado
-  ADD PRIMARY KEY (idres),
-  ADD KEY fkrescom (idcom);
+ALTER TABLE `resultado`
+  ADD PRIMARY KEY (`idres`),
+  ADD KEY `fkrescom` (`idcom`);
 
 --
--- Indices de la tabla resxins
+-- Indices de la tabla `resxins`
 --
-ALTER TABLE resxins
-  ADD KEY fkresins (idusu),
-  ADD KEY idres (idres);
+ALTER TABLE `resxins`
+  ADD KEY `fkresins` (`idusu`),
+  ADD KEY `idres` (`idres`);
 
 --
--- Indices de la tabla sesion
+-- Indices de la tabla `sesion`
 --
-ALTER TABLE sesion
-  ADD PRIMARY KEY (idses),
-  ADD KEY idage (idage);
+ALTER TABLE `sesion`
+  ADD PRIMARY KEY (`idses`),
+  ADD KEY `idage` (`idage`);
 
 --
--- Indices de la tabla solicicerti
+-- Indices de la tabla `solicicerti`
 --
-ALTER TABLE solicicerti
-  ADD PRIMARY KEY (id),
-  ADD KEY idx_idusu (idusu),
-  ADD KEY idx_idfic (idfic),
-  ADD KEY idx_estado (estado);
+ALTER TABLE `solicicerti`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idx_idusu` (`idusu`),
+  ADD KEY `idx_idfic` (`idfic`),
+  ADD KEY `idx_estado` (`estado`);
 
 --
--- Indices de la tabla soporte
+-- Indices de la tabla `soporte`
 --
-ALTER TABLE soporte
-  ADD PRIMARY KEY (idsop),
-  ADD KEY FK_idusu (idusu),
-  ADD KEY FK_falrep (falrep),
-  ADD KEY FK_carper (carper);
+ALTER TABLE `soporte`
+  ADD PRIMARY KEY (`idsop`),
+  ADD KEY `FK_idusu` (`idusu`),
+  ADD KEY `FK_falrep` (`falrep`),
+  ADD KEY `FK_carper` (`carper`);
 
 --
--- Indices de la tabla trazacom
+-- Indices de la tabla `trazacom`
 --
-ALTER TABLE trazacom
-  ADD PRIMARY KEY (idtrht),
-  ADD KEY fktzht (idnorad),
-  ADD KEY fktzps (idpas),
-  ADD KEY fktzus (idusu);
+ALTER TABLE `trazacom`
+  ADD PRIMARY KEY (`idtrht`),
+  ADD KEY `fktzht` (`idnorad`),
+  ADD KEY `fktzps` (`idpas`),
+  ADD KEY `fktzus` (`idusu`);
 
 --
--- Indices de la tabla trazamat
+-- Indices de la tabla `trazamat`
 --
-ALTER TABLE trazamat
-  ADD PRIMARY KEY (idtrm),
-  ADD KEY fktrmpas (idpas),
-  ADD KEY fktrmusu (iduxf);
+ALTER TABLE `trazamat`
+  ADD PRIMARY KEY (`idtrm`),
+  ADD KEY `fktrmpas` (`idpas`),
+  ADD KEY `fktrmusu` (`iduxf`);
 
 --
--- Indices de la tabla ubica
+-- Indices de la tabla `ubica`
 --
-ALTER TABLE ubica
-  ADD PRIMARY KEY (codubi),
-  ADD KEY fkubi (depubi);
+ALTER TABLE `ubica`
+  ADD PRIMARY KEY (`codubi`),
+  ADD KEY `fkubi` (`depubi`);
 
 --
--- Indices de la tabla usuario
+-- Indices de la tabla `usuario`
 --
-ALTER TABLE usuario
-  ADD PRIMARY KEY (idusu),
-  ADD UNIQUE KEY ndocusu (ndocusu),
-  ADD KEY idper (idper),
-  ADD KEY idcen (idcen),
-  ADD KEY rhusu (rhusu),
-  ADD KEY tdousu (tdousu),
-  ADD KEY genusu (genusu);
+ALTER TABLE `usuario`
+  ADD PRIMARY KEY (`idusu`),
+  ADD UNIQUE KEY `ndocusu` (`ndocusu`),
+  ADD KEY `idper` (`idper`),
+  ADD KEY `idcen` (`idcen`),
+  ADD KEY `rhusu` (`rhusu`),
+  ADD KEY `tdousu` (`tdousu`),
+  ADD KEY `genusu` (`genusu`);
 
 --
--- Indices de la tabla usucom
+-- Indices de la tabla `usucom`
 --
-ALTER TABLE usucom
-  ADD KEY fkuxcusu (idusu),
-  ADD KEY fkuxccom (idcom);
+ALTER TABLE `usucom`
+  ADD KEY `fkuxcusu` (`idusu`),
+  ADD KEY `fkuxccom` (`idcom`);
 
 --
--- Indices de la tabla usufic
+-- Indices de la tabla `usufic`
 --
-ALTER TABLE usufic
-  ADD KEY idusu (idusu),
-  ADD KEY idfic (idfic);
+ALTER TABLE `usufic`
+  ADD KEY `idusu` (`idusu`),
+  ADD KEY `idfic` (`idfic`);
 
 --
--- Indices de la tabla usupef
+-- Indices de la tabla `usupef`
 --
-ALTER TABLE usupef
-  ADD KEY idusu (idusu),
-  ADD KEY idper (idper);
+ALTER TABLE `usupef`
+  ADD KEY `idusu` (`idusu`),
+  ADD KEY `idper` (`idper`);
 
 --
--- Indices de la tabla usu_dep
+-- Indices de la tabla `usu_dep`
 --
-ALTER TABLE usu_dep
-  ADD PRIMARY KEY (idusu,id_dependencia),
-  ADD KEY fk_usu_dep_dependencias (id_dependencia);
+ALTER TABLE `usu_dep`
+  ADD PRIMARY KEY (`idusu`,`id_dependencia`),
+  ADD KEY `fk_usu_dep_dependencias` (`id_dependencia`);
 
 --
--- Indices de la tabla valor
+-- Indices de la tabla `valor`
 --
-ALTER TABLE valor
-  ADD PRIMARY KEY (idval),
-  ADD KEY FK_iddom (iddom);
+ALTER TABLE `valor`
+  ADD PRIMARY KEY (`idval`),
+  ADD KEY `FK_iddom` (`iddom`);
 
 --
--- Indices de la tabla video
+-- Indices de la tabla `video`
 --
-ALTER TABLE video
-  ADD PRIMARY KEY (idvid);
+ALTER TABLE `video`
+  ADD PRIMARY KEY (`idvid`);
 
 --
--- Indices de la tabla voto
+-- Indices de la tabla `voto`
 --
-ALTER TABLE voto
-  ADD PRIMARY KEY (id),
-  ADD UNIQUE KEY idusu (idusu,tipo_voto),
-  ADD KEY canusu (canusu);
+ALTER TABLE `voto`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `idusu` (`idusu`,`tipo_voto`),
+  ADD KEY `canusu` (`canusu`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
 --
--- AUTO_INCREMENT de la tabla accxuser
+-- AUTO_INCREMENT de la tabla `accxuser`
 --
-ALTER TABLE accxuser
-  MODIFY idacc int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=266;
+ALTER TABLE `accxuser`
+  MODIFY `idacc` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=266;
 
 --
--- AUTO_INCREMENT de la tabla acta
+-- AUTO_INCREMENT de la tabla `acta`
 --
-ALTER TABLE acta
-  MODIFY idact bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
+ALTER TABLE `acta`
+  MODIFY `idact` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
 
 --
--- AUTO_INCREMENT de la tabla acta_cierre
+-- AUTO_INCREMENT de la tabla `acta_cierre`
 --
-ALTER TABLE acta_cierre
-  MODIFY idactdc int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+ALTER TABLE `acta_cierre`
+  MODIFY `idactdc` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT de la tabla actdec
+-- AUTO_INCREMENT de la tabla `actdec`
 --
-ALTER TABLE actdec
-  MODIFY idacde bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
+ALTER TABLE `actdec`
+  MODIFY `idacde` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
 
 --
--- AUTO_INCREMENT de la tabla actividades
+-- AUTO_INCREMENT de la tabla `actividades`
 --
-ALTER TABLE actividades
-  MODIFY idactividad int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+ALTER TABLE `actividades`
+  MODIFY `idactividad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
--- AUTO_INCREMENT de la tabla agenda
+-- AUTO_INCREMENT de la tabla `agenda`
 --
-ALTER TABLE agenda
-  MODIFY idage bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=377;
+ALTER TABLE `agenda`
+  MODIFY `idage` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=377;
 
 --
--- AUTO_INCREMENT de la tabla aprobacion_resultado
+-- AUTO_INCREMENT de la tabla `aprobacion_resultado`
 --
-ALTER TABLE aprobacion_resultado
-  MODIFY idaprob bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+ALTER TABLE `aprobacion_resultado`
+  MODIFY `idaprob` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 
 --
--- AUTO_INCREMENT de la tabla area
+-- AUTO_INCREMENT de la tabla `area`
 --
-ALTER TABLE area
-  MODIFY idare int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+ALTER TABLE `area`
+  MODIFY `idare` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT de la tabla asistente
+-- AUTO_INCREMENT de la tabla `asistente`
 --
-ALTER TABLE asistente
-  MODIFY idasi bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=193;
+ALTER TABLE `asistente`
+  MODIFY `idasi` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=193;
 
 --
--- AUTO_INCREMENT de la tabla aspirante
+-- AUTO_INCREMENT de la tabla `aspirante`
 --
-ALTER TABLE aspirante
-  MODIFY idasp bigint(15) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `aspirante`
+  MODIFY `idasp` bigint(15) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla aula
+-- AUTO_INCREMENT de la tabla `aula`
 --
-ALTER TABLE aula
-  MODIFY idaul int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=229;
+ALTER TABLE `aula`
+  MODIFY `idaul` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=229;
 
 --
--- AUTO_INCREMENT de la tabla bitacora
+-- AUTO_INCREMENT de la tabla `bitacora`
 --
-ALTER TABLE bitacora
-  MODIFY idbitacora int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+ALTER TABLE `bitacora`
+  MODIFY `idbitacora` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT de la tabla calcri
+-- AUTO_INCREMENT de la tabla `calcri`
 --
-ALTER TABLE calcri
-  MODIFY idcal bigint(20) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `calcri`
+  MODIFY `idcal` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla calendario_academico
+-- AUTO_INCREMENT de la tabla `calendario_academico`
 --
-ALTER TABLE calendario_academico
-  MODIFY id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+ALTER TABLE `calendario_academico`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT de la tabla centro
+-- AUTO_INCREMENT de la tabla `centro`
 --
-ALTER TABLE centro
-  MODIFY idcen int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=554545455;
+ALTER TABLE `centro`
+  MODIFY `idcen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=554545455;
 
 --
--- AUTO_INCREMENT de la tabla certificaciones
+-- AUTO_INCREMENT de la tabla `certificaciones`
 --
-ALTER TABLE certificaciones
-  MODIFY idcertificacion int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `certificaciones`
+  MODIFY `idcertificacion` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla cmr
+-- AUTO_INCREMENT de la tabla `cmr`
 --
-ALTER TABLE cmr
-  MODIFY idcmr int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID único';
+ALTER TABLE `cmr`
+  MODIFY `idcmr` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID único';
 
 --
--- AUTO_INCREMENT de la tabla compromiso
+-- AUTO_INCREMENT de la tabla `compromiso`
 --
-ALTER TABLE compromiso
-  MODIFY idcom bigint(15) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `compromiso`
+  MODIFY `idcom` bigint(15) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla configuracion
+-- AUTO_INCREMENT de la tabla `configuracion`
 --
-ALTER TABLE configuracion
-  MODIFY idcof int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+ALTER TABLE `configuracion`
+  MODIFY `idcof` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT de la tabla criterio
+-- AUTO_INCREMENT de la tabla `criterio`
 --
-ALTER TABLE criterio
-  MODIFY idcri bigint(20) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `criterio`
+  MODIFY `idcri` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla dependencias
+-- AUTO_INCREMENT de la tabla `dependencias`
 --
-ALTER TABLE dependencias
-  MODIFY id_dependencia bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+ALTER TABLE `dependencias`
+  MODIFY `id_dependencia` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT de la tabla desercion
+-- AUTO_INCREMENT de la tabla `desercion`
 --
-ALTER TABLE desercion
-  MODIFY iddec bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
+ALTER TABLE `desercion`
+  MODIFY `iddec` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
 
 --
--- AUTO_INCREMENT de la tabla detallesps
+-- AUTO_INCREMENT de la tabla `detallesps`
 --
-ALTER TABLE detallesps
-  MODIFY iddetalle int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `detallesps`
+  MODIFY `iddetalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT de la tabla detalle_soporte
+-- AUTO_INCREMENT de la tabla `detalle_soporte`
 --
-ALTER TABLE detalle_soporte
-  MODIFY iddet bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id detalle soporte', AUTO_INCREMENT=8;
+ALTER TABLE `detalle_soporte`
+  MODIFY `iddet` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id detalle soporte', AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT de la tabla detcom
+-- AUTO_INCREMENT de la tabla `detcom`
 --
-ALTER TABLE detcom
-  MODIFY iddtc bigint(15) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `detcom`
+  MODIFY `iddtc` bigint(15) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla docmat
+-- AUTO_INCREMENT de la tabla `docmat`
 --
-ALTER TABLE docmat
-  MODIFY iddcma bigint(15) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `docmat`
+  MODIFY `iddcma` bigint(15) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla docped
+-- AUTO_INCREMENT de la tabla `docped`
 --
-ALTER TABLE docped
-  MODIFY iddocp bigint(15) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `docped`
+  MODIFY `iddocp` bigint(15) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla documento
+-- AUTO_INCREMENT de la tabla `documento`
 --
-ALTER TABLE documento
-  MODIFY iddoc bigint(15) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `documento`
+  MODIFY `iddoc` bigint(15) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla dominio
+-- AUTO_INCREMENT de la tabla `dominio`
 --
-ALTER TABLE dominio
-  MODIFY iddom int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+ALTER TABLE `dominio`
+  MODIFY `iddom` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
--- AUTO_INCREMENT de la tabla elemento
+-- AUTO_INCREMENT de la tabla `elemento`
 --
-ALTER TABLE elemento
-  MODIFY idele bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=766;
+ALTER TABLE `elemento`
+  MODIFY `idele` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=766;
 
 --
--- AUTO_INCREMENT de la tabla empresa
+-- AUTO_INCREMENT de la tabla `empresa`
 --
-ALTER TABLE empresa
-  MODIFY idemp bigint(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+ALTER TABLE `empresa`
+  MODIFY `idemp` bigint(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT de la tabla evases
+-- AUTO_INCREMENT de la tabla `evases`
 --
-ALTER TABLE evases
-  MODIFY ideva bigint(20) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `evases`
+  MODIFY `ideva` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla evidencia
+-- AUTO_INCREMENT de la tabla `evidencia`
 --
-ALTER TABLE evidencia
-  MODIFY evid bigint(20) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `evidencia`
+  MODIFY `evid` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla flujo
+-- AUTO_INCREMENT de la tabla `flujo`
 --
-ALTER TABLE flujo
-  MODIFY idflu bigint(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+ALTER TABLE `flujo`
+  MODIFY `idflu` bigint(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT de la tabla fotdec
+-- AUTO_INCREMENT de la tabla `fotdec`
 --
-ALTER TABLE fotdec
-  MODIFY idfdc bigint(20) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `fotdec`
+  MODIFY `idfdc` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla foto
+-- AUTO_INCREMENT de la tabla `foto`
 --
-ALTER TABLE foto
-  MODIFY idfot bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=537;
+ALTER TABLE `foto`
+  MODIFY `idfot` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=537;
 
 --
--- AUTO_INCREMENT de la tabla hojatra
+-- AUTO_INCREMENT de la tabla `hojatra`
 --
-ALTER TABLE hojatra
-  MODIFY idnorad bigint(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `hojatra`
+  MODIFY `idnorad` bigint(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT de la tabla horario
+-- AUTO_INCREMENT de la tabla `horario`
 --
-ALTER TABLE horario
-  MODIFY idhor bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID único del horario', AUTO_INCREMENT=68;
+ALTER TABLE `horario`
+  MODIFY `idhor` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID único del horario', AUTO_INCREMENT=68;
 
 --
--- AUTO_INCREMENT de la tabla horas_mensuales
+-- AUTO_INCREMENT de la tabla `horas_mensuales`
 --
-ALTER TABLE horas_mensuales
-  MODIFY id int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `horas_mensuales`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla imagen_usuario
+-- AUTO_INCREMENT de la tabla `imagen_usuario`
 --
-ALTER TABLE imagen_usuario
-  MODIFY idimg bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=111;
+ALTER TABLE `imagen_usuario`
+  MODIFY `idimg` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=111;
 
 --
--- AUTO_INCREMENT de la tabla inasistencia
+-- AUTO_INCREMENT de la tabla `inasistencia`
 --
-ALTER TABLE inasistencia
-  MODIFY idina bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19434;
+ALTER TABLE `inasistencia`
+  MODIFY `idina` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19434;
 
 --
--- AUTO_INCREMENT de la tabla inseva
+-- AUTO_INCREMENT de la tabla `inseva`
 --
-ALTER TABLE inseva
-  MODIFY idins bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+ALTER TABLE `inseva`
+  MODIFY `idins` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT de la tabla juicio
+-- AUTO_INCREMENT de la tabla `juicio`
 --
-ALTER TABLE juicio
-  MODIFY idjui int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID único del juicio', AUTO_INCREMENT=1519;
+ALTER TABLE `juicio`
+  MODIFY `idjui` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID único del juicio', AUTO_INCREMENT=1519;
 
 --
--- AUTO_INCREMENT de la tabla llamado
+-- AUTO_INCREMENT de la tabla `llamado`
 --
-ALTER TABLE llamado
-  MODIFY idllam int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=329;
+ALTER TABLE `llamado`
+  MODIFY `idllam` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=329;
 
 --
--- AUTO_INCREMENT de la tabla minuta
+-- AUTO_INCREMENT de la tabla `minuta`
 --
-ALTER TABLE minuta
-  MODIFY nummin bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=232121;
+ALTER TABLE `minuta`
+  MODIFY `nummin` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=232121;
 
 --
--- AUTO_INCREMENT de la tabla modulo
+-- AUTO_INCREMENT de la tabla `modulo`
 --
-ALTER TABLE modulo
-  MODIFY idmod int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+ALTER TABLE `modulo`
+  MODIFY `idmod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
--- AUTO_INCREMENT de la tabla pagina
+-- AUTO_INCREMENT de la tabla `pagina`
 --
-ALTER TABLE pagina
-  MODIFY idpag bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2475;
+ALTER TABLE `pagina`
+  MODIFY `idpag` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2475;
 
 --
--- AUTO_INCREMENT de la tabla paso
+-- AUTO_INCREMENT de la tabla `paso`
 --
-ALTER TABLE paso
-  MODIFY idpas bigint(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `paso`
+  MODIFY `idpas` bigint(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT de la tabla pazysalvo
+-- AUTO_INCREMENT de la tabla `pazysalvo`
 --
-ALTER TABLE pazysalvo
-  MODIFY idpaz int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `pazysalvo`
+  MODIFY `idpaz` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT de la tabla perfil
+-- AUTO_INCREMENT de la tabla `perfil`
 --
-ALTER TABLE perfil
-  MODIFY idper int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+ALTER TABLE `perfil`
+  MODIFY `idper` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
--- AUTO_INCREMENT de la tabla presaula
+-- AUTO_INCREMENT de la tabla `presaula`
 --
-ALTER TABLE presaula
-  MODIFY idpres bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+ALTER TABLE `presaula`
+  MODIFY `idpres` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
--- AUTO_INCREMENT de la tabla presele
+-- AUTO_INCREMENT de la tabla `presele`
 --
-ALTER TABLE presele
-  MODIFY idprele bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+ALTER TABLE `presele`
+  MODIFY `idprele` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT de la tabla presesp
+-- AUTO_INCREMENT de la tabla `presesp`
 --
-ALTER TABLE presesp
-  MODIFY idpresp bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+ALTER TABLE `presesp`
+  MODIFY `idpresp` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT de la tabla propuesta
+-- AUTO_INCREMENT de la tabla `propuesta`
 --
-ALTER TABLE propuesta
-  MODIFY npro int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `propuesta`
+  MODIFY `npro` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla registro
+-- AUTO_INCREMENT de la tabla `registro`
 --
-ALTER TABLE registro
-  MODIFY iduxf bigint(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20650;
+ALTER TABLE `registro`
+  MODIFY `iduxf` bigint(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20650;
 
 --
--- AUTO_INCREMENT de la tabla sesion
+-- AUTO_INCREMENT de la tabla `sesion`
 --
-ALTER TABLE sesion
-  MODIFY idses bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `sesion`
+  MODIFY `idses` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT de la tabla solicicerti
+-- AUTO_INCREMENT de la tabla `solicicerti`
 --
-ALTER TABLE solicicerti
-  MODIFY id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+ALTER TABLE `solicicerti`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT de la tabla soporte
+-- AUTO_INCREMENT de la tabla `soporte`
 --
-ALTER TABLE soporte
-  MODIFY idsop bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id soporte', AUTO_INCREMENT=8;
+ALTER TABLE `soporte`
+  MODIFY `idsop` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id soporte', AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT de la tabla trazacom
+-- AUTO_INCREMENT de la tabla `trazacom`
 --
-ALTER TABLE trazacom
-  MODIFY idtrht bigint(15) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `trazacom`
+  MODIFY `idtrht` bigint(15) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla trazamat
+-- AUTO_INCREMENT de la tabla `trazamat`
 --
-ALTER TABLE trazamat
-  MODIFY idtrm bigint(15) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `trazamat`
+  MODIFY `idtrm` bigint(15) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla usuario
+-- AUTO_INCREMENT de la tabla `usuario`
 --
-ALTER TABLE usuario
-  MODIFY idusu bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45280;
+ALTER TABLE `usuario`
+  MODIFY `idusu` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45280;
 
 --
--- AUTO_INCREMENT de la tabla valor
+-- AUTO_INCREMENT de la tabla `valor`
 --
-ALTER TABLE valor
-  MODIFY idval int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2011;
+ALTER TABLE `valor`
+  MODIFY `idval` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2011;
 
 --
--- AUTO_INCREMENT de la tabla video
+-- AUTO_INCREMENT de la tabla `video`
 --
-ALTER TABLE video
-  MODIFY idvid bigint(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+ALTER TABLE `video`
+  MODIFY `idvid` bigint(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 
 --
--- AUTO_INCREMENT de la tabla voto
+-- AUTO_INCREMENT de la tabla `voto`
 --
-ALTER TABLE voto
-  MODIFY id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2741;
+ALTER TABLE `voto`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2777;
 
 --
 -- Restricciones para tablas volcadas
 --
 
 --
--- Filtros para la tabla acta
+-- Filtros para la tabla `acta`
 --
-ALTER TABLE acta
-  ADD CONSTRAINT fk_act_usu FOREIGN KEY (idusu) REFERENCES usuario (idusu),
-  ADD CONSTRAINT fk_act_valor FOREIGN KEY (tipact) REFERENCES valor (idval);
+ALTER TABLE `acta`
+  ADD CONSTRAINT `fk_act_usu` FOREIGN KEY (`idusu`) REFERENCES `usuario` (`idusu`),
+  ADD CONSTRAINT `fk_act_valor` FOREIGN KEY (`tipact`) REFERENCES `valor` (`idval`);
 
 --
--- Filtros para la tabla actdec
+-- Filtros para la tabla `actdec`
 --
-ALTER TABLE actdec
-  ADD CONSTRAINT fk_acde_act FOREIGN KEY (idact) REFERENCES acta (idact),
-  ADD CONSTRAINT fk_acde_usu FOREIGN KEY (idusu) REFERENCES usuario (idusu);
+ALTER TABLE `actdec`
+  ADD CONSTRAINT `fk_acde_act` FOREIGN KEY (`idact`) REFERENCES `acta` (`idact`),
+  ADD CONSTRAINT `fk_acde_usu` FOREIGN KEY (`idusu`) REFERENCES `usuario` (`idusu`);
 
 --
--- Filtros para la tabla actividad
+-- Filtros para la tabla `actividad`
 --
-ALTER TABLE actividad
-  ADD CONSTRAINT actividad_ibfk_1 FOREIGN KEY (idses) REFERENCES sesion (idses);
+ALTER TABLE `actividad`
+  ADD CONSTRAINT `actividad_ibfk_1` FOREIGN KEY (`idses`) REFERENCES `sesion` (`idses`);
 
 --
--- Filtros para la tabla area
+-- Filtros para la tabla `area`
 --
-ALTER TABLE area
-  ADD CONSTRAINT fkareusu FOREIGN KEY (idusu) REFERENCES usuario (idusu);
+ALTER TABLE `area`
+  ADD CONSTRAINT `fkareusu` FOREIGN KEY (`idusu`) REFERENCES `usuario` (`idusu`);
 
 --
--- Filtros para la tabla asistente
+-- Filtros para la tabla `asistente`
 --
-ALTER TABLE asistente
-  ADD CONSTRAINT fk_asi_acta FOREIGN KEY (idact) REFERENCES acta (idact),
-  ADD CONSTRAINT fk_asi_usu FOREIGN KEY (idusu) REFERENCES usuario (idusu);
+ALTER TABLE `asistente`
+  ADD CONSTRAINT `fk_asi_acta` FOREIGN KEY (`idact`) REFERENCES `acta` (`idact`),
+  ADD CONSTRAINT `fk_asi_usu` FOREIGN KEY (`idusu`) REFERENCES `usuario` (`idusu`);
 
 --
--- Filtros para la tabla aspirante
+-- Filtros para la tabla `aspirante`
 --
-ALTER TABLE aspirante
-  ADD CONSTRAINT fkasht FOREIGN KEY (idnorad) REFERENCES hojatra (idnorad),
-  ADD CONSTRAINT fkasus FOREIGN KEY (idusu) REFERENCES usuario (idusu);
+ALTER TABLE `aspirante`
+  ADD CONSTRAINT `fkasht` FOREIGN KEY (`idnorad`) REFERENCES `hojatra` (`idnorad`),
+  ADD CONSTRAINT `fkasus` FOREIGN KEY (`idusu`) REFERENCES `usuario` (`idusu`);
 
 --
--- Filtros para la tabla aula
+-- Filtros para la tabla `aula`
 --
-ALTER TABLE aula
-  ADD CONSTRAINT aula_ibfk_1 FOREIGN KEY (idcen) REFERENCES centro (idcen),
-  ADD CONSTRAINT fkaub FOREIGN KEY (codubi) REFERENCES ubica (codubi);
+ALTER TABLE `aula`
+  ADD CONSTRAINT `aula_ibfk_1` FOREIGN KEY (`idcen`) REFERENCES `centro` (`idcen`),
+  ADD CONSTRAINT `fkaub` FOREIGN KEY (`codubi`) REFERENCES `ubica` (`codubi`);
 
 --
--- Filtros para la tabla bitacora
+-- Filtros para la tabla `bitacora`
 --
-ALTER TABLE bitacora
-  ADD CONSTRAINT bitacora_ibfk_1 FOREIGN KEY (idaprendiz) REFERENCES usuario (idusu),
-  ADD CONSTRAINT bitacora_ibfk_2 FOREIGN KEY (idjefe) REFERENCES usuario (idusu),
-  ADD CONSTRAINT bitacora_ibfk_3 FOREIGN KEY (idinstructor) REFERENCES usuario (idusu),
-  ADD CONSTRAINT bitacora_ibfk_4 FOREIGN KEY (idaltep) REFERENCES dominio (iddom);
+ALTER TABLE `bitacora`
+  ADD CONSTRAINT `bitacora_ibfk_1` FOREIGN KEY (`idaprendiz`) REFERENCES `usuario` (`idusu`),
+  ADD CONSTRAINT `bitacora_ibfk_2` FOREIGN KEY (`idjefe`) REFERENCES `usuario` (`idusu`),
+  ADD CONSTRAINT `bitacora_ibfk_3` FOREIGN KEY (`idinstructor`) REFERENCES `usuario` (`idusu`),
+  ADD CONSTRAINT `bitacora_ibfk_4` FOREIGN KEY (`idaltep`) REFERENCES `dominio` (`iddom`);
 
 --
--- Filtros para la tabla calcri
+-- Filtros para la tabla `calcri`
 --
-ALTER TABLE calcri
-  ADD CONSTRAINT calcri_ibfk_1 FOREIGN KEY (idcri) REFERENCES criterio (idcri),
-  ADD CONSTRAINT calcri_ibfk_2 FOREIGN KEY (idusu) REFERENCES usuario (idusu);
+ALTER TABLE `calcri`
+  ADD CONSTRAINT `calcri_ibfk_1` FOREIGN KEY (`idcri`) REFERENCES `criterio` (`idcri`),
+  ADD CONSTRAINT `calcri_ibfk_2` FOREIGN KEY (`idusu`) REFERENCES `usuario` (`idusu`);
 
 --
--- Filtros para la tabla compromiso
+-- Filtros para la tabla `compromiso`
 --
-ALTER TABLE compromiso
-  ADD CONSTRAINT fkdtccom FOREIGN KEY (idval) REFERENCES valor (idval);
+ALTER TABLE `compromiso`
+  ADD CONSTRAINT `fkdtccom` FOREIGN KEY (`idval`) REFERENCES `valor` (`idval`);
 
 --
--- Filtros para la tabla criterio
+-- Filtros para la tabla `criterio`
 --
-ALTER TABLE criterio
-  ADD CONSTRAINT fk_criterio_inseva FOREIGN KEY (idins) REFERENCES inseva (idins);
+ALTER TABLE `criterio`
+  ADD CONSTRAINT `fk_criterio_inseva` FOREIGN KEY (`idins`) REFERENCES `inseva` (`idins`);
 
 --
--- Filtros para la tabla desercion
+-- Filtros para la tabla `desercion`
 --
-ALTER TABLE desercion
-  ADD CONSTRAINT desercion_ibfk_1 FOREIGN KEY (idusu) REFERENCES usuario (idusu),
-  ADD CONSTRAINT desercion_ibfk_2 FOREIGN KEY (idact) REFERENCES acta (idact);
+ALTER TABLE `desercion`
+  ADD CONSTRAINT `desercion_ibfk_1` FOREIGN KEY (`idusu`) REFERENCES `usuario` (`idusu`),
+  ADD CONSTRAINT `desercion_ibfk_2` FOREIGN KEY (`idact`) REFERENCES `acta` (`idact`);
 
 --
--- Filtros para la tabla detalle_soporte
+-- Filtros para la tabla `detalle_soporte`
 --
-ALTER TABLE detalle_soporte
-  ADD CONSTRAINT detalle_soporte_ibfk_1 FOREIGN KEY (idsop) REFERENCES soporte (idsop),
-  ADD CONSTRAINT detalle_soporte_ibfk_2 FOREIGN KEY (idusu) REFERENCES usuario (idusu);
+ALTER TABLE `detalle_soporte`
+  ADD CONSTRAINT `detalle_soporte_ibfk_1` FOREIGN KEY (`idsop`) REFERENCES `soporte` (`idsop`),
+  ADD CONSTRAINT `detalle_soporte_ibfk_2` FOREIGN KEY (`idusu`) REFERENCES `usuario` (`idusu`);
 
 --
--- Filtros para la tabla detcom
+-- Filtros para la tabla `detcom`
 --
-ALTER TABLE detcom
-  ADD CONSTRAINT fkdtcom FOREIGN KEY (idcom) REFERENCES compromiso (idcom);
+ALTER TABLE `detcom`
+  ADD CONSTRAINT `fkdtcom` FOREIGN KEY (`idcom`) REFERENCES `compromiso` (`idcom`);
 
 --
--- Filtros para la tabla docmat
+-- Filtros para la tabla `docmat`
 --
-ALTER TABLE docmat
-  ADD CONSTRAINT fkuxcdpd FOREIGN KEY (iddocp) REFERENCES docped (iddocp),
-  ADD CONSTRAINT fkuxcreg FOREIGN KEY (iduxf) REFERENCES registro (iduxf);
+ALTER TABLE `docmat`
+  ADD CONSTRAINT `fkuxcdpd` FOREIGN KEY (`iddocp`) REFERENCES `docped` (`iddocp`),
+  ADD CONSTRAINT `fkuxcreg` FOREIGN KEY (`iduxf`) REFERENCES `registro` (`iduxf`);
 
 --
--- Filtros para la tabla documento
+-- Filtros para la tabla `documento`
 --
-ALTER TABLE documento
-  ADD CONSTRAINT fkdocht FOREIGN KEY (idnorad) REFERENCES hojatra (idnorad);
+ALTER TABLE `documento`
+  ADD CONSTRAINT `fkdocht` FOREIGN KEY (`idnorad`) REFERENCES `hojatra` (`idnorad`);
 
 --
--- Filtros para la tabla elemento
+-- Filtros para la tabla `elemento`
 --
-ALTER TABLE elemento
-  ADD CONSTRAINT elemento_ibfk_1 FOREIGN KEY (idusu) REFERENCES usuario (idusu);
+ALTER TABLE `elemento`
+  ADD CONSTRAINT `elemento_ibfk_1` FOREIGN KEY (`idusu`) REFERENCES `usuario` (`idusu`);
 
 --
--- Filtros para la tabla evases
+-- Filtros para la tabla `evases`
 --
-ALTER TABLE evases
-  ADD CONSTRAINT evases_ibfk_1 FOREIGN KEY (idses) REFERENCES sesion (idses),
-  ADD CONSTRAINT evases_ibfk_2 FOREIGN KEY (idusu) REFERENCES usuario (idusu);
+ALTER TABLE `evases`
+  ADD CONSTRAINT `evases_ibfk_1` FOREIGN KEY (`idses`) REFERENCES `sesion` (`idses`),
+  ADD CONSTRAINT `evases_ibfk_2` FOREIGN KEY (`idusu`) REFERENCES `usuario` (`idusu`);
 
 --
--- Filtros para la tabla evidencia
+-- Filtros para la tabla `evidencia`
 --
-ALTER TABLE evidencia
-  ADD CONSTRAINT evidencia_ibfk_1 FOREIGN KEY (iddec) REFERENCES desercion (iddec);
+ALTER TABLE `evidencia`
+  ADD CONSTRAINT `evidencia_ibfk_1` FOREIGN KEY (`iddec`) REFERENCES `desercion` (`iddec`);
 
 --
--- Filtros para la tabla ficha
+-- Filtros para la tabla `ficha`
 --
-ALTER TABLE ficha
-  ADD CONSTRAINT ficha_ibfk_2 FOREIGN KEY (jornada) REFERENCES valor (idval),
-  ADD CONSTRAINT ficha_ibfk_3 FOREIGN KEY (idcen) REFERENCES centro (idcen);
+ALTER TABLE `ficha`
+  ADD CONSTRAINT `ficha_ibfk_2` FOREIGN KEY (`jornada`) REFERENCES `valor` (`idval`),
+  ADD CONSTRAINT `ficha_ibfk_3` FOREIGN KEY (`idcen`) REFERENCES `centro` (`idcen`);
 
 --
--- Filtros para la tabla filhor
+-- Filtros para la tabla `filhor`
 --
-ALTER TABLE filhor
-  ADD CONSTRAINT filhor_ibfk_1 FOREIGN KEY (idusu) REFERENCES usuario (idusu),
-  ADD CONSTRAINT filhor_ibfk_2 FOREIGN KEY (idare) REFERENCES area (idare);
+ALTER TABLE `filhor`
+  ADD CONSTRAINT `filhor_ibfk_1` FOREIGN KEY (`idusu`) REFERENCES `usuario` (`idusu`),
+  ADD CONSTRAINT `filhor_ibfk_2` FOREIGN KEY (`idare`) REFERENCES `area` (`idare`);
 
 --
--- Filtros para la tabla fotdec
+-- Filtros para la tabla `fotdec`
 --
-ALTER TABLE fotdec
-  ADD CONSTRAINT fotdec_ibfk_1 FOREIGN KEY (iddec) REFERENCES desercion (iddec);
+ALTER TABLE `fotdec`
+  ADD CONSTRAINT `fotdec_ibfk_1` FOREIGN KEY (`iddec`) REFERENCES `desercion` (`iddec`);
 
 --
--- Filtros para la tabla foto
+-- Filtros para la tabla `foto`
 --
-ALTER TABLE foto
-  ADD CONSTRAINT foto_ibfk_1 FOREIGN KEY (idele) REFERENCES elemento (idele);
+ALTER TABLE `foto`
+  ADD CONSTRAINT `foto_ibfk_1` FOREIGN KEY (`idele`) REFERENCES `elemento` (`idele`);
 
 --
--- Filtros para la tabla hdtxusu
+-- Filtros para la tabla `hdtxusu`
 --
-ALTER TABLE hdtxusu
-  ADD CONSTRAINT fkhtus FOREIGN KEY (idnorad) REFERENCES hojatra (idnorad),
-  ADD CONSTRAINT fkusht FOREIGN KEY (idusu) REFERENCES usuario (idusu);
+ALTER TABLE `hdtxusu`
+  ADD CONSTRAINT `fkhtus` FOREIGN KEY (`idnorad`) REFERENCES `hojatra` (`idnorad`),
+  ADD CONSTRAINT `fkusht` FOREIGN KEY (`idusu`) REFERENCES `usuario` (`idusu`);
 
 --
--- Filtros para la tabla hojatra
+-- Filtros para la tabla `hojatra`
 --
-ALTER TABLE hojatra
-  ADD CONSTRAINT fkhtem FOREIGN KEY (idemp) REFERENCES empresa (idemp),
-  ADD CONSTRAINT fkhtpr FOREIGN KEY (codpro) REFERENCES programa (codpro);
+ALTER TABLE `hojatra`
+  ADD CONSTRAINT `fkhtem` FOREIGN KEY (`idemp`) REFERENCES `empresa` (`idemp`),
+  ADD CONSTRAINT `fkhtpr` FOREIGN KEY (`codpro`) REFERENCES `programa` (`codpro`);
 
 --
--- Filtros para la tabla imagen_usuario
+-- Filtros para la tabla `imagen_usuario`
 --
-ALTER TABLE imagen_usuario
-  ADD CONSTRAINT imagen_usuario_ibfk_1 FOREIGN KEY (idusu) REFERENCES usuario (idusu) ON DELETE CASCADE;
+ALTER TABLE `imagen_usuario`
+  ADD CONSTRAINT `imagen_usuario_ibfk_1` FOREIGN KEY (`idusu`) REFERENCES `usuario` (`idusu`) ON DELETE CASCADE;
 
 --
--- Filtros para la tabla inasistencia
+-- Filtros para la tabla `inasistencia`
 --
-ALTER TABLE inasistencia
-  ADD CONSTRAINT inasistencia_ibfk_1 FOREIGN KEY (idusu) REFERENCES usuario (idusu);
+ALTER TABLE `inasistencia`
+  ADD CONSTRAINT `inasistencia_ibfk_1` FOREIGN KEY (`idusu`) REFERENCES `usuario` (`idusu`);
 
 --
--- Filtros para la tabla inseva
+-- Filtros para la tabla `inseva`
 --
-ALTER TABLE inseva
-  ADD CONSTRAINT fk_inseva_resultado FOREIGN KEY (idres) REFERENCES resultado (idres);
+ALTER TABLE `inseva`
+  ADD CONSTRAINT `fk_inseva_resultado` FOREIGN KEY (`idres`) REFERENCES `resultado` (`idres`);
 
 --
--- Filtros para la tabla pagper
+-- Filtros para la tabla `pagper`
 --
-ALTER TABLE pagper
-  ADD CONSTRAINT pagper_ibfk_1 FOREIGN KEY (idpag) REFERENCES pagina (idpag),
-  ADD CONSTRAINT pagper_ibfk_2 FOREIGN KEY (idper) REFERENCES perfil (idper);
+ALTER TABLE `pagper`
+  ADD CONSTRAINT `pagper_ibfk_1` FOREIGN KEY (`idpag`) REFERENCES `pagina` (`idpag`),
+  ADD CONSTRAINT `pagper_ibfk_2` FOREIGN KEY (`idper`) REFERENCES `perfil` (`idper`);
 
 --
--- Filtros para la tabla paso
+-- Filtros para la tabla `paso`
 --
-ALTER TABLE paso
-  ADD CONSTRAINT fkflps FOREIGN KEY (idflu) REFERENCES flujo (idflu),
-  ADD CONSTRAINT fkpspf FOREIGN KEY (idper) REFERENCES perfil (idper);
+ALTER TABLE `paso`
+  ADD CONSTRAINT `fkflps` FOREIGN KEY (`idflu`) REFERENCES `flujo` (`idflu`),
+  ADD CONSTRAINT `fkpspf` FOREIGN KEY (`idper`) REFERENCES `perfil` (`idper`);
 
 --
--- Filtros para la tabla perfil
+-- Filtros para la tabla `perfil`
 --
-ALTER TABLE perfil
-  ADD CONSTRAINT perfil_ibfk_1 FOREIGN KEY (idmod) REFERENCES modulo (idmod);
+ALTER TABLE `perfil`
+  ADD CONSTRAINT `perfil_ibfk_1` FOREIGN KEY (`idmod`) REFERENCES `modulo` (`idmod`);
 
 --
--- Filtros para la tabla propuesta
+-- Filtros para la tabla `propuesta`
 --
-ALTER TABLE propuesta
-  ADD CONSTRAINT propuesta_ibfk_1 FOREIGN KEY (idusu) REFERENCES usuario (idusu),
-  ADD CONSTRAINT propuesta_ibfk_2 FOREIGN KEY (idval) REFERENCES valor (idval);
+ALTER TABLE `propuesta`
+  ADD CONSTRAINT `propuesta_ibfk_1` FOREIGN KEY (`idusu`) REFERENCES `usuario` (`idusu`),
+  ADD CONSTRAINT `propuesta_ibfk_2` FOREIGN KEY (`idval`) REFERENCES `valor` (`idval`);
 
 --
--- Filtros para la tabla proxcom
+-- Filtros para la tabla `proxcom`
 --
-ALTER TABLE proxcom
-  ADD CONSTRAINT fkprocom FOREIGN KEY (codpro) REFERENCES programa (codpro),
-  ADD CONSTRAINT proxcom_ibfk_1 FOREIGN KEY (idcom) REFERENCES competencia (idcom);
+ALTER TABLE `proxcom`
+  ADD CONSTRAINT `fkprocom` FOREIGN KEY (`codpro`) REFERENCES `programa` (`codpro`),
+  ADD CONSTRAINT `proxcom_ibfk_1` FOREIGN KEY (`idcom`) REFERENCES `competencia` (`idcom`);
 
 --
--- Filtros para la tabla registro
+-- Filtros para la tabla `registro`
 --
-ALTER TABLE registro
-  ADD CONSTRAINT fkregfic FOREIGN KEY (idfic) REFERENCES ficha (idfic),
-  ADD CONSTRAINT fkregusu FOREIGN KEY (idusu) REFERENCES usuario (idusu);
+ALTER TABLE `registro`
+  ADD CONSTRAINT `fkregfic` FOREIGN KEY (`idfic`) REFERENCES `ficha` (`idfic`),
+  ADD CONSTRAINT `fkregusu` FOREIGN KEY (`idusu`) REFERENCES `usuario` (`idusu`);
 
 --
--- Filtros para la tabla resultado
+-- Filtros para la tabla `resultado`
 --
-ALTER TABLE resultado
-  ADD CONSTRAINT fkrescom FOREIGN KEY (idcom) REFERENCES competencia (idcom);
+ALTER TABLE `resultado`
+  ADD CONSTRAINT `fkrescom` FOREIGN KEY (`idcom`) REFERENCES `competencia` (`idcom`);
 
 --
--- Filtros para la tabla resxins
+-- Filtros para la tabla `resxins`
 --
-ALTER TABLE resxins
-  ADD CONSTRAINT fkresins FOREIGN KEY (idusu) REFERENCES usuario (idusu),
-  ADD CONSTRAINT resxins_ibfk_1 FOREIGN KEY (idres) REFERENCES resultado (idres);
+ALTER TABLE `resxins`
+  ADD CONSTRAINT `fkresins` FOREIGN KEY (`idusu`) REFERENCES `usuario` (`idusu`),
+  ADD CONSTRAINT `resxins_ibfk_1` FOREIGN KEY (`idres`) REFERENCES `resultado` (`idres`);
 
 --
--- Filtros para la tabla sesion
+-- Filtros para la tabla `sesion`
 --
-ALTER TABLE sesion
-  ADD CONSTRAINT sesion_ibfk_1 FOREIGN KEY (idage) REFERENCES agenda (idage);
+ALTER TABLE `sesion`
+  ADD CONSTRAINT `sesion_ibfk_1` FOREIGN KEY (`idage`) REFERENCES `agenda` (`idage`);
 
 --
--- Filtros para la tabla solicicerti
+-- Filtros para la tabla `solicicerti`
 --
-ALTER TABLE solicicerti
-  ADD CONSTRAINT soliciCerti_ibfk_1 FOREIGN KEY (idusu) REFERENCES usuario (idusu);
+ALTER TABLE `solicicerti`
+  ADD CONSTRAINT `soliciCerti_ibfk_1` FOREIGN KEY (`idusu`) REFERENCES `usuario` (`idusu`);
 
 --
--- Filtros para la tabla soporte
+-- Filtros para la tabla `soporte`
 --
-ALTER TABLE soporte
-  ADD CONSTRAINT soporte_ibfk_1 FOREIGN KEY (idusu) REFERENCES usuario (idusu);
+ALTER TABLE `soporte`
+  ADD CONSTRAINT `soporte_ibfk_1` FOREIGN KEY (`idusu`) REFERENCES `usuario` (`idusu`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
