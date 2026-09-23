@@ -182,6 +182,23 @@ class Mnvv{
         return $result->fetch(PDO::FETCH_ASSOC);
     }
 
+    // Metodo para obtener estadisticas globales de aprendices que no han votado (todas las fichas)
+    public function getEstadisticasGlobalesNoVotantes() {
+        $sql = "SELECT COUNT(DISTINCT u.idusu) AS total_personas,
+                       COUNT(DISTINCT CASE WHEN vo.idusu IS NULL THEN u.idusu END) AS no_votaron,
+                       COUNT(DISTINCT CASE WHEN vo.idusu IS NOT NULL THEN u.idusu END) AS votaron
+                FROM usuario AS u
+                INNER JOIN usufic AS uf ON u.idusu = uf.idusu AND uf.actfic = 1
+                LEFT JOIN voto AS vo ON u.idusu = vo.idusu
+                WHERE (u.idper = 3 OR u.idper = 4 OR u.idper = 13 OR u.idper = 8)";
+
+        $modelo = new conexion();
+        $conexion = $modelo->get_conexion();
+        $result = $conexion->prepare($sql);
+        $result->execute();
+        return $result->fetch(PDO::FETCH_ASSOC);
+    }
+
     // Metodo para obtener todos los aprendices 
     public function getAll($fidfic = null) {
         $sql = "SELECT u.idusu, u.ndocusu, u.nomusu, u.idper, p.nomper, 

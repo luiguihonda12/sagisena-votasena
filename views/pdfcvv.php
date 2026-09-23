@@ -15,7 +15,7 @@ $datOne = $mcvh->selOne();
 
 function urlimg($url)
 {
-    $imagenBase64 = "data:image/png;base64," . base64_encode(file_get_contents($url));
+    $imagenBase64 = "data:img/png;base64," . base64_encode(file_get_contents($url));
     return $imagenBase64;
 }
 ?>
@@ -112,7 +112,7 @@ function urlimg($url)
 </head>
 <body onload="window.print()">
     <div class="cert-content">
-        <img src="<?php echo urlimg('../image/sena.png'); ?>"><br><br>
+        <img src="<?php echo urlimg('../img/sena.png'); ?>"><br><br>
 
         <h2>El Servicio Nacional de Aprendizaje SENA</h2>
         <p><strong>Hace constar que</strong></p>

@@ -2,6 +2,20 @@
 
 <?php echo titulo2("<i class='fas fa-users'></i> No votantes vocero", 2); ?>
 
+<!-- Dashboard: Aprendices que no han votado (global) -->
+<div class="card border-0 shadow-sm rounded-3 mb-4">
+    <div class="card-body p-3 p-md-4 d-flex align-items-center">
+        <div class="rounded-3 bg-danger-subtle text-danger p-3 d-flex align-items-center justify-content-center me-3">
+            <i class="fas fa-user-times fa-2x"></i>
+        </div>
+        <div>
+            <span class="text-muted small text-uppercase fw-semibold d-block mb-1">Aprendices que no han votado</span>
+            <h3 class="mb-0 fw-bold text-danger"><?= number_format($gafGlobal['no_votaron'], 0, ',', '.'); ?></h3>
+            <small class="text-muted"><i class="fas fa-layer-group me-1"></i> Total en todas las fichas del sistema</small>
+        </div>
+    </div>
+</div>
+
 <!-- Buscador de Ficha -->
 <div class="card border-0 shadow-sm rounded-3 mb-4">
     <div class="card-body p-3 p-md-4">
@@ -26,7 +40,7 @@
                     </button>
                 </div>
                 <!-- Dropdown flotante de resultados -->
-                <div id="nvvv-dropdown-fichas" class="shadow rounded-3 border bg-white position-absolute start-0 end-0" style="display:none; top:100%; max-height: 280px; overflow-y: auto; z-index: 1050; margin-top: 4px;"></div>
+                <div id="nvvv-dropdown-fichas" class="shadow rounded-3 border bg-white position-absolute start-0 end-0" style="display:none; top:100%; max-height: 280px; overflow-y: auto; z-index: 1030; margin-top: 4px;"></div>
             </div>
         </form>
     </div>
@@ -141,14 +155,11 @@
     <div class="mb-4">
         <?php if(!empty($candidatos) || !empty($aprendices)): ?>
 
-            <!-- SECCIÓN 1: CANDIDATOS A VOCERO (CON PRIORIDAD) -->
+            <!-- SECCIÓN 1: CANDIDATOS A VOCERO -->
             <div class="d-flex align-items-center justify-content-between mb-3 pb-2 border-bottom">
                 <h5 class="mb-0 fw-bold text-dark d-flex align-items-center">
                     <i class="fas fa-bullhorn text-success me-2"></i> Candidatos a Vocero (<?= count($candidatos); ?>)
                 </h5>
-                <span class="badge bg-warning text-dark px-3 py-1 rounded-pill">
-                    <i class="fas fa-star me-1"></i> Prioridad
-                </span>
             </div>
 
             <?php if(!empty($candidatos)): ?>
@@ -156,9 +167,7 @@
                     <div class="card border-0 shadow-sm rounded-3 mb-2" style="border-left: 5px solid #198754 !important;">
                         <div class="card-body p-3 d-flex flex-wrap align-items-center justify-content-between gap-2">
                             <div class="d-flex align-items-center gap-3">
-                                <div class="rounded-circle d-flex align-items-center justify-content-center text-white flex-shrink-0" style="width: 44px; height: 44px; background-color: #198754;">
-                                    <i class="fas fa-user-tie fa-lg"></i>
-                                </div>
+                                <img src="img/user.jpg" alt="Candidato a Vocero" width="44" height="44" class="rounded-circle border flex-shrink-0" style="object-fit: cover;">
                                 <div>
                                     <div class="d-flex align-items-center gap-2 flex-wrap mb-1">
                                         <span class="fw-bold text-dark fs-6"><?= htmlspecialchars($candidato['nomusu'], ENT_QUOTES, 'UTF-8'); ?></span>
@@ -203,9 +212,7 @@
                     <div class="card border-0 shadow-sm rounded-3 mb-2">
                         <div class="card-body p-3 d-flex flex-wrap align-items-center justify-content-between gap-2">
                             <div class="d-flex align-items-center gap-3">
-                                <div class="rounded-circle bg-light d-flex align-items-center justify-content-center text-secondary border flex-shrink-0" style="width: 42px; height: 42px;">
-                                    <i class="fas fa-user"></i>
-                                </div>
+                                <img src="img/user.jpg" alt="Aprendiz" width="42" height="42" class="rounded-circle border flex-shrink-0" style="object-fit: cover;">
                                 <div>
                                     <div class="fw-semibold text-dark mb-1"><?= htmlspecialchars($aprendiz['nomusu'], ENT_QUOTES, 'UTF-8'); ?></div>
                                     <div class="text-muted small">

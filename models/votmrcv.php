@@ -70,7 +70,8 @@ class Votmrcv{
                 LEFT JOIN usuario AS ins ON f.idusu = ins.idusu
                 LEFT JOIN voto AS vo ON u.idusu = vo.canusu
                 WHERE uf.idfic = :idfic
-                AND up.idper = 13
+                AND uf.actfic = 1
+                AND up.idper IN (3, 13)
                 GROUP BY u.idusu, u.ndocusu, u.nomusu, u.fotcan, u.emausu, u.telcan, u.tdousu, vtd.nomval, f.idfic, f.nomfic, v.nomval, f.idusu, ins.nomusu, ins.emausu, ins.ndocusu
                 ORDER BY total_votos DESC, u.nomusu ASC";
         

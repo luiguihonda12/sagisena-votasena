@@ -59,63 +59,33 @@
     </div>
 </div>
 
-<!-- Filtro y Selector de Ficha con Búsqueda -->
+<!-- Filtro de Ficha con Búsqueda -->
 <div class="card border shadow-sm rounded-3 mb-4">
     <div class="card-body p-3 p-md-4">
         <form id="formFicha" name="frm1" action="home.php?pg=<?= $pg; ?>" method="POST">
             <input type="hidden" name="pg" value="<?= $pg; ?>">
-            <div class="row g-3 align-items-center">
-                <!-- Campo de búsqueda en tiempo real con lista de resultados flotante -->
-                <div class="col-12 col-md-6 position-relative">
-                    <label for="buscar-ficha-input" class="form-label fw-semibold text-secondary mb-1">
-                        <i class="fas fa-search text-success me-1"></i> Buscar Ficha por Número o Nombre
-                    </label>
-                    <div class="input-group">
-                        <span class="input-group-text bg-light text-muted">
-                            <i class="fas fa-filter"></i>
-                        </span>
-                        <input type="text" 
-                               id="buscar-ficha-input" 
-                               class="form-control" 
-                               placeholder="Escriba número o nombre (ej: ADSO, 269...)..." 
-                               autocomplete="off">
-                        <button class="btn btn-outline-secondary" type="button" id="btn-limpiar-busqueda" title="Limpiar búsqueda">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                    <!-- Menú flotante con resultados -->
-                    <div id="dropdown-fichas-resultados" 
-                         class="list-group position-absolute w-100 shadow mt-1 overflow-auto rounded-3 border" 
-                         style="top: 100%; left: 0; z-index: 1050; max-height: 280px; display: none;"></div>
+            <input type="hidden" name="idficfil" id="idficfil-hidden" value="<?= isset($_REQUEST['idficfil']) ? htmlspecialchars($_REQUEST['idficfil'], ENT_QUOTES, 'UTF-8') : ''; ?>">
+            <div class="position-relative">
+                <label for="buscar-ficha-input" class="form-label fw-semibold text-secondary mb-2 d-flex align-items-center small text-uppercase">
+                    <i class="fas fa-search text-success me-2"></i> Buscar Ficha de Formación
+                </label>
+                <div class="input-group">
+                    <span class="input-group-text bg-light border-end-0">
+                        <i class="fas fa-id-card text-muted"></i>
+                    </span>
+                    <input type="text"
+                           id="buscar-ficha-input"
+                           class="form-control border-start-0"
+                           placeholder="Escriba número de ficha o nombre del programa (ej: ADSO, 269...)..."
+                           autocomplete="off">
+                    <button class="btn btn-outline-secondary" type="button" id="btn-limpiar-busqueda" title="Limpiar búsqueda">
+                        <i class="fas fa-times"></i>
+                    </button>
                 </div>
-
-                <!-- Selector de Ficha sincronizado -->
-                <div class="col-12 col-md-6">
-                    <label for="ficha-selector" class="form-label fw-semibold text-secondary mb-1">
-                        <i class="fas fa-id-card text-success me-1"></i> Seleccione Ficha para ver aprendices
-                    </label>
-                    <select name="idficfil" id="ficha-selector" class="form-select" onchange="this.form.submit();" required>
-                        <option value="">-- Seleccione una ficha --</option>
-                        <?php
-                        if ($dfi) {
-                            foreach ($dfi as $de) {
-                                $jornadaLimpia = (isset($de['nomval']) && strpos($de['nomval'], 'Ã') !== false) ? @utf8_decode($de['nomval']) : ($de['nomval'] ?? '');
-                                $jornadaLimpia = str_replace(['MaÃ±ana', 'maÃ±ana'], ['Mañana', 'mañana'], $jornadaLimpia);
-                                $selected = (isset($_REQUEST['idficfil']) && $_REQUEST['idficfil'] == $de['idfic']) ? 'selected' : '';
-                        ?>
-                                <option value="<?= $de['idfic']; ?>" 
-                                        data-numero="<?= $de['idfic']; ?>"
-                                        data-nombre="<?= htmlspecialchars(mb_strtolower($de['nomfic'], 'UTF-8')); ?>"
-                                        data-jornada="<?= htmlspecialchars(mb_strtolower($jornadaLimpia, 'UTF-8')); ?>"
-                                        data-nombre-mostrar="<?= htmlspecialchars($de['nomfic']); ?>"
-                                        data-jornada-mostrar="<?= htmlspecialchars($jornadaLimpia); ?>"
-                                        <?= $selected; ?>>
-                                    <?= $de['idfic']; ?> - <?= $de['nomfic']; ?> (<?= $jornadaLimpia; ?>)
-                                </option>
-                        <?php }
-                        } ?>
-                    </select>
-                </div>
+                <!-- Menú flotante con resultados -->
+                <div id="dropdown-fichas-resultados"
+                     class="list-group position-absolute w-100 shadow mt-1 overflow-auto rounded-3 border"
+                     style="top: 100%; left: 0; z-index: 1030; max-height: 280px; display: none;"></div>
             </div>
         </form>
     </div>
@@ -242,17 +212,23 @@
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     const searchInput = document.getElementById('buscar-ficha-input');
-    const selectFicha = document.getElementById('ficha-selector');
+    const fichaHidden = document.getElementById('idficfil-hidden');
     const btnLimpiar = document.getElementById('btn-limpiar-busqueda');
     const dropdownResultados = document.getElementById('dropdown-fichas-resultados');
     const formFicha = document.getElementById('formFicha');
 
-    if (!selectFicha || !searchInput) return;
+    if (!searchInput || !fichaHidden) return;
 
-    // Almacenar todas las opciones originales
-    const todasLasOpciones = Array.from(selectFicha.options);
-    const placeholderOption = todasLasOpciones[0];
-    const opcionesFichas = todasLasOpciones.slice(1);
+    // Lista de fichas inyectada desde PHP
+    const listaFichas = [
+        <?php foreach ($dfi ?? [] as $de):
+            $jornadaLimpia = (isset($de['nomval']) && strpos($de['nomval'], 'Ã') !== false) ? @utf8_decode($de['nomval']) : ($de['nomval'] ?? '');
+            $jornadaLimpia = str_replace(['MaÃ±ana', 'maÃ±ana'], ['Mañana', 'mañana'], $jornadaLimpia);
+        ?>
+        { numero: <?= json_encode($de['idfic']); ?>, nombre: <?= json_encode($de['nomfic']); ?>, jornada: <?= json_encode($jornadaLimpia); ?> },
+        <?php endforeach; ?>
+    ];
+
     let activeIndex = -1;
 
     // Función para normalizar cadenas (quitar tildes y pasar a minúsculas)
@@ -265,6 +241,30 @@ document.addEventListener('DOMContentLoaded', function () {
             .trim();
     }
 
+    // Badge de jornada con icono
+    function badgeJornada(jornada) {
+        const j = normalizar(jornada);
+        let badgeClass = 'bg-light text-dark border';
+        let iconoJornada = 'fa-clock';
+        if (j.includes('manana')) {
+            badgeClass = 'bg-warning-subtle text-dark border border-warning';
+            iconoJornada = 'fa-sun';
+        } else if (j.includes('tarde')) {
+            badgeClass = 'bg-info-subtle text-dark border border-info';
+            iconoJornada = 'fa-cloud-sun';
+        } else if (j.includes('virtual')) {
+            badgeClass = 'bg-primary-subtle text-primary border border-primary';
+            iconoJornada = 'fa-laptop';
+        } else if (j.includes('noche') || j.includes('nocturna')) {
+            badgeClass = 'bg-dark text-white';
+            iconoJornada = 'fa-moon';
+        } else if (j.includes('fin de semana') || j.includes('sabado')) {
+            badgeClass = 'bg-secondary text-white';
+            iconoJornada = 'fa-calendar-week';
+        }
+        return '<span class="badge ' + badgeClass + ' text-nowrap px-2 py-1"><i class="fas ' + iconoJornada + ' me-1"></i>' + (jornada || 'Jornada N/A') + '</span>';
+    }
+
     // Coincidencia inteligente por frase completa o por cada palabra
     function coincideFicha(query, numero, nombre, jornada, textoCompleto) {
         if (!query) return true;
@@ -273,131 +273,62 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         const palabras = query.split(/\s+/).filter(p => p.length > 0);
         if (palabras.length > 1) {
-            return palabras.every(p => 
+            return palabras.every(p =>
                 numero.includes(p) || nombre.includes(p) || jornada.includes(p) || textoCompleto.includes(p)
             );
         }
         return false;
     }
 
-    // Función para filtrar las opciones y mostrar el dropdown inferior
-    function filtrarOpciones(abrirDropdown = true) {
+    function filtrarOpciones() {
         const query = normalizar(searchInput.value);
-        const valorSeleccionado = selectFicha.value;
         activeIndex = -1;
 
-        // Limpiar select nativo y reinsertar placeholder
-        selectFicha.innerHTML = '';
-        selectFicha.appendChild(placeholderOption.cloneNode(true));
+        if (!dropdownResultados) return;
+        dropdownResultados.innerHTML = '';
 
-        if (dropdownResultados) {
-            dropdownResultados.innerHTML = '';
-        }
-
-        let coincidencias = [];
-        let opcionSeleccionadaExiste = false;
-
-        opcionesFichas.forEach(function (opt) {
-            const numero = normalizar(opt.getAttribute('data-numero') || '');
-            const nombre = normalizar(opt.getAttribute('data-nombre') || '');
-            const jornada = normalizar(opt.getAttribute('data-jornada') || '');
-            const textoCompleto = normalizar(opt.text);
-
-            const nombreMostrar = opt.getAttribute('data-nombre-mostrar') || opt.text;
-            const jornadaMostrar = opt.getAttribute('data-jornada-mostrar') || '';
-
-            if (coincideFicha(query, numero, nombre, jornada, textoCompleto)) {
-                const optClon = opt.cloneNode(true);
-                if (opt.value === valorSeleccionado) {
-                    optClon.selected = true;
-                    opcionSeleccionadaExiste = true;
-                }
-                selectFicha.appendChild(optClon);
-
-                coincidencias.push({
-                    numero: opt.value,
-                    nombreMostrar: nombreMostrar,
-                    jornadaMostrar: jornadaMostrar,
-                    textoCompleto: opt.text
-                });
-            }
+        const coincidencias = listaFichas.filter(function (item) {
+            const numero = normalizar(item.numero);
+            const nombre = normalizar(item.nombre);
+            const jornada = normalizar(item.jornada);
+            const textoCompleto = normalizar(item.numero + ' ' + item.nombre);
+            return coincideFicha(query, numero, nombre, jornada, textoCompleto);
         });
 
-        if (!opcionSeleccionadaExiste && valorSeleccionado && query) {
-            selectFicha.value = '';
-        }
-
-        // Renderizar el dropdown inferior si el usuario está escribiendo
-        if (dropdownResultados) {
-            if (query.length > 0 && abrirDropdown) {
-                if (coincidencias.length > 0) {
-                    coincidencias.forEach(function (item, index) {
-                        const itemBtn = document.createElement('button');
-                        itemBtn.type = 'button';
-                        itemBtn.className = 'list-group-item list-group-item-action d-flex justify-content-between align-items-center py-2 px-3 border-bottom';
-                        itemBtn.dataset.index = index;
-                        itemBtn.dataset.idfic = item.numero;
-
-                        const jLower = normalizar(item.jornadaMostrar);
-                        let badgeClass = 'bg-light text-dark border';
-                        let iconoJornada = 'fa-clock';
-                        if (jLower.includes('manana')) {
-                            badgeClass = 'bg-warning-subtle text-dark border border-warning';
-                            iconoJornada = 'fa-sun';
-                        } else if (jLower.includes('tarde')) {
-                            badgeClass = 'bg-info-subtle text-dark border border-info';
-                            iconoJornada = 'fa-cloud-sun';
-                        } else if (jLower.includes('virtual')) {
-                            badgeClass = 'bg-primary-subtle text-primary border border-primary';
-                            iconoJornada = 'fa-laptop';
-                        } else if (jLower.includes('noche') || jLower.includes('nocturna')) {
-                            badgeClass = 'bg-dark text-white';
-                            iconoJornada = 'fa-moon';
-                        }
-
-                        itemBtn.innerHTML = `
-                            <div class="text-truncate me-2">
-                                <strong class="text-success">${item.numero}</strong> - <span class="text-dark">${item.nombreMostrar}</span>
-                            </div>
-                            <span class="badge ${badgeClass} text-nowrap px-2 py-1">
-                                <i class="fas ${iconoJornada} me-1"></i>${item.jornadaMostrar || 'Jornada N/A'}
-                            </span>
-                        `;
-
-                        itemBtn.addEventListener('click', function () {
-                            seleccionarFicha(item.numero, item.textoCompleto);
-                        });
-
-                        dropdownResultados.appendChild(itemBtn);
-                    });
-                } else {
-                    dropdownResultados.innerHTML = `
-                        <div class="p-3 text-muted text-center small bg-white">
-                            <i class="fas fa-circle-exclamation text-warning me-1"></i> No se encontraron fichas para "<strong>${searchInput.value}</strong>"
-                        </div>
-                    `;
-                }
-                dropdownResultados.style.display = 'block';
-            } else {
-                dropdownResultados.style.display = 'none';
-            }
+        if (query.length > 0 && coincidencias.length > 0) {
+            coincidencias.forEach(function (item, index) {
+                const itemBtn = document.createElement('button');
+                itemBtn.type = 'button';
+                itemBtn.className = 'list-group-item list-group-item-action d-flex justify-content-between align-items-center py-2 px-3 border-bottom';
+                itemBtn.dataset.index = index;
+                itemBtn.innerHTML =
+                    '<div class="text-truncate me-2"><strong class="text-success">' + item.numero + '</strong> - <span class="text-dark">' + item.nombre + '</span></div>' +
+                    badgeJornada(item.jornada);
+                itemBtn.addEventListener('click', function () { seleccionarFicha(item); });
+                dropdownResultados.appendChild(itemBtn);
+            });
+            dropdownResultados.style.display = 'block';
+        } else if (query.length > 0) {
+            dropdownResultados.innerHTML =
+                '<div class="p-3 text-muted text-center small bg-white"><i class="fas fa-circle-exclamation text-warning me-1"></i> No se encontraron fichas para "<strong>' + searchInput.value + '</strong>"</div>';
+            dropdownResultados.style.display = 'block';
+        } else {
+            dropdownResultados.style.display = 'none';
         }
     }
 
-    function seleccionarFicha(idfic, textoVisible) {
-        selectFicha.value = idfic;
-        searchInput.value = textoVisible || idfic;
+    function seleccionarFicha(item) {
+        searchInput.value = item.numero + ' - ' + item.nombre + ' (' + item.jornada + ')';
+        fichaHidden.value = item.numero;
         if (dropdownResultados) dropdownResultados.style.display = 'none';
         formFicha.submit();
     }
 
-    searchInput.addEventListener('input', function () {
-        filtrarOpciones(true);
-    });
+    searchInput.addEventListener('input', filtrarOpciones);
 
     searchInput.addEventListener('focus', function () {
         if (searchInput.value.trim().length > 0) {
-            filtrarOpciones(true);
+            filtrarOpciones();
         }
     });
 
@@ -405,10 +336,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!dropdownResultados || dropdownResultados.style.display === 'none') {
             if (e.key === 'Enter') {
                 e.preventDefault();
-                if (selectFicha.options.length > 1) {
-                    selectFicha.selectedIndex = 1;
-                    selectFicha.form.submit();
-                }
+                if (listaFichas.length > 0) seleccionarFicha(listaFichas[0]);
             }
             return;
         }
@@ -456,10 +384,17 @@ document.addEventListener('DOMContentLoaded', function () {
     if (btnLimpiar) {
         btnLimpiar.addEventListener('click', function () {
             searchInput.value = '';
-            filtrarOpciones(false);
+            fichaHidden.value = '';
             if (dropdownResultados) dropdownResultados.style.display = 'none';
             searchInput.focus();
         });
+    }
+
+    // Mostrar ficha ya seleccionada al cargar
+    const fichaInicial = fichaHidden.value;
+    if (fichaInicial) {
+        const actual = listaFichas.find(function (f) { return String(f.numero) === String(fichaInicial); });
+        if (actual) searchInput.value = actual.numero + ' - ' + actual.nombre + ' (' + actual.jornada + ')';
     }
 });
 

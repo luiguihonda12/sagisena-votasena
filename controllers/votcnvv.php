@@ -86,4 +86,13 @@ if($fidfic) {
         ];
     }
 }
+
+$gafGlobal = $mnvv->getEstadisticasGlobalesNoVotantes();
+if (!$gafGlobal || !is_array($gafGlobal)) {
+    $gafGlobal = ['total_personas' => 0, 'votaron' => 0, 'no_votaron' => 0];
+} else {
+    $gafGlobal['total_personas'] = (int)($gafGlobal['total_personas'] ?? 0);
+    $gafGlobal['votaron']        = (int)($gafGlobal['votaron'] ?? 0);
+    $gafGlobal['no_votaron']     = (int)($gafGlobal['no_votaron'] ?? 0);
+}
 ?>
