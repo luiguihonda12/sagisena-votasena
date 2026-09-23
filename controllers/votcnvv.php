@@ -96,3 +96,152 @@ if (!$gafGlobal || !is_array($gafGlobal)) {
     $gafGlobal['no_votaron']     = (int)($gafGlobal['no_votaron'] ?? 0);
 }
 ?>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var searchInput = document.getElementById('nvvv-buscar-input');
+    var fichaHidden = document.getElementById('fidfic-hidden');
+    var btnLimpiar  = document.getElementById('nvvv-btn-limpiar');
+    var dropdown    = document.getElementById('nvvv-dropdown-fichas');
+    var form        = document.getElementById('form-filtro-ficha');
+
+    if (!searchInput) return;
+
+    var listaFichas = [
+        <?php foreach ($fichas as $ficha):
+            $jornadaFic = (isset($ficha['nomval']) && strpos($ficha['nomval'], 'Ã') !== false) ? utf8_decode($ficha['nomval']) : ($ficha['nomval'] ?? '');
+            $jornadaFic = str_replace(['MaÃ±ana', 'maÃ±ana'], ['Mañana', 'mañana'], $jornadaFic);
+        ?>
+        { id: "<?= $ficha['idfic']; ?>", nombre: <?= json_encode($ficha['nomfic']); ?>, jornada: <?= json_encode($jornadaFic); ?> },
+        <?php endforeach; ?>
+    ];
+
+    var activeIndex = -1;
+
+    function normalizar(t) {
+        return (t || '').toString().toLowerCase()
+            .normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
+    }
+
+    function badgeJornada(jornada) {
+        var j = normalizar(jornada);
+        if (j.includes('manana') || j.includes('ma\u00f1ana')) {
+            return '<span class="badge bg-warning text-dark px-2 py-1"><i class="fas fa-sun me-1"></i>' + jornada + '</span>';
+        } else if (j.includes('tarde')) {
+            return '<span class="badge bg-light text-dark border px-2 py-1"><i class="fas fa-cloud-sun me-1"></i>' + jornada + '</span>';
+        } else if (j.includes('noche') || j.includes('nocturna')) {
+            return '<span class="badge bg-dark text-white px-2 py-1"><i class="fas fa-moon me-1"></i>' + jornada + '</span>';
+        } else if (j.includes('fin de semana') || j.includes('sabado') || j.includes('s\u00e1bado')) {
+            return '<span class="badge bg-secondary text-white px-2 py-1"><i class="fas fa-calendar-week me-1"></i>' + jornada + '</span>';
+        } else if (j.includes('virtual')) {
+            return '<span class="badge bg-primary text-white px-2 py-1"><i class="fas fa-laptop me-1"></i>' + jornada + '</span>';
+        }
+        return '<span class="badge bg-light text-dark border px-2 py-1">' + jornada + '</span>';
+    }
+
+    function renderDropdown(lista) {
+        dropdown.innerHTML = '';
+        activeIndex = -1;
+        if (lista.length === 0) {
+            dropdown.innerHTML = '<div class="p-3 text-muted text-center small"><i class="fas fa-exclamation-circle text-warning me-1"></i> No se encontraron fichas</div>';
+            dropdown.style.display = 'block';
+            return;
+        }
+        lista.forEach(function (item) {
+            var div = document.createElement('div');
+            div.className = 'p-2 px-3 border-bottom d-flex justify-content-between align-items-center nvvv-item-ficha';
+            div.style.cursor = 'pointer';
+            div.style.transition = 'background-color 0.15s ease';
+            div.innerHTML =
+                '<div class="text-truncate me-2"><strong class="text-success">' + item.id + '</strong> &ndash; <span class="text-dark">' + item.nombre + '</span></div>' +
+                badgeJornada(item.jornada);
+
+            div.addEventListener('mouseenter', function () {
+                this.style.backgroundColor = '#e8f5e9';
+            });
+            div.addEventListener('mouseleave', function () {
+                if (!this.classList.contains('nvvv-active')) {
+                    this.style.backgroundColor = '';
+                }
+            });
+            div.addEventListener('click', function () { seleccionar(item); });
+            dropdown.appendChild(div);
+        });
+        dropdown.style.display = 'block';
+    }
+
+    function seleccionar(item) {
+        searchInput.value = item.id + ' - ' + item.nombre + ' (' + item.jornada + ')';
+        fichaHidden.value = item.id;
+        dropdown.style.display = 'none';
+        form.submit();
+    }
+
+    function filtrar() {
+        var query = normalizar(searchInput.value);
+        if (!query) { renderDropdown(listaFichas); return; }
+        var esNumero = /^\d+$/.test(query);
+        var res = listaFichas.filter(function (item) {
+            var idN  = normalizar(item.id);
+            var nomN = normalizar(item.nombre);
+            return esNumero ? idN.indexOf(query) === 0 : (nomN.indexOf(query) !== -1 || idN.indexOf(query) === 0);
+        });
+        renderDropdown(res);
+    }
+
+    searchInput.addEventListener('input', filtrar);
+    searchInput.addEventListener('focus', filtrar);
+
+    searchInput.addEventListener('keydown', function (e) {
+        var items = dropdown.querySelectorAll('.nvvv-item-ficha');
+        if (dropdown.style.display === 'none' || items.length === 0) return;
+        if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            activeIndex = (activeIndex + 1) % items.length;
+            items.forEach(function (el, i) {
+                var isActive = (i === activeIndex);
+                el.classList.toggle('nvvv-active', isActive);
+                el.style.backgroundColor = isActive ? '#e8f5e9' : '';
+            });
+            items[activeIndex].scrollIntoView({ block: 'nearest' });
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            activeIndex = (activeIndex - 1 + items.length) % items.length;
+            items.forEach(function (el, i) {
+                var isActive = (i === activeIndex);
+                el.classList.toggle('nvvv-active', isActive);
+                el.style.backgroundColor = isActive ? '#e8f5e9' : '';
+            });
+            items[activeIndex].scrollIntoView({ block: 'nearest' });
+        } else if (e.key === 'Enter') {
+            e.preventDefault();
+            if (activeIndex >= 0 && items[activeIndex]) { items[activeIndex].click(); }
+            else if (items.length > 0) { items[0].click(); }
+        } else if (e.key === 'Escape') {
+            dropdown.style.display = 'none';
+        }
+    });
+
+    document.addEventListener('click', function (e) {
+        if (!searchInput.contains(e.target) && !dropdown.contains(e.target)) {
+            dropdown.style.display = 'none';
+        }
+    });
+
+    if (btnLimpiar) {
+        btnLimpiar.addEventListener('click', function () {
+            searchInput.value = '';
+            fichaHidden.value = '';
+            dropdown.style.display = 'none';
+            searchInput.focus();
+        });
+    }
+
+    /* Mostrar ficha ya seleccionada al cargar */
+    <?php if ($fidfic): ?>
+    (function () {
+        var actual = listaFichas.find(function (f) { return f.id == "<?= $fidfic; ?>"; });
+        if (actual) searchInput.value = actual.id + ' - ' + actual.nombre + ' (' + actual.jornada + ')';
+    })();
+    <?php endif; ?>
+});
+</script>

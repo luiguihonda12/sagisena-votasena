@@ -34,3 +34,34 @@ $porc_no_votaron = $total_personas > 0 ? round(($no_votaron / $total_personas) *
 $porc_blanco = $total_personas > 0 ? round(($votos_blanco / $total_personas) * 100, 1) : 0;
 
 ?>
+<script>
+// Filtro por estado aplicado solo a la tabla #example
+var filtroEstadoVotantes = 'todos';
+
+$.fn.dataTable.ext.search.push(function (settings, searchData, dataIndex, rowData, counter) {
+    if (!settings.nTable || settings.nTable.id !== 'example') return true;
+    var estado = $(settings.aoData[dataIndex].nTr).attr('data-estado');
+    if (filtroEstadoVotantes === 'todos') return true;
+    return (filtroEstadoVotantes === 'voto' && estado === '1') ||
+           (filtroEstadoVotantes === 'novoto' && estado === '0');
+});
+
+function aplicarFiltroEstado(filtro) {
+    filtroEstadoVotantes = filtro;
+    document.querySelectorAll('.btn-filtro-estado').forEach(function (btn) {
+        btn.classList.toggle('active', btn.getAttribute('data-estado-filtro') === filtro);
+    });
+    if (typeof $.fn.DataTable !== 'undefined' && $.fn.DataTable.isDataTable('#example')) {
+        $('#example').DataTable().draw();
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.btn-filtro-estado').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            aplicarFiltroEstado(this.getAttribute('data-estado-filtro'));
+        });
+    });
+    setTimeout(function () { aplicarFiltroEstado('todos'); }, 300);
+});
+</script>

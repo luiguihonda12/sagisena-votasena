@@ -18,7 +18,7 @@
         <div class="col-12 col-md-6">
             <div class="card border shadow-sm h-100 rounded-3">
                 <div class="card-body d-flex align-items-center p-3">
-                    <div class="rounded-3 bg-success-subtle text-success me-3 d-flex align-items-center justify-content-center" style="width: 52px; height: 52px; min-width: 52px;">
+                    <div class="rounded-3 bg-success-subtle text-success me-3 d-flex align-items-center justify-content-center w-[52px] h-[52px] min-w-[52px]">
                         <i class="fas fa-layer-group fa-2x"></i>
                     </div>
                     <div>
@@ -34,7 +34,7 @@
         <div class="col-12 col-md-6">
             <div class="card border shadow-sm h-100 rounded-3">
                 <div class="card-body d-flex align-items-center p-3">
-                    <div class="rounded-3 bg-warning-subtle text-warning-emphasis me-3 d-flex align-items-center justify-content-center" style="width: 52px; height: 52px; min-width: 52px;">
+                    <div class="rounded-3 bg-warning-subtle text-warning-emphasis me-3 d-flex align-items-center justify-content-center w-[52px] h-[52px] min-w-[52px]">
                         <i class="fas fa-check-to-slot fa-2x text-warning"></i>
                     </div>
                     <div>
@@ -84,8 +84,7 @@
                 </div>
                 <!-- Menú flotante con resultados -->
                 <div id="dropdown-fichas-resultados"
-                     class="list-group position-absolute w-100 shadow mt-1 overflow-auto rounded-3 border"
-                     style="top: 100%; left: 0; z-index: 1030; max-height: 280px; display: none;"></div>
+                     class="list-group position-absolute w-100 shadow mt-1 overflow-auto rounded-3 border top-100 start-0 hidden z-[1030] max-h-[280px]"></div>
             </div>
         </form>
     </div>
@@ -95,7 +94,7 @@
     <div class="card border shadow-sm rounded-3 mb-4">
         <div class="card-header bg-white py-3 border-bottom d-flex flex-wrap justify-content-between align-items-center gap-2">
             <div class="d-flex align-items-center">
-                <div class="rounded-circle bg-success-subtle text-success p-2 me-2 d-flex align-items-center justify-content-center" style="width: 38px; height: 38px;">
+                <div class="rounded-circle bg-success-subtle text-success p-2 me-2 d-flex align-items-center justify-content-center w-[38px] h-[38px]">
                     <i class="fas fa-users"></i>
                 </div>
                 <div>
@@ -116,9 +115,9 @@
                     <table class="table table-hover align-middle mb-0">
                         <thead class="table-light text-secondary">
                             <tr>
-                                <th class="text-center" style="width: 140px;">Acción</th>
-                                <th class="text-center" style="width: 100px;">Estado</th>
-                                <th class="text-center" style="width: 80px;">Foto</th>
+                                <th class="text-center w-[140px]">Acción</th>
+                                <th class="text-center w-[100px]">Estado</th>
+                                <th class="text-center w-[80px]">Foto</th>
                                 <th>Aprendiz</th>
                                 <th>No. Documento</th>
                                 <th>Perfil / Cargo</th>
@@ -129,33 +128,30 @@
                                 $esCandidato = ($d['es_candidato'] > 0 || $d['idper'] == 13);
                             ?>
                                 <tr class="<?= $esCandidato ? 'table-success bg-opacity-25' : ''; ?>">
-                                    <td class="text-center" style="vertical-align: middle !important; position: static !important;">
+                                    <td class="text-center align-middle position-static">
                                         <?php if ($esCandidato): ?>
                                             <a href="javascript:void(0)" role="button" 
-                                               class="btn btn-sm btn-outline-danger d-inline-flex align-items-center justify-content-center"
-                                               onclick="confirmarEliminarVocero(<?= $d['idusu']; ?>, '<?= addslashes(htmlspecialchars($d['nomusu'])); ?>')"
-                                               style="position: static !important; float: none !important; margin: 0 auto !important; vertical-align: middle !important; text-decoration: none;">
+                                               class="btn btn-sm btn-outline-danger d-inline-flex align-items-center justify-content-center position-static float-none my-0 mx-auto align-middle text-decoration-none"
+                                               onclick="confirmarEliminarVocero(<?= $d['idusu']; ?>, '<?= addslashes(htmlspecialchars($d['nomusu'])); ?>')">
                                                 <i class="fas fa-user-minus me-1"></i> Quitar
                                             </a>
                                         <?php else: ?>
                                             <?php if ($conteoCandidatos < 4): ?>
                                                 <a href="javascript:void(0)" role="button" 
-                                                   class="btn btn-sm btn-success d-inline-flex align-items-center justify-content-center text-white"
-                                                   onclick="confirmarVocero(<?= $d['idusu']; ?>, '<?= addslashes(htmlspecialchars($d['nomusu'])); ?>')"
-                                                   style="position: static !important; float: none !important; margin: 0 auto !important; vertical-align: middle !important; text-decoration: none;">
+                                                   class="btn btn-sm btn-success d-inline-flex align-items-center justify-content-center text-white position-static float-none my-0 mx-auto align-middle text-decoration-none"
+                                                   onclick="confirmarVocero(<?= $d['idusu']; ?>, '<?= addslashes(htmlspecialchars($d['nomusu'])); ?>')">
                                                     <i class="fas fa-user-plus me-1"></i> Seleccionar
                                                 </a>
                                             <?php else: ?>
                                                 <button type="button" 
-                                                    class="btn btn-sm btn-secondary d-inline-flex align-items-center justify-content-center" 
-                                                    disabled title="Límite máximo de 4 candidatos alcanzado"
-                                                    style="position: static !important; float: none !important; margin: 0 auto !important; vertical-align: middle !important;">
+                                                    class="btn btn-sm btn-secondary d-inline-flex align-items-center justify-content-center position-static float-none my-0 mx-auto align-middle" 
+                                                    disabled title="Límite máximo de 4 candidatos alcanzado">
                                                     <i class="fas fa-ban me-1"></i> Cupo lleno
                                                 </button>
                                             <?php endif; ?>
                                         <?php endif; ?>
                                     </td>
-                                    <td class="text-center" style="vertical-align: middle !important;">
+                                    <td class="text-center align-middle">
                                         <?php if ($d['actusu'] == 1): ?>
                                             <span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1">
                                                 <i class="fas fa-circle-check me-1"></i>Activo
@@ -166,24 +162,24 @@
                                             </span>
                                         <?php endif; ?>
                                     </td>
-                                    <td class="text-center" style="vertical-align: middle !important;">
+                                    <td class="text-center align-middle">
                                         <?php 
                                         $fotoSrc = (!empty($d['fotcan']) && file_exists($d['fotcan'])) ? $d['fotcan'] : 'img/user.jpg';
                                         ?>
-                                        <img src="<?= $fotoSrc; ?>" alt="Foto" width="45" height="45" class="rounded-circle border shadow-sm" style="object-fit: cover;">
+                                        <img src="<?= $fotoSrc; ?>" alt="Foto" width="45" height="45" class="rounded-circle border shadow-sm object-cover">
                                     </td>
-                                    <td style="vertical-align: middle !important;">
+                                    <td class="align-middle">
                                         <span class="fw-bold text-dark d-block"><?= htmlspecialchars($d['nomusu']); ?></span>
                                         <?php if ($esCandidato): ?>
                                             <small class="text-success fw-semibold"><i class="fas fa-award me-1"></i>Postulado a vocero</small>
                                         <?php endif; ?>
                                     </td>
-                                    <td style="vertical-align: middle !important;">
-                                        <span class="badge bg-light text-dark border font-monospace px-2 py-1" style="font-size: 1.4rem !important; font-weight: 600; letter-spacing: 0.5px;">
+                                    <td class="align-middle">
+                                        <span class="badge bg-light text-dark border font-monospace px-2 py-1 text-[1.4rem] font-semibold tracking-[0.5px]">
                                             <?= htmlspecialchars($d['ndocusu']); ?>
                                         </span>
                                     </td>
-                                    <td style="vertical-align: middle !important;">
+                                    <td class="align-middle">
                                         <?php if ($esCandidato): ?>
                                             <span class="badge bg-success px-2 py-1">
                                                 <i class="fas fa-star me-1"></i>Candidato a Vocero
@@ -208,227 +204,3 @@
         </div>
     </div>
 <?php endif; ?>
-
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const searchInput = document.getElementById('buscar-ficha-input');
-    const fichaHidden = document.getElementById('idficfil-hidden');
-    const btnLimpiar = document.getElementById('btn-limpiar-busqueda');
-    const dropdownResultados = document.getElementById('dropdown-fichas-resultados');
-    const formFicha = document.getElementById('formFicha');
-
-    if (!searchInput || !fichaHidden) return;
-
-    // Lista de fichas inyectada desde PHP
-    const listaFichas = [
-        <?php foreach ($dfi ?? [] as $de):
-            $jornadaLimpia = (isset($de['nomval']) && strpos($de['nomval'], 'Ã') !== false) ? @utf8_decode($de['nomval']) : ($de['nomval'] ?? '');
-            $jornadaLimpia = str_replace(['MaÃ±ana', 'maÃ±ana'], ['Mañana', 'mañana'], $jornadaLimpia);
-        ?>
-        { numero: <?= json_encode($de['idfic']); ?>, nombre: <?= json_encode($de['nomfic']); ?>, jornada: <?= json_encode($jornadaLimpia); ?> },
-        <?php endforeach; ?>
-    ];
-
-    let activeIndex = -1;
-
-    // Función para normalizar cadenas (quitar tildes y pasar a minúsculas)
-    function normalizar(texto) {
-        return (texto || '')
-            .toString()
-            .toLowerCase()
-            .normalize('NFD')
-            .replace(/[\u0300-\u036f]/g, '')
-            .trim();
-    }
-
-    // Badge de jornada con icono
-    function badgeJornada(jornada) {
-        const j = normalizar(jornada);
-        let badgeClass = 'bg-light text-dark border';
-        let iconoJornada = 'fa-clock';
-        if (j.includes('manana')) {
-            badgeClass = 'bg-warning-subtle text-dark border border-warning';
-            iconoJornada = 'fa-sun';
-        } else if (j.includes('tarde')) {
-            badgeClass = 'bg-info-subtle text-dark border border-info';
-            iconoJornada = 'fa-cloud-sun';
-        } else if (j.includes('virtual')) {
-            badgeClass = 'bg-primary-subtle text-primary border border-primary';
-            iconoJornada = 'fa-laptop';
-        } else if (j.includes('noche') || j.includes('nocturna')) {
-            badgeClass = 'bg-dark text-white';
-            iconoJornada = 'fa-moon';
-        } else if (j.includes('fin de semana') || j.includes('sabado')) {
-            badgeClass = 'bg-secondary text-white';
-            iconoJornada = 'fa-calendar-week';
-        }
-        return '<span class="badge ' + badgeClass + ' text-nowrap px-2 py-1"><i class="fas ' + iconoJornada + ' me-1"></i>' + (jornada || 'Jornada N/A') + '</span>';
-    }
-
-    // Coincidencia inteligente por frase completa o por cada palabra
-    function coincideFicha(query, numero, nombre, jornada, textoCompleto) {
-        if (!query) return true;
-        if (numero.includes(query) || nombre.includes(query) || jornada.includes(query) || textoCompleto.includes(query)) {
-            return true;
-        }
-        const palabras = query.split(/\s+/).filter(p => p.length > 0);
-        if (palabras.length > 1) {
-            return palabras.every(p =>
-                numero.includes(p) || nombre.includes(p) || jornada.includes(p) || textoCompleto.includes(p)
-            );
-        }
-        return false;
-    }
-
-    function filtrarOpciones() {
-        const query = normalizar(searchInput.value);
-        activeIndex = -1;
-
-        if (!dropdownResultados) return;
-        dropdownResultados.innerHTML = '';
-
-        const coincidencias = listaFichas.filter(function (item) {
-            const numero = normalizar(item.numero);
-            const nombre = normalizar(item.nombre);
-            const jornada = normalizar(item.jornada);
-            const textoCompleto = normalizar(item.numero + ' ' + item.nombre);
-            return coincideFicha(query, numero, nombre, jornada, textoCompleto);
-        });
-
-        if (query.length > 0 && coincidencias.length > 0) {
-            coincidencias.forEach(function (item, index) {
-                const itemBtn = document.createElement('button');
-                itemBtn.type = 'button';
-                itemBtn.className = 'list-group-item list-group-item-action d-flex justify-content-between align-items-center py-2 px-3 border-bottom';
-                itemBtn.dataset.index = index;
-                itemBtn.innerHTML =
-                    '<div class="text-truncate me-2"><strong class="text-success">' + item.numero + '</strong> - <span class="text-dark">' + item.nombre + '</span></div>' +
-                    badgeJornada(item.jornada);
-                itemBtn.addEventListener('click', function () { seleccionarFicha(item); });
-                dropdownResultados.appendChild(itemBtn);
-            });
-            dropdownResultados.style.display = 'block';
-        } else if (query.length > 0) {
-            dropdownResultados.innerHTML =
-                '<div class="p-3 text-muted text-center small bg-white"><i class="fas fa-circle-exclamation text-warning me-1"></i> No se encontraron fichas para "<strong>' + searchInput.value + '</strong>"</div>';
-            dropdownResultados.style.display = 'block';
-        } else {
-            dropdownResultados.style.display = 'none';
-        }
-    }
-
-    function seleccionarFicha(item) {
-        searchInput.value = item.numero + ' - ' + item.nombre + ' (' + item.jornada + ')';
-        fichaHidden.value = item.numero;
-        if (dropdownResultados) dropdownResultados.style.display = 'none';
-        formFicha.submit();
-    }
-
-    searchInput.addEventListener('input', filtrarOpciones);
-
-    searchInput.addEventListener('focus', function () {
-        if (searchInput.value.trim().length > 0) {
-            filtrarOpciones();
-        }
-    });
-
-    searchInput.addEventListener('keydown', function (e) {
-        if (!dropdownResultados || dropdownResultados.style.display === 'none') {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                if (listaFichas.length > 0) seleccionarFicha(listaFichas[0]);
-            }
-            return;
-        }
-
-        const items = dropdownResultados.querySelectorAll('.list-group-item');
-        if (items.length === 0) return;
-
-        if (e.key === 'ArrowDown') {
-            e.preventDefault();
-            activeIndex = (activeIndex + 1) % items.length;
-            actualizarItemActivo(items);
-        } else if (e.key === 'ArrowUp') {
-            e.preventDefault();
-            activeIndex = (activeIndex - 1 + items.length) % items.length;
-            actualizarItemActivo(items);
-        } else if (e.key === 'Enter') {
-            e.preventDefault();
-            if (activeIndex >= 0 && items[activeIndex]) {
-                items[activeIndex].click();
-            } else if (items.length > 0) {
-                items[0].click();
-            }
-        } else if (e.key === 'Escape') {
-            dropdownResultados.style.display = 'none';
-        }
-    });
-
-    function actualizarItemActivo(items) {
-        items.forEach((item, idx) => {
-            if (idx === activeIndex) {
-                item.classList.add('active');
-                item.scrollIntoView({ block: 'nearest' });
-            } else {
-                item.classList.remove('active');
-            }
-        });
-    }
-
-    document.addEventListener('click', function (e) {
-        if (!searchInput.contains(e.target) && (!dropdownResultados || !dropdownResultados.contains(e.target))) {
-            if (dropdownResultados) dropdownResultados.style.display = 'none';
-        }
-    });
-
-    if (btnLimpiar) {
-        btnLimpiar.addEventListener('click', function () {
-            searchInput.value = '';
-            fichaHidden.value = '';
-            if (dropdownResultados) dropdownResultados.style.display = 'none';
-            searchInput.focus();
-        });
-    }
-
-    // Mostrar ficha ya seleccionada al cargar
-    const fichaInicial = fichaHidden.value;
-    if (fichaInicial) {
-        const actual = listaFichas.find(function (f) { return String(f.numero) === String(fichaInicial); });
-        if (actual) searchInput.value = actual.numero + ' - ' + actual.nombre + ' (' + actual.jornada + ')';
-    }
-});
-
-function confirmarVocero(idusu, nombre) {
-    Swal.fire({
-        title: '¿Confirmar Candidato?',
-        html: '¿Deseas postular a <strong>' + nombre + '</strong> como candidato a vocero de esta ficha?',
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonColor: '#198754',
-        cancelButtonColor: '#6c757d',
-        confirmButtonText: '<i class="fas fa-check me-1"></i> Sí, postular',
-        cancelButtonText: 'Cancelar'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            window.location.href = `home.php?pg=<?= $pg; ?>&idusu=${idusu}&opera=make_vocero&idficfil=<?= isset($_REQUEST['idficfil']) ? urlencode($_REQUEST['idficfil']) : ''; ?>`;
-        }
-    });
-}
-
-function confirmarEliminarVocero(idusu, nombre) {
-    Swal.fire({
-        title: '¿Quitar Candidato?',
-        html: '¿Estás seguro de retirar a <strong>' + nombre + '</strong> como candidato a vocero?<br><small class="text-muted">Volverá a su estado regular de aprendiz.</small>',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#dc3545',
-        cancelButtonColor: '#6c757d',
-        confirmButtonText: '<i class="fas fa-user-minus me-1"></i> Sí, quitar',
-        cancelButtonText: 'Cancelar'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            window.location.href = `home.php?pg=<?= $pg; ?>&idusu=${idusu}&opera=remove_vocero&idficfil=<?= isset($_REQUEST['idficfil']) ? urlencode($_REQUEST['idficfil']) : ''; ?>`;
-        }
-    });
-}
-</script>

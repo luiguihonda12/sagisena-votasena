@@ -69,7 +69,7 @@ class Votmvvc {
                     INNER JOIN usupef up ON u.idusu = up.idusu
                     LEFT JOIN usufic uf ON u.idusu = uf.idusu
                     LEFT JOIN ficha f ON uf.idfic = f.idfic
-                    WHERE (up.idper = 13 OR up.idper = 8 OR u.noca IS NOT NULL)
+                    WHERE up.idper = 13
                     AND u.actusu = '1'
                     AND uf.idfic = :idfic
                     $excluye

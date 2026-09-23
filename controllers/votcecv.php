@@ -309,3 +309,226 @@ function modsimsel($id, $nom,$pg){
 }
 
 ?>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const searchInput = document.getElementById('buscar-ficha-input');
+    const fichaHidden = document.getElementById('idficfil-hidden');
+    const btnLimpiar = document.getElementById('btn-limpiar-busqueda');
+    const dropdownResultados = document.getElementById('dropdown-fichas-resultados');
+    const formFicha = document.getElementById('formFicha');
+
+    if (!searchInput || !fichaHidden) return;
+
+    // Lista de fichas inyectada desde PHP
+    const listaFichas = [
+        <?php foreach ($dfi ?? [] as $de):
+            $jornadaLimpia = (isset($de['nomval']) && strpos($de['nomval'], 'Ã') !== false) ? @utf8_decode($de['nomval']) : ($de['nomval'] ?? '');
+            $jornadaLimpia = str_replace(['MaÃ±ana', 'maÃ±ana'], ['Mañana', 'mañana'], $jornadaLimpia);
+        ?>
+        { numero: <?= json_encode($de['idfic']); ?>, nombre: <?= json_encode($de['nomfic']); ?>, jornada: <?= json_encode($jornadaLimpia); ?> },
+        <?php endforeach; ?>
+    ];
+
+    let activeIndex = -1;
+
+    // Función para normalizar cadenas (quitar tildes y pasar a minúsculas)
+    function normalizar(texto) {
+        return (texto || '')
+            .toString()
+            .toLowerCase()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .trim();
+    }
+
+    // Badge de jornada con icono
+    function badgeJornada(jornada) {
+        const j = normalizar(jornada);
+        let badgeClass = 'bg-light text-dark border';
+        let iconoJornada = 'fa-clock';
+        if (j.includes('manana')) {
+            badgeClass = 'bg-warning-subtle text-dark border border-warning';
+            iconoJornada = 'fa-sun';
+        } else if (j.includes('tarde')) {
+            badgeClass = 'bg-info-subtle text-dark border border-info';
+            iconoJornada = 'fa-cloud-sun';
+        } else if (j.includes('virtual')) {
+            badgeClass = 'bg-primary-subtle text-primary border border-primary';
+            iconoJornada = 'fa-laptop';
+        } else if (j.includes('noche') || j.includes('nocturna')) {
+            badgeClass = 'bg-dark text-white';
+            iconoJornada = 'fa-moon';
+        } else if (j.includes('fin de semana') || j.includes('sabado')) {
+            badgeClass = 'bg-secondary text-white';
+            iconoJornada = 'fa-calendar-week';
+        }
+        return '<span class="badge ' + badgeClass + ' text-nowrap px-2 py-1"><i class="fas ' + iconoJornada + ' me-1"></i>' + (jornada || 'Jornada N/A') + '</span>';
+    }
+
+    // Coincidencia inteligente por frase completa o por cada palabra
+    function coincideFicha(query, numero, nombre, jornada, textoCompleto) {
+        if (!query) return true;
+        if (numero.includes(query) || nombre.includes(query) || jornada.includes(query) || textoCompleto.includes(query)) {
+            return true;
+        }
+        const palabras = query.split(/\s+/).filter(p => p.length > 0);
+        if (palabras.length > 1) {
+            return palabras.every(p =>
+                numero.includes(p) || nombre.includes(p) || jornada.includes(p) || textoCompleto.includes(p)
+            );
+        }
+        return false;
+    }
+
+    function filtrarOpciones() {
+        const query = normalizar(searchInput.value);
+        activeIndex = -1;
+
+        if (!dropdownResultados) return;
+        dropdownResultados.innerHTML = '';
+
+        const coincidencias = listaFichas.filter(function (item) {
+            const numero = normalizar(item.numero);
+            const nombre = normalizar(item.nombre);
+            const jornada = normalizar(item.jornada);
+            const textoCompleto = normalizar(item.numero + ' ' + item.nombre);
+            return coincideFicha(query, numero, nombre, jornada, textoCompleto);
+        });
+
+        if (query.length > 0 && coincidencias.length > 0) {
+            coincidencias.forEach(function (item, index) {
+                const itemBtn = document.createElement('button');
+                itemBtn.type = 'button';
+                itemBtn.className = 'list-group-item list-group-item-action d-flex justify-content-between align-items-center py-2 px-3 border-bottom';
+                itemBtn.dataset.index = index;
+                itemBtn.innerHTML =
+                    '<div class="text-truncate me-2"><strong class="text-success">' + item.numero + '</strong> - <span class="text-dark">' + item.nombre + '</span></div>' +
+                    badgeJornada(item.jornada);
+                itemBtn.addEventListener('click', function () { seleccionarFicha(item); });
+                dropdownResultados.appendChild(itemBtn);
+            });
+            dropdownResultados.style.display = 'block';
+        } else if (query.length > 0) {
+            dropdownResultados.innerHTML =
+                '<div class="p-3 text-muted text-center small bg-white"><i class="fas fa-circle-exclamation text-warning me-1"></i> No se encontraron fichas para "<strong>' + searchInput.value + '</strong>"</div>';
+            dropdownResultados.style.display = 'block';
+        } else {
+            dropdownResultados.style.display = 'none';
+        }
+    }
+
+    function seleccionarFicha(item) {
+        searchInput.value = item.numero + ' - ' + item.nombre + ' (' + item.jornada + ')';
+        fichaHidden.value = item.numero;
+        if (dropdownResultados) dropdownResultados.style.display = 'none';
+        formFicha.submit();
+    }
+
+    searchInput.addEventListener('input', filtrarOpciones);
+
+    searchInput.addEventListener('focus', function () {
+        if (searchInput.value.trim().length > 0) {
+            filtrarOpciones();
+        }
+    });
+
+    searchInput.addEventListener('keydown', function (e) {
+        if (!dropdownResultados || dropdownResultados.style.display === 'none') {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                if (listaFichas.length > 0) seleccionarFicha(listaFichas[0]);
+            }
+            return;
+        }
+
+        const items = dropdownResultados.querySelectorAll('.list-group-item');
+        if (items.length === 0) return;
+
+        if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            activeIndex = (activeIndex + 1) % items.length;
+            actualizarItemActivo(items);
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            activeIndex = (activeIndex - 1 + items.length) % items.length;
+            actualizarItemActivo(items);
+        } else if (e.key === 'Enter') {
+            e.preventDefault();
+            if (activeIndex >= 0 && items[activeIndex]) {
+                items[activeIndex].click();
+            } else if (items.length > 0) {
+                items[0].click();
+            }
+        } else if (e.key === 'Escape') {
+            dropdownResultados.style.display = 'none';
+        }
+    });
+
+    function actualizarItemActivo(items) {
+        items.forEach((item, idx) => {
+            if (idx === activeIndex) {
+                item.classList.add('active');
+                item.scrollIntoView({ block: 'nearest' });
+            } else {
+                item.classList.remove('active');
+            }
+        });
+    }
+
+    document.addEventListener('click', function (e) {
+        if (!searchInput.contains(e.target) && (!dropdownResultados || !dropdownResultados.contains(e.target))) {
+            if (dropdownResultados) dropdownResultados.style.display = 'none';
+        }
+    });
+
+    if (btnLimpiar) {
+        btnLimpiar.addEventListener('click', function () {
+            searchInput.value = '';
+            fichaHidden.value = '';
+            if (dropdownResultados) dropdownResultados.style.display = 'none';
+            searchInput.focus();
+        });
+    }
+
+    // Mostrar ficha ya seleccionada al cargar
+    const fichaInicial = fichaHidden.value;
+    if (fichaInicial) {
+        const actual = listaFichas.find(function (f) { return String(f.numero) === String(fichaInicial); });
+        if (actual) searchInput.value = actual.numero + ' - ' + actual.nombre + ' (' + actual.jornada + ')';
+    }
+});
+
+function confirmarVocero(idusu, nombre) {
+    Swal.fire({
+        title: '¿Confirmar Candidato?',
+        html: '¿Deseas postular a <strong>' + nombre + '</strong> como candidato a vocero de esta ficha?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#198754',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: '<i class="fas fa-check me-1"></i> Sí, postular',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = `home.php?pg=<?= $pg; ?>&idusu=${idusu}&opera=make_vocero&idficfil=<?= isset($_REQUEST['idficfil']) ? urlencode($_REQUEST['idficfil']) : ''; ?>`;
+        }
+    });
+}
+
+function confirmarEliminarVocero(idusu, nombre) {
+    Swal.fire({
+        title: '¿Quitar Candidato?',
+        html: '¿Estás seguro de retirar a <strong>' + nombre + '</strong> como candidato a vocero?<br><small class="text-muted">Volverá a su estado regular de aprendiz.</small>',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#dc3545',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: '<i class="fas fa-user-minus me-1"></i> Sí, quitar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = `home.php?pg=<?= $pg; ?>&idusu=${idusu}&opera=remove_vocero&idficfil=<?= isset($_REQUEST['idficfil']) ? urlencode($_REQUEST['idficfil']) : ''; ?>`;
+        }
+    });
+}
+</script>
