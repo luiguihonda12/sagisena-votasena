@@ -934,8 +934,46 @@ if (isset($_GET['pdf']) && $_GET['pdf'] === 'ok') {
         $nombrePdf = "Acta_Representantes_" . $fecha2 . ".pdf";
     }
 
-    if (file_exists('vendor/autoload.php')) {
-        require_once('vendor/autoload.php');
+    // Autoloader autónomo y selectivo de Dompdf (evita platform_check global de Composer en PHP 8.0)
+    if (!class_exists('Dompdf\Dompdf')) {
+        $vendorDir = file_exists('vendor') ? 'vendor' : (file_exists('../vendor') ? '../vendor' : '');
+        if ($vendorDir) {
+            spl_autoload_register(function ($class) use ($vendorDir) {
+                $prefixes = [
+                    'Dompdf\\'  => $vendorDir . '/dompdf/dompdf/src/',
+                    'FontLib\\' => $vendorDir . '/phenx/php-font-lib/src/FontLib/',
+                    'Svg\\'     => $vendorDir . '/phenx/php-svg-lib/src/Svg/',
+                ];
+                foreach ($prefixes as $prefix => $base_dir) {
+                    $len = strlen($prefix);
+                    if (strncmp($prefix, $class, $len) !== 0) continue;
+                    $relative_class = substr($class, $len);
+                    $file = $base_dir . str_replace('\\', '/', $relative_class) . '.php';
+                    if (file_exists($file)) {
+                        require_once $file;
+                        return;
+                    }
+                }
+
+                // Clases auxiliares HTML5 de Dompdf
+                if (strpos($class, 'HTML5_') === 0) {
+                    $html5File = $vendorDir . '/dompdf/dompdf/lib/html5lib/' . substr($class, 6) . '.php';
+                    if (file_exists($html5File)) {
+                        require_once $html5File;
+                        return;
+                    }
+                }
+            });
+
+            if (file_exists($vendorDir . '/dompdf/dompdf/lib/Cpdf.php')) {
+                require_once $vendorDir . '/dompdf/dompdf/lib/Cpdf.php';
+            }
+        }
+
+        // Fallback secundario a autoload de Composer solo si no se pudo cargar directamente
+        if (!class_exists('Dompdf\Dompdf') && file_exists('vendor/autoload.php')) {
+            @include_once('vendor/autoload.php');
+        }
     }
 
     if (class_exists('Dompdf\Dompdf')) {
