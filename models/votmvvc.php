@@ -58,65 +58,35 @@ class Votmvvc {
             return [];
         }
         try {
+            // Excluir al usuario actual solo cuando existe; así el parámetro
+            // nombrado :idusu_apar solamente se usa una vez en la consulta.
+            $excluye = ($idusu_actual !== null && $idusu_actual !== '')
+                ? "AND u.idusu <> :idusu_apar"
+                : "";
+
             $sql = "SELECT DISTINCT u.idusu, u.nomusu, u.fotcan, u.noca, f.nomfic, uf.idfic
                     FROM usuario u
                     INNER JOIN usupef up ON u.idusu = up.idusu
-                    INNER JOIN usufic uf ON u.idusu = uf.idusu
-                    INNER JOIN ficha f ON uf.idfic = f.idfic
-                    WHERE up.idper = 13
+                    LEFT JOIN usufic uf ON u.idusu = uf.idusu
+                    LEFT JOIN ficha f ON uf.idfic = f.idfic
+                    WHERE (up.idper = 13 OR up.idper = 8 OR u.noca IS NOT NULL)
                     AND u.actusu = '1'
                     AND uf.idfic = :idfic
-                    AND (:idusu_actual IS NULL OR u.idusu != :idusu_actual)
+                    $excluye
                     ORDER BY CAST(NULLIF(u.noca, '') AS UNSIGNED) ASC, u.nomusu ASC";
             
             $modelo = new conexion();
             $conexion = $modelo->get_conexion();
             $stmt = $conexion->prepare($sql);
-            $stmt->bindParam(":idfic", $idfic);
-            $stmt->bindParam(":idusu_actual", $idusu_actual);
+            $stmt->bindValue(":idfic", $idfic);
+            if ($excluye !== "") {
+                $stmt->bindValue(":idusu_apar", $idusu_actual, PDO::PARAM_INT);
+            }
             $stmt->execute();
             
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             error_log("Error en getVocerosMismaFicha: " . $e->getMessage());
-            return [];
-        }
-    }
-
-    // Método para obtener todos los voceros registrados (cuando el usuario no tiene ficha)
-    public function getAllVoceros($idcen = null, $idusu_actual = null) {
-        try {
-            $sql = "SELECT u.idusu, u.nomusu, u.fotcan, u.noca, u.emausu, u.telcan,
-                           uf.idfic, f.nomfic, v.nomval AS jornada, c.nomcen
-                    FROM usuario u
-                    INNER JOIN usupef up ON u.idusu = up.idusu
-                    INNER JOIN centro c ON u.idcen = c.idcen
-                    LEFT JOIN usufic uf ON u.idusu = uf.idusu AND uf.actfic = 1
-                    LEFT JOIN ficha f ON uf.idfic = f.idfic
-                    LEFT JOIN valor v ON f.jornada = v.idval
-                    WHERE up.idper = 13
-                    AND u.actusu = '1'
-                    AND (:idusu_actual IS NULL OR u.idusu != :idusu_actual)";
-
-            $params = [':idusu_actual' => $idusu_actual];
-            if ($idcen) {
-                $sql .= " AND u.idcen = :idcen";
-                $params[':idcen'] = $idcen;
-            }
-            $sql .= " GROUP BY u.idusu ORDER BY u.noca";
-
-            $modelo = new conexion();
-            $conexion = $modelo->get_conexion();
-            $stmt = $conexion->prepare($sql);
-            foreach ($params as $clave => $valor) {
-                $tipo = is_null($valor) ? PDO::PARAM_NULL : PDO::PARAM_STR;
-                $stmt->bindValue($clave, $valor, $tipo);
-            }
-            $stmt->execute();
-
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            error_log("Error en getAllVoceros: " . $e->getMessage());
             return [];
         }
     }
@@ -169,9 +139,13 @@ class Votmvvc {
             
             // Intentar inserción con tipo_voto
             try {
-                $sql = "INSERT INTO voto (idusu, canusu, dtvot, tipo_voto) 
-                        VALUES (:idusu, :canusu, :dtvot, :tipo)";
+                $sql = "INSERT INTO voto (id, idusu, canusu, dtvot, tipo_voto) 
+                        VALUES (:id, :idusu, :canusu, :dtvot, :tipo)";
                 $result = $conexion->prepare($sql);
+                // La tabla voto no tiene id autoincremental: se calcula el siguiente
+                $maxid = $conexion->query("SELECT IFNULL(MAX(id),0)+1 AS sig FROM voto")->fetch(PDO::FETCH_ASSOC);
+                $id = (int)$maxid['sig'];
+                $result->bindParam(":id", $id, PDO::PARAM_INT);
                 $result->bindParam(":idusu", $this->idusu, PDO::PARAM_INT);
                 $result->bindParam(":canusu", $this->canusu, PDO::PARAM_INT);
                 $result->bindParam(":dtvot", $this->dtvot);
@@ -179,9 +153,12 @@ class Votmvvc {
                 return $result->execute();
             } catch (PDOException $ex) {
                 // Fallback si la tabla voto no tiene la columna tipo_voto
-                $sql = "INSERT INTO voto (idusu, canusu, dtvot) 
-                        VALUES (:idusu, :canusu, :dtvot)";
+                $sql = "INSERT INTO voto (id, idusu, canusu, dtvot) 
+                        VALUES (:id, :idusu, :canusu, :dtvot)";
                 $result = $conexion->prepare($sql);
+                $maxid = $conexion->query("SELECT IFNULL(MAX(id),0)+1 AS sig FROM voto")->fetch(PDO::FETCH_ASSOC);
+                $id = (int)$maxid['sig'];
+                $result->bindParam(":id", $id, PDO::PARAM_INT);
                 $result->bindParam(":idusu", $this->idusu, PDO::PARAM_INT);
                 $result->bindParam(":canusu", $this->canusu, PDO::PARAM_INT);
                 $result->bindParam(":dtvot", $this->dtvot);

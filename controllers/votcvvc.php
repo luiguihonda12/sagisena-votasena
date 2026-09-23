@@ -15,7 +15,7 @@ if ($idusu) {
 }
 
 // Validación de sesión si no existe
-if (!$idusu && session_status() === PHP_SESSION_ACTIVE && !isset($_SESSION['nomusu'])) {
+if (!$idusu && session_status() === PHP_SESSION_ACTIVE && !isset($_SESSION['nomusu']) && !headers_sent()) {
     // Si no hay sesión válida, redirigir
     header("Location: index.php?error=sesion");
     exit();
@@ -27,74 +27,76 @@ $votoInfo = ($idusu && $yaVoto) ? $votmvvc->getVotoUsuario('vocero') : null;
 $candVotadoId = ($votoInfo && isset($votoInfo['canusu'])) ? $votoInfo['canusu'] : null;
 
 // Procesar el registro del voto
-if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['opera']) && $_POST['opera'] === 'save') {
+if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['opera']) && $_POST['opera'] === 'save') {
     $canusu = isset($_POST['canusu']) ? $_POST['canusu'] : NULL;
 
     if ($yaVoto) {
-        echo "<script>
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'VOTO PREVIO REGISTRADO',
-                    text: 'Ya has ejercido tu derecho al voto para vocero de ficha. No es posible modificar tu voto.',
-                    confirmButtonText: 'Aceptar',
-                    confirmButtonColor: '#00324D'
-                }).then(() => {
-                    window.location.href = 'home.php?pg=1202';
-                });
-              </script>";
-        exit();
-    }
-
-    if (!empty($canusu)) {
+        $_SESSION['votmsg'] = array(
+            'tipo'  => 'warning',
+            'texto' => 'Ya has ejercido tu derecho al voto para vocero de ficha. No es posible modificar tu voto.'
+        );
+    } elseif (empty($canusu)) {
+        $_SESSION['votmsg'] = array(
+            'tipo'  => 'danger',
+            'texto' => 'Debes seleccionar una opción de voto antes de confirmar.'
+        );
+    } else {
         $votmvvc->setCanusu($canusu);
         $votmvvc->setDtvot(date("Y-m-d H:i:s"));
-        
-        $guardado = $votmvvc->save('vocero');
-        
-        if ($guardado) {
-            echo "<script>
-                    Swal.fire({
-                        icon: 'success',
-                        title: '¡VOTO REGISTRADO CON ÉXITO!',
-                        text: 'Tu voto para vocero de ficha ha sido registrado correctamente.',
-                        confirmButtonText: 'Aceptar',
-                        confirmButtonColor: '#39A900'
-                    }).then(() => {
-                        window.location.href = 'home.php?pg=1202';
-                    });
-                  </script>";
-            exit();
+
+        if ($votmvvc->save('vocero')) {
+            $_SESSION['votmsg'] = array(
+                'tipo'  => 'success',
+                'texto' => 'Tu voto para vocero de ficha ha sido registrado correctamente.'
+            );
         } else {
-            echo "<script>
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'NO SE PUDO REGISTRAR EL VOTO',
-                        text: 'Hubo un inconveniente al procesar tu solicitud o ya votaste previamente.',
-                        confirmButtonText: 'Reintentar',
-                        confirmButtonColor: '#d33'
-                    }).then(() => {
-                        window.location.href = 'home.php?pg=1202';
-                    });
-                  </script>";
-            exit();
+            $_SESSION['votmsg'] = array(
+                'tipo'  => 'danger',
+                'texto' => 'Hubo un inconveniente al procesar tu solicitud o ya votaste previamente.'
+            );
         }
+
+        // Refrescar el estado del voto para mostrar la vista en modo solo lectura
+        $yaVoto = $idusu ? $votmvvc->getOne('vocero') : false;
+        $votoInfo = ($idusu && $yaVoto) ? $votmvvc->getVotoUsuario('vocero') : null;
+        $candVotadoId = ($votoInfo && isset($votoInfo['canusu'])) ? $votoInfo['canusu'] : null;
+    }
+
+    if (!headers_sent()) {
+        header("Location: home.php?pg=1202");
+        exit();
     }
 }
 
 // Obtener ficha del aprendiz
 $idfic = $idusu ? $votmvvc->getFichaUsuario($idusu) : null;
 
-// Candidatos: si el usuario tiene ficha, se muestran los voceros registrados en su ficha;
-// si no tiene ficha (por ejemplo, personal administrativo), se muestran todos los candidatos
-// voceros registrados del centro.
-$fidcen = isset($_SESSION['idcen']) ? $_SESSION['idcen'] : null;
-if ($idfic) {
-    $candidatosBD = ($idusu) ? $votmvvc->getVocerosMismaFicha($idfic, $idusu) : [];
-} else {
-    $candidatosBD = $votmvvc->getAllVoceros($fidcen, $idusu);
-}
+// Consultar candidatos desde base de datos
+$candidatosBD = ($idfic && $idusu) ? $votmvvc->getVocerosMismaFicha($idfic, $idusu) : [];
 
-// Módulo de voto en blanco
+// Módulos de candidatos predeterminados con nombres inventados
+$candidato1 = [
+    'idusu' => 101,
+    'nomusu' => 'Valentina Morales Gómez',
+    'noca' => 1,
+    'idfic' => $idfic ? $idfic : '2670123',
+    'nomfic' => 'Análisis y Desarrollo de Software',
+    'fotcan' => 'img/user.jpg',
+    'lema' => 'Liderazgo activo, comunicación transparente y trabajo en equipo por nuestra ficha.',
+    'is_blanco' => false
+];
+
+$candidato2 = [
+    'idusu' => 102,
+    'nomusu' => 'Sebastián Martínez Rocha',
+    'noca' => 2,
+    'idfic' => $idfic ? $idfic : '2670123',
+    'nomfic' => 'Análisis y Desarrollo de Software',
+    'fotcan' => 'img/user.jpg',
+    'lema' => 'Voz, compromiso e inclusión para el bienestar y crecimiento de todos los aprendices.',
+    'is_blanco' => false
+];
+
 $votoBlanco = [
     'idusu' => 999,
     'nomusu' => 'Voto en Blanco',
@@ -106,22 +108,31 @@ $votoBlanco = [
     'is_blanco' => true
 ];
 
-// Candidatos registrados desde el módulo Candidato Vocero (1211)
-$dat = [];
-foreach ($candidatosBD as $idx => $cand) {
-    $dat[] = [
-        'idusu' => $cand['idusu'],
-        'nomusu' => $cand['nomusu'],
-        'noca' => !empty($cand['noca']) ? $cand['noca'] : ($idx + 1),
-        'idfic' => !empty($cand['idfic']) ? $cand['idfic'] : $idfic,
-        'nomfic' => !empty($cand['nomfic']) ? $cand['nomfic'] : 'Formación Titulada',
-        'fotcan' => 'img/user.jpg',
-        'lema' => 'Compromiso, dedicación y vocería activa en representación de la ficha.',
-        'is_blanco' => false
+// Si la BD contiene candidatos de la ficha, adaptarlos; si no, utilizar los dos candidatos inventados
+if (!empty($candidatosBD) && count($candidatosBD) >= 2) {
+    $dat = [];
+    foreach ($candidatosBD as $idx => $cand) {
+        $dat[] = [
+            'idusu' => $cand['idusu'],
+            'nomusu' => $cand['nomusu'],
+            'noca' => !empty($cand['noca']) ? $cand['noca'] : ($idx + 1),
+            'idfic' => !empty($cand['idfic']) ? $cand['idfic'] : $idfic,
+            'nomfic' => !empty($cand['nomfic']) ? $cand['nomfic'] : 'Formación Titulada',
+            'fotcan' => 'img/user.jpg',
+            'lema' => 'Compromiso, dedicación y vocería activa en representación de la ficha.',
+            'is_blanco' => false
+        ];
+    }
+    // Agregar opción de voto en blanco
+    $dat[] = $votoBlanco;
+} else {
+    // Lista exacta solicitada: Dos candidatos con nombres inventados + Módulo de Voto en Blanco
+    $dat = [
+        $candidato1,
+        $candidato2,
+        $votoBlanco
     ];
 }
-// Agregar opción de voto en blanco
-$dat[] = $votoBlanco;
 
 // Si el usuario ya votó, asegurarse de que la opción votada esté presente en $dat
 if ($yaVoto && $candVotadoId) {

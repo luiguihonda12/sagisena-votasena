@@ -1,7 +1,7 @@
 <?php
     require_once ('models/votmvot.php');
 
-    $mvot = new Votmvot();
+    $mvot = new Mvot();
    
     $idusu = isset($_SESSION['idusu']) ? $_SESSION['idusu'] : NULL;
     $idval = isset($_REQUEST['idval']) ? $_REQUEST['idval'] : NULL;
@@ -18,61 +18,41 @@
     $votoInfo = ($idusu && $yaVoto) ? $mvot->getVotoUsuario() : null;
     $candVotadoId = ($votoInfo && isset($votoInfo['canusu'])) ? $votoInfo['canusu'] : null;
 
-    if ($opera == "save") {
+    if ($opera == "save" && ($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
         if ($yaVoto) {
-            echo "<script>
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'Atención',
-                    text: 'Ya ejerciste tu derecho al voto para representante. No es posible modificar tu voto.',
-                    confirmButtonText: 'Aceptar',
-                    confirmButtonColor: '#117f09'
-                }).then(() => {
-                    window.location.href = 'home.php?pg=1203';
-                });
-            </script>";
-            exit();
-        }
-        if (empty($canusu)) {
-            echo "<script>
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Debes seleccionar una opción de voto',
-                    confirmButtonText: 'Aceptar'
-                }).then(() => {
-                    window.location.href = 'home.php?pg=1203';
-                });
-            </script>";
-            exit();
-        }
-        $mvot->setCanusu($canusu);
-        $mvot->setDtvot($dtvot);
-        
-        if ($mvot->save()) {
-            echo "<script>
-                Swal.fire({
-                    icon: 'success',
-                    title: '¡Éxito!',
-                    text: 'Voto para representante registrado con éxito',
-                    confirmButtonText: 'Aceptar',
-                    confirmButtonColor: '#117f09'
-                }).then(() => {
-                    window.location.href = 'home.php?pg=1203';
-                });
-            </script>";
-            exit();
+            $_SESSION['votmsg'] = array(
+                'tipo'  => 'warning',
+                'texto' => 'Ya ejerciste tu derecho al voto para representante. No es posible modificar tu voto.'
+            );
+        } elseif (empty($canusu)) {
+            $_SESSION['votmsg'] = array(
+                'tipo'  => 'danger',
+                'texto' => 'Debes seleccionar una opción de voto.'
+            );
         } else {
-            echo "<script>
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Ya has votado por representante o hubo un problema',
-                    confirmButtonText: 'Aceptar'
-                }).then(() => {
-                    window.location.href = 'home.php?pg=1203';
-                });
-            </script>";
+            $mvot->setCanusu($canusu);
+            $mvot->setDtvot($dtvot);
+
+            if ($mvot->save()) {
+                $_SESSION['votmsg'] = array(
+                    'tipo'  => 'success',
+                    'texto' => 'Voto para representante registrado con éxito.'
+                );
+            } else {
+                $_SESSION['votmsg'] = array(
+                    'tipo'  => 'danger',
+                    'texto' => 'Ya has votado por representante o hubo un problema al registrar el voto.'
+                );
+            }
+
+            // Refrescar el estado del voto para mostrar la vista en modo solo lectura
+            $yaVoto = $idusu ? $mvot->getOne() : false;
+            $votoInfo = ($idusu && $yaVoto) ? $mvot->getVotoUsuario() : null;
+            $candVotadoId = ($votoInfo && isset($votoInfo['canusu'])) ? $votoInfo['canusu'] : null;
+        }
+
+        if (!headers_sent()) {
+            header("Location: home.php?pg=1203");
             exit();
         }
     }

@@ -1,12 +1,10 @@
 <?php
-require_once "models/conexion.php";
-
-class Votmvot{
+class Mvot{
     private $idusu;
     private $canusu;
     private $dtvot;
 
-    // Metodos Set 
+    // Métodos Get
     public function getIdusu(){
         return $this->idusu;
     }
@@ -17,7 +15,7 @@ class Votmvot{
         return $this->dtvot;
     }
 
-    // Metodo Get
+    // Métodos Set
     public function setIdusu($idusu){
         $this->idusu=$idusu;
     }
@@ -37,21 +35,31 @@ class Votmvot{
               INNER JOIN usufic AS uf ON u.idusu=uf.idusu AND uf.actfic='1'
               INNER JOIN ficha AS f ON uf.idfic=f.idfic
               LEFT JOIN valor AS v ON v.idval=f.jornada
-              WHERE up.idper=3 AND u.actusu=1 AND u.noca<>'999' AND f.jornada='$idval'
+              WHERE up.idper=3 AND u.actusu=1 AND u.noca<>'999' AND f.jornada=:jor
               GROUP BY u.idusu
               ORDER BY u.noca, u.nomusu";
         $modelo = new conexion();
         $conexion = $modelo->get_conexion();
         $result = $conexion->prepare($sql);
+        $result->bindValue(":jor", $idval);
         $result->execute();
         $res=$result->fetchAll(PDO::FETCH_ASSOC);
         return $res;
     } 
 
     // Devuelve una lista de candidatos de la jornada elegidos al azar.
+    // Si no hay suficientes, crea candidatos generados aleatoriamente para completar.
     public function getCandidatosAleatorios($jornada=1, $cantidad=3){
         $cands = $this->getAll($jornada);
-        if(!$cands){ return array(); }
+        if(!$cands){ $cands = array(); }
+        $faltan = $cantidad - count($cands);
+        if($faltan > 0){
+            for($i=0;$i<$faltan;$i++){
+                $this->crearCandidatoRandom($jornada);
+            }
+            $cands = $this->getAll($jornada);
+            if(!$cands){ $cands = array(); }
+        }
         shuffle($cands);
         return array_slice($cands, 0, $cantidad);
     }
@@ -308,6 +316,4 @@ class Votmvot{
     }
 
 }
-if (!class_exists('Mvot')) {
-    class_alias('Votmvot', 'Mvot');
-}
+?>
