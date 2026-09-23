@@ -1,71 +1,76 @@
 <?php require_once 'controllers/votcvpr.php'; ?>
-<link rel="stylesheet" href="css/stypro.css">
 
 <div class="conte">
 	<?php echo titulo2("<i class='" . $icono . "'></i> Visualizar Propuesta", 2); ?>
-</div>
 
-<div class="cand-wrap">
-	<?php if ($dcand) { ?>
-	<div class="cand-grid">
-		<?php foreach ($dcand as $c) { ?>
-		<div class="cand-card" data-id="<?= (int)$c['idusu']; ?>">
-			<div class="cand-photo">
-				<?php if (!empty($c['fotcan']) && file_exists($c['fotcan'])) { ?>
-				<img src="<?= htmlspecialchars($c['fotcan']); ?>" alt="Foto de <?= txlbl($c['nomusu']); ?>">
-				<?php } else { ?>
-				<img src="img/user.jpg" alt="Foto de <?= txlbl($c['nomusu']); ?>">
-				<?php } ?>
-				<?php if ($c['noca'] !== '' && $c['noca'] !== null) { ?>
-				<span class="cand-num"><?= txlbl($c['noca']); ?></span>
-				<?php } ?>
+	<div class="mx-auto w-100 max-w-screen-xl mt-4 ">
+		<?php if ($dcand) { ?>
+		<div class="row g-4">
+			<?php foreach ($dcand as $c) { ?>
+			<div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+				<article class="card h-100 border-0 shadow-sm module-card cursor-pointer" data-id="<?= (int)$c['idusu']; ?>">
+					<div class="position-relative rounded-top overflow-hidden h-56 bg-gray-100">
+						<?php if (!empty($c['fotcan']) && file_exists($c['fotcan'])) { ?>
+						<img class="w-100 h-100 object-fit-cover" src="<?= htmlspecialchars($c['fotcan']); ?>" alt="Foto de <?= txlbl($c['nomusu']); ?>">
+						<?php } else { ?>
+						<img class="w-100 h-100 object-fit-cover" src="img/user.jpg" alt="Foto de <?= txlbl($c['nomusu']); ?>">
+						<?php } ?>
+						<?php if ($c['noca'] !== '' && $c['noca'] !== null) { ?>
+						<span class="badge bg-success position-absolute top-0 end-0 m-2 rounded-pill"><?= txlbl($c['noca']); ?></span>
+						<?php } ?>
+					</div>
+					<div class="card-body">
+						<div class="card-title fw-bold text-dark mb-2"><?= txlbl($c['nomusu']); ?></div>
+						<ul class="small text-muted d-flex flex-column gap-1 list-unstyled mb-0">
+							<?php if (!empty($c['idfic'])) { ?>
+							<li><i class="fa-solid fa-hashtag text-success me-1"></i>Ficha <?= (int)$c['idfic']; ?> - <?= txlbl($c['nomfic']); ?></li>
+							<?php } ?>
+							<?php if (!empty($c['nomjor'])) { ?>
+							<li><i class="fa-solid fa-clock text-success me-1"></i><?= txlbl($c['nomjor']); ?></li>
+							<?php } ?>
+							<?php if (!empty($c['nomcen'])) { ?>
+							<li><i class="fa-solid fa-building-columns text-success me-1"></i><?= txlbl($c['nomcen']); ?></li>
+							<?php } ?>
+						</ul>
+					</div>
+					<footer class="card-footer bg-white border-0 pt-0 pb-3 px-3">
+						<div class="border border-success text-success fw-bold text-center rounded-2 py-2">
+							<i class="fa-solid fa-eye me-1"></i> Ver propuesta
+						</div>
+					</footer>
+				</article>
 			</div>
-			<div class="cand-body">
-				<div class="cand-name"><?= txlbl($c['nomusu']); ?></div>
-				<div class="cand-meta">
-					<?php if (!empty($c['idfic'])) { ?>
-					<span><i class="fa-solid fa-hashtag"></i>Ficha <?= (int)$c['idfic']; ?> - <?= txlbl($c['nomfic']); ?></span>
-					<?php } ?>
-					<?php if (!empty($c['nomjor'])) { ?>
-					<span><i class="fa-solid fa-clock"></i><?= txlbl($c['nomjor']); ?></span>
-					<?php } ?>
-					<?php if (!empty($c['nomcen'])) { ?>
-					<span><i class="fa-solid fa-building-columns"></i><?= txlbl($c['nomcen']); ?></span>
-					<?php } ?>
-				</div>
-			</div>
-			<div class="cand-foot">
-				<span class="cand-ver"><i class="fa-solid fa-eye"></i> Ver propuesta</span>
+			<?php } ?>
+		</div>
+		<?php } else { ?>
+		<div class="card border-0 shadow-sm text-center py-5">
+			<div class="card-body">
+				<i class="fa-solid fa-file-circle-question text-success fs-1 d-block mb-3"></i>
+				<span class="text-muted">No hay propuestas registradas en tu jornada.</span>
 			</div>
 		</div>
 		<?php } ?>
 	</div>
-	<?php } else { ?>
-	<div class="pro-empty">
-		<i class="fa-solid fa-file-circle-question"></i><br>
-		No hay propuestas registradas en tu jornada.
-	</div>
-	<?php } ?>
 </div>
 
 <!-- Modal con la propuesta del candidato -->
 <div class="modal fade" id="candModal" tabindex="-1" aria-hidden="true">
-	<div class="modal-dialog modal-lg modal-dialog-scrollable cand-dlg">
-		<div class="modal-content cand-modal">
-			<div class="modal-header cand-mh">
-				<div class="cand-hd">
-					<div id="m_foto" class="cand-hd-photo"></div>
-					<div class="cand-hd-info">
-						<div class="cand-hd-name" id="m_nombre"></div>
-						<div class="cand-hd-meta" id="m_meta"></div>
+	<div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+		<div class="modal-content shadow-lg border-0 rounded-3 overflow-hidden">
+			<header class="modal-header bg-success text-white d-flex align-items-center gap-3 border-0 px-4 py-3">
+				<div class="d-flex align-items-center gap-3 min-w-0">
+					<div id="m_foto" class="rounded-circle overflow-hidden border border-2 border-white shadow w-20 h-20 flex-shrink-0 bg-white"></div>
+					<div class="min-w-0">
+						<div id="m_nombre" class="fs-5 fw-bold lh-sm"></div>
+						<div id="m_meta" class="small d-flex flex-wrap gap-2"></div>
 					</div>
 				</div>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-			</div>
-			<div class="modal-body cand-mb" id="m_body"></div>
-			<div class="modal-footer cand-mf">
-				<button type="button" class="btn-pro" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i> Cerrar</button>
-			</div>
+				<button type="button" class="btn-close btn-close-white ms-auto" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+			</header>
+			<div class="modal-body bg-light py-4" id="m_body"></div>
+			<footer class="modal-footer bg-white border-0 px-4 py-3">
+				<button type="button" class="btn btn-success" data-bs-dismiss="modal"><i class="fa-solid fa-xmark me-1"></i> Cerrar</button>
+			</footer>
 		</div>
 	</div>
 </div>
@@ -83,10 +88,12 @@ function nb(t) {
 }
 
 function chkVal(v) {
-	const est = (v === 'Si') ? 'is-si' : ((v === 'No') ? 'is-no' : 'is-pend');
-	const icn = (v === 'Si') ? 'fa-circle-check' : ((v === 'No') ? 'fa-circle-xmark' : 'fa-minus');
+	const on = (v === 'Si');
+	const off = (v === 'No');
+	const cls = on ? 'bg-success text-white' : (off ? 'bg-danger text-white' : 'bg-light text-muted border');
+	const icn = on ? 'fa-circle-check' : (off ? 'fa-circle-xmark' : 'fa-minus');
 	const txt = v ? v : 'Pendiente';
-	return '<span class="fpro-chk-val ' + est + '"><i class="fa-solid ' + icn + '"></i>' + eH(txt) + '</span>';
+	return '<span class="badge ' + cls + ' rounded-pill"><i class="fa-solid ' + icn + ' me-1"></i>' + eH(txt) + '</span>';
 }
 
 function vidMime(n) {
@@ -97,24 +104,29 @@ function vidMime(n) {
 
 function vidBlock(c) {
 	if (!c.videoOk || !c.video) return '';
-	return '<div class="fpro-video">' +
-		'<span class="fpro-campo-lbl"><i class="fa-solid fa-video"></i> Video de la propuesta</span>' +
-		'<span class="pro-vid-fname" title="' + eH(c.video) + '"><i class="fa-solid fa-file-video"></i> ' + eH(c.video) + '</span>' +
-		'<div class="pro-vid-frame">' +
-		'<video controls preload="metadata" class="pro-vid-player">' +
+	return '<div class="border-top border-light pt-3 mt-4">' +
+		'<span class="d-block text-uppercase fw-bold small text-success mb-2"><i class="fa-solid fa-video me-1"></i> Video de la propuesta</span>' +
+		'<span class="badge bg-light text-muted text-break rounded-pill mb-2 border" title="' + eH(c.video) + '"><i class="fa-solid fa-file-video text-success me-1"></i> ' + eH(c.video) + '</span>' +
+		'<div class="bg-black rounded overflow-hidden">' +
+		'<video controls preload="metadata" class="w-100">' +
 		'<source src="videos/' + eH(c.video) + '" type="' + vidMime(c.video) + '">' +
 		'Su navegador no soporta la visualización de video.' +
 		'</video></div></div>';
 }
 
+function secTitulo(titulo) {
+	return '<header class="card-header bg-success text-white fw-bold">' + eH(titulo) + '</header>';
+}
+
 function bloqueChk(titulo, def, vals) {
 	if (!def || !def.length) return '';
-	let h = '<div class="fpro-sec"><div class="fpro-sec-tit">' + eH(titulo) + '</div><div class="fpro-sec-body">';
+	let h = '<section class="card border-0 shadow-sm overflow-hidden mb-4">' + secTitulo(titulo) + '<div class="card-body">';
+	h += '<ul class="list-unstyled mb-0">';
 	def.forEach(function (f) {
 		const v = (vals && vals[f.idval]) ? vals[f.idval] : '';
-		h += '<div class="fpro-chk-row"><span class="fpro-campo-lbl">' + eH(f.nomval) + '</span>' + chkVal(v) + '</div>';
+		h += '<li class="d-flex justify-content-between align-items-center gap-2 py-2 border-bottom border-light"><span class="text-uppercase fw-bold small text-success">' + eH(f.nomval) + '</span>' + chkVal(v) + '</li>';
 	});
-	h += '</div></div>';
+	h += '</ul></div></section>';
 	return h;
 }
 
@@ -124,18 +136,18 @@ function cuerpoPropuesta(c) {
 	let n = 0;
 	d3.forEach(function (f) {
 		if (f.subs && f.subs.length) {
-			h += '<div class="fpro-sec"><div class="fpro-sec-tit">' + eH(f.nomval) + '</div><div class="fpro-sec-body">';
+			h += '<section class="card border-0 shadow-sm overflow-hidden mb-4">' + secTitulo(f.nomval) + '<div class="card-body">';
 			f.subs.forEach(function (sub) {
 				const v = (c.props3 && c.props3[n]) ? c.props3[n] : '';
 				n++;
-				h += '<div class="fpro-campo"><span class="fpro-campo-lbl">' + eH(sub) + '</span><span class="fpro-campo-val">' + (v ? nb(v) : '<em>Sin diligenciar</em>') + '</span></div>';
+				h += '<div class="mb-3"><span class="d-block text-uppercase fw-bold small text-success mb-1 tracking-wide">' + eH(sub) + '</span><span class="d-block border-start border-success ps-3 lh-lg">' + (v ? nb(v) : '<em class="text-muted">Sin diligenciar</em>') + '</span></div>';
 			});
 			if (f.idval === 50) h += vidBlock(c);
-			h += '</div></div>';
+			h += '</div></section>';
 		} else {
 			const v = (c.props3 && c.props3[n]) ? c.props3[n] : '';
 			n++;
-			h += '<div class="fpro-sec"><div class="fpro-sec-tit">' + eH(f.nomval) + '</div><div class="fpro-sec-body"><p class="fpro-val">' + (v ? nb(v) : '<em>Sin diligenciar</em>') + '</p></div></div>';
+			h += '<section class="card border-0 shadow-sm overflow-hidden mb-4">' + secTitulo(f.nomval) + '<div class="card-body"><p class="mb-0 lh-lg">' + (v ? nb(v) : '<em class="text-muted">Sin diligenciar</em>') + '</p></div></section>';
 		}
 	});
 	h += bloqueChk('Condiciones', DEF[2] || [], c.conds);
@@ -144,7 +156,7 @@ function cuerpoPropuesta(c) {
 }
 
 let candModal = null;
-document.querySelectorAll('.cand-card').forEach(function (card) {
+document.querySelectorAll('.card[data-id]').forEach(function (card) {
 	card.addEventListener('click', function () {
 		const id = card.getAttribute('data-id');
 		const c = CAND.find(function (x) { return String(x.idusu) === id; });
@@ -152,17 +164,17 @@ document.querySelectorAll('.cand-card').forEach(function (card) {
 
 		let foto = '';
 		if (c.fotcan) {
-			foto = '<img src="' + eH(c.fotcan) + '" alt="Foto de ' + eH(c.nomusu) + '" onerror="this.onerror=null;this.src=\'img/user.jpg\'">';
+			foto = '<img class="w-100 h-100 object-fit-cover" src="' + eH(c.fotcan) + '" alt="Foto de ' + eH(c.nomusu) + '" onerror="this.onerror=null;this.src=\'img/user.jpg\'">';
 		} else {
-			foto = '<img src="img/user.jpg" alt="Foto de ' + eH(c.nomusu) + '">';
+			foto = '<img class="w-100 h-100 object-fit-cover" src="img/user.jpg" alt="Foto de ' + eH(c.nomusu) + '">';
 		}
 		document.getElementById('m_foto').innerHTML = foto;
 
 		let meta = '';
-		if (c.noca) meta += '<span class="cand-hd-num"><i class="fa-solid fa-star"></i> Candidato # ' + eH(c.noca) + '</span>';
-		if (c.idfic) meta += '<span><i class="fa-solid fa-hashtag"></i> Ficha ' + eH(c.idfic) + ' - ' + eH(c.nomfic) + '</span>';
-		if (c.nomjor) meta += '<span><i class="fa-solid fa-clock"></i> ' + eH(c.nomjor) + '</span>';
-		if (c.nomcen) meta += '<span><i class="fa-solid fa-building-columns"></i> ' + eH(c.nomcen) + '</span>';
+		if (c.noca) meta += '<span class="fw-semibold"><i class="fa-solid fa-star me-1"></i> Candidato # ' + eH(c.noca) + '</span>';
+		if (c.idfic) meta += '<span><i class="fa-solid fa-hashtag me-1"></i> Ficha ' + eH(c.idfic) + ' - ' + eH(c.nomfic) + '</span>';
+		if (c.nomjor) meta += '<span><i class="fa-solid fa-clock me-1"></i> ' + eH(c.nomjor) + '</span>';
+		if (c.nomcen) meta += '<span><i class="fa-solid fa-building-columns me-1"></i> ' + eH(c.nomcen) + '</span>';
 
 		document.getElementById('m_nombre').textContent = c.nomusu;
 		document.getElementById('m_meta').innerHTML = meta;
@@ -170,8 +182,8 @@ document.querySelectorAll('.cand-card').forEach(function (card) {
 
 		const dlg = document.querySelector('#candModal .modal-dialog');
 		if (dlg) {
-			if (c.videoOk) dlg.classList.add('cand-dlg--wide');
-			else dlg.classList.remove('cand-dlg--wide');
+			if (c.videoOk) dlg.classList.add('modal-xl');
+			else dlg.classList.remove('modal-xl');
 		}
 
 		if (!candModal) candModal = new bootstrap.Modal(document.getElementById('candModal'));

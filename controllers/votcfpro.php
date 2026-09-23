@@ -11,7 +11,6 @@ $datOne = NULL;
 $datC   = NULL;
 $datM   = NULL;
 $dus    = NULL;
-$vidRut = NULL;
 
 if ($idusu) {
 	$mfpro->setIdusu($idusu);
@@ -26,9 +25,6 @@ if ($idusu) {
 	$datM = $mfpro->selOne();
 
 	$dus = $mfpro->getUsu();
-
-	$vid = $mfpro->getVideo();
-	$vidRut = ($vid && isset($vid[0]['rutvid']) && $vid[0]['rutvid']) ? $vid[0]['rutvid'] : NULL;
 }
 
 /* Perfiles Aprendiz: solo a un estudiante se le muestra ficha y jornada */
@@ -46,17 +42,5 @@ $dman = $mfpro->getVal(4);
 if (!function_exists('txlbl')) {
 	function txlbl($s) {
 		return html_entity_decode($s, ENT_QUOTES | ENT_HTML5, 'UTF-8');
-	}
-}
-
-if (!function_exists('vidmime')) {
-	function vidmime($fname) {
-		$ext = strtolower(pathinfo($fname, PATHINFO_EXTENSION));
-		$m = array(
-			'mp4' => 'video/mp4', 'm4v' => 'video/mp4', 'webm' => 'video/webm',
-			'mov' => 'video/quicktime', 'qt' => 'video/quicktime',
-			'avi' => 'video/x-msvideo', 'ogv' => 'video/ogg'
-		);
-		return isset($m[$ext]) ? $m[$ext] : 'video/mp4';
 	}
 }

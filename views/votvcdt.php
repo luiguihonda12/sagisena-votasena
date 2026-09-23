@@ -261,7 +261,7 @@
                                     </a>
                                     <button type="button" class="btn btn-outline-danger" 
                                             onclick="confirmarEliminar(<?= $d['idusu'] ?>, '<?= htmlspecialchars($d['nomusu']) ?>')"
-                                            title="Desactivar">
+                                            title="Eliminar candidatura">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </div>
@@ -284,11 +284,11 @@
 <script>
 function confirmarEliminar(idusu, nombre) {
     Swal.fire({
-        title: '¿Desactivar candidato?',
-        text: "Está a punto de desactivar a " + nombre,
+        title: '¿Eliminar candidatura?',
+        text: "Está a punto de retirar la postulación de " + nombre,
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonText: 'Sí, desactivar',
+        confirmButtonText: 'Sí, eliminar',
         cancelButtonText: 'Cancelar',
         confirmButtonColor: '#dc3545'
     }).then((result) => {

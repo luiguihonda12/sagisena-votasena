@@ -41,14 +41,19 @@ if ($idusu && isset($_FILES['vidpro']) && $_FILES['vidpro']['name'] != '') {
 	$docext = strtolower(pathinfo($_FILES['vidpro']['name'], PATHINFO_EXTENSION));
 	$permit = array('mp4', 'webm', 'mov', 'avi', 'm4v', 'ogv');
 	if ($_FILES['vidpro']['error'] != UPLOAD_ERR_OK) {
-		$vidErr = "Ocurrió un error al cargar el video. Inténtelo nuevamente.";
+		if (in_array($_FILES['vidpro']['error'], array(UPLOAD_ERR_INI_SIZE, UPLOAD_ERR_FORM_SIZE))) {
+			$vidErr = "El video supera el límite del servidor (" . ini_get('upload_max_filesize') . "). Redúcelo e inténtalo de nuevo.";
+		} else {
+			$vidErr = "Ocurrió un error al cargar el video (código " . (int)$_FILES['vidpro']['error'] . "). Inténtalo de nuevo.";
+		}
 	} elseif (!in_array($docext, $permit)) {
 		$vidErr = "Extensión no permitida. Solo se admiten: mp4, webm, mov, avi, m4v, ogv.";
 	} elseif ($_FILES['vidpro']['size'] >= 100741824) {
 		$vidErr = "El video es demasiado grande. El peso máximo permitido es de 97Mb.";
 	} else {
 		if (!is_dir('videos')) {
-			@mkdir('videos', 0775, true);
+			@mkdir('videos', 0777, true);
+			@chmod('videos', 0777);
 		}
 		$nombre = 'prop_' . $idusu . '_' . time() . '.' . $docext;
 		if (move_uploaded_file($_FILES['vidpro']['tmp_name'], 'videos/' . $nombre)) {
@@ -115,15 +120,18 @@ if (!function_exists('txlbl')) {
  */
 function dbche($tit, $vec, $dat, $reado = false) {
 	if (!$vec) return '';
-	$html = '<div class="pro-sec">';
-		$html .= '<div class="pro-sec-head"><i class="fa-solid fa-clipboard-check"></i>' . txlbl($tit) . '</div>';
-		$html .= '<div class="pro-sec-body row g-3">';
+	$html = '<section class="bg-white border rounded-4 shadow-sm mb-4 overflow-hidden">';
+		$html .= '<header class="d-flex align-items-center gap-3 px-4 py-3 bg-success-subtle border-bottom">'
+			. '<span class="w-8 h-8 rounded-circle bg-success text-white d-inline-flex align-items-center justify-content-center flex-shrink-0"><i class="fa-solid fa-clipboard-check"></i></span>'
+			. '<h2 class="fs-5 fw-bold mb-0 pb-0">' . txlbl($tit) . '</h2>'
+			. '</header>';
+		$html .= '<div class="p-4"><div class="row g-3">';
 		$i = 0;
 		foreach ($vec as $dv) {
 			$val = ($dat && isset($dat[$i]['texpro'])) ? $dat[$i]['texpro'] : NULL;
 			$html .= '<div class="col-md-6">';
-				$html .= '<label class="pro-lbl" for="texpr_s_' . $i . '">' . txlbl($dv['nomval']) . '</label>';
-				$html .= '<select name="texpro[]" id="texpr_s_' . $i . '" class="form-select"' . ($reado ? ' disabled' : '') . '>';
+				$html .= '<label class="form-label fw-bold fs-6" for="texpr_s_' . $i . '">' . txlbl($dv['nomval']) . '</label>';
+				$html .= '<select name="texpro[]" id="texpr_s_' . $i . '" class="form-select rounded-3"' . ($reado ? ' disabled' : '') . '>';
 				if (!$val) {
 					$html .= '<option value="" selected>Seleccione</option>';
 				}
@@ -135,7 +143,7 @@ function dbche($tit, $vec, $dat, $reado = false) {
 			$html .= '</div>';
 			$i++;
 		}
-		$html .= '</div>';
-	$html .= '</div>';
+		$html .= '</div></div>';
+	$html .= '</section>';
 	return $html;
 }

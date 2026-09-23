@@ -242,8 +242,8 @@ if (!empty($resultados)) {
                                 </a>
                                 <button type="button" class="btn btn-sm btn-outline-danger d-inline-flex align-items-center gap-1"
                                         onclick="confirmarEliminar(<?= $candidato['idusu'] ?>, '<?= addslashes($candidato['nomusu']) ?>')"
-                                        title="Desactivar candidato vocero">
-                                    <i class="fas fa-trash"></i> Desactivar
+                                        title="Eliminar candidatura de vocero">
+                                    <i class="fas fa-trash"></i> Eliminar
                                 </button>
                             </div>
                         </div>
@@ -317,11 +317,11 @@ if (!empty($resultados)) {
 <script>
 function confirmarEliminar(idusu, nombre) {
     Swal.fire({
-        title: '¿Desactivar candidato vocero?',
-        text: "Está a punto de desactivar a " + nombre,
+        title: '¿Eliminar candidatura de vocero?',
+        text: "Está a punto de retirar la postulación de " + nombre,
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonText: 'Sí, desactivar',
+        confirmButtonText: 'Sí, eliminar',
         cancelButtonText: 'Cancelar',
         confirmButtonColor: '#dc3545'
     }).then((result) => {

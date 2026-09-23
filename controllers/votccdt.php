@@ -147,11 +147,13 @@ if ($opera === "Actualizar" && $idusu) {
 if ($opera === "Eliminar" && $idusu) {
     $votmcdt->setIdusu($idusu);
     if ($votmcdt->delete()) {
-        $mensaje = "Candidato desactivado correctamente";
+        $mensaje = "Candidato eliminado correctamente";
         $tipoMensaje = "success";
+        $idusu = NULL;
+        $datOne = NULL;
         $dat = $votmcdt->getByFicha($fidfic ?: $fidval);
     } else {
-        $mensaje = "Error al desactivar el candidato";
+        $mensaje = "Error al eliminar el candidato";
         $tipoMensaje = "error";
     }
 }

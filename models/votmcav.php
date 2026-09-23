@@ -194,11 +194,32 @@ class Votmcav {
             $modelo = new conexion();
             $conexion = $modelo->get_conexion();
 
-            $sql = "UPDATE usuario SET actusu = 0 WHERE idusu = :idusu";
-            $result = $conexion->prepare($sql);
-            $result->bindParam(":idusu", $this->idusu, PDO::PARAM_INT);
-            return $result->execute();
+            $conexion->beginTransaction();
+
+            // 1. Eliminar asignación de rol candidato vocero en usupef
+            $sql1 = "DELETE FROM usupef WHERE idusu = :idusu AND idper = 13";
+            $stmt1 = $conexion->prepare($sql1);
+            $stmt1->bindParam(":idusu", $this->idusu, PDO::PARAM_INT);
+            $stmt1->execute();
+
+            // 2. Liberar número de tarjetón, foto y teléfono sin desactivar al aprendiz
+            $sql2 = "UPDATE usuario SET noca = NULL, fotcan = NULL, telcan = NULL WHERE idusu = :idusu";
+            $stmt2 = $conexion->prepare($sql2);
+            $stmt2->bindParam(":idusu", $this->idusu, PDO::PARAM_INT);
+            $stmt2->execute();
+
+            // 3. Eliminar propuestas asociadas al candidato si existen
+            $sql3 = "DELETE FROM propuesta WHERE idusu = :idusu";
+            $stmt3 = $conexion->prepare($sql3);
+            $stmt3->bindParam(":idusu", $this->idusu, PDO::PARAM_INT);
+            $stmt3->execute();
+
+            $conexion->commit();
+            return true;
         } catch (PDOException $e) {
+            if (isset($conexion) && $conexion->inTransaction()) {
+                $conexion->rollBack();
+            }
             error_log("Error al eliminar candidato vocero: " . $e->getMessage());
             return false;
         }
