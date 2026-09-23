@@ -19,499 +19,35 @@ if (!function_exists('inicialesNombres')) {
 
 <?php echo titulo2("<i class='" . $icono . "'></i> Cartón Electoral", 2); ?>
 
-<style>
-    :root {
-        --vot-verde: #117f09;
-        --vot-verde-claro: #00af00;
-        --vot-azul: #123a1f;
-        --vot-dorado: #ffc800;
-        --vot-sombra: 0 18px 40px rgba(17, 127, 9, .22);
-        --vot-border: 18px;
-    }
-
-    /* Barra de acciones (imprimir) - oculta al imprimir */
-    .vot-print-toolbar {
-        max-width: 1200px;
-        margin: 0 auto 22px auto;
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        flex-wrap: wrap;
-        gap: 12px;
-        padding: 14px 20px;
-        background: linear-gradient(135deg, #0a3d1a 0%, #117f09 55%, #00af00 100%);
-        border-radius: 16px;
-        box-shadow: 0 10px 28px rgba(10, 61, 26, .18);
-        border-left: 6px solid var(--vot-dorado);
-        position: relative;
-        overflow: hidden;
-    }
-    .vot-print-toolbar .vot-info-periodo {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        color: #fff;
-        font-size: 13.5px;
-        font-weight: 600;
-        background: rgba(255, 255, 255, .14);
-        border: 1px solid rgba(255, 255, 255, .35);
-        border-radius: 30px;
-        padding: 7px 15px;
-    }
-    .vot-print-toolbar .vot-info-periodo i {
-        margin-right: 4px;
-    }
-    .btn-vot-print {
-        display: inline-flex;
-        align-items: center;
-        gap: 9px;
-        border: none;
-        border-radius: 30px;
-        padding: 11px 24px;
-        background: var(--vot-dorado);
-        color: #17321a;
-        font-weight: 800;
-        font-size: 14px;
-        letter-spacing: .5px;
-        text-transform: uppercase;
-        box-shadow: 0 4px 14px rgba(0, 0, 0, .25);
-        cursor: pointer;
-        transition: transform .2s ease, filter .2s ease;
-    }
-    .btn-vot-print:hover {
-        filter: brightness(1.06);
-        transform: translateY(-2px);
-    }
-
-    /* Núcleo imprimible */
-    .vot-wrap {
-        max-width: 1200px;
-        margin: 0 auto 30px auto;
-    }
-
-    .votacion-intro {
-        text-align: center;
-        max-width: 760px;
-        margin: 0 auto 30px auto;
-    }
-    .votacion-intro .votacion-sub {
-        color: #5b635b;
-        font-size: 14.5px;
-        line-height: 1.65;
-    }
-    .votacion-intro .votacion-sub i {
-        color: var(--vot-verde);
-        margin-right: 6px;
-    }
-    .votacion-intro .votacion-sub strong {
-        color: var(--vot-verde);
-    }
-
-    /* Banner institucional */
-    .votacion-banner {
-        background: linear-gradient(135deg, #0a3d1a 0%, #117f09 55%, #00af00 100%);
-        border-radius: var(--vot-border);
-        padding: 22px 28px;
-        color: #fff;
-        margin: 0 auto 30px auto;
-        max-width: 1040px;
-        box-shadow: 0 10px 28px rgba(10, 61, 26, .35);
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        gap: 14px;
-        border-left: 6px solid var(--vot-dorado);
-        position: relative;
-        overflow: hidden;
-    }
-    .votacion-banner::after {
-        content: "\f0c0";
-        font-family: "Font Awesome 6 Free";
-        font-weight: 900;
-        position: absolute;
-        right: -20px;
-        bottom: -34px;
-        font-size: 150px;
-        color: rgba(255, 255, 255, .07);
-    }
-    .votacion-banner.banner-voceros::after {
-        content: "\f0a1";
-    }
-    .votacion-banner.banner-voceros {
-        background: linear-gradient(135deg, #083a5e 0%, #0f5c8c 55%, #1b83bd 100%);
-        border-left-color: #ffdd59;
-        box-shadow: 0 10px 28px rgba(8, 58, 94, .35);
-    }
-    .votacion-banner-info h4 {
-        margin: 0 0 5px 0;
-        font-size: 1.45rem;
-        font-weight: 800;
-        color: #fff;
-        letter-spacing: .3px;
-    }
-    .votacion-banner-info p {
-        margin: 0;
-        font-size: 1rem;
-        color: #e8f7e6;
-    }
-    .votacion-banner.banner-voceros .votacion-banner-info p {
-        color: #dceefb;
-    }
-    .votacion-badge-total {
-        background: rgba(255, 255, 255, .16);
-        border: 1px solid rgba(255, 255, 255, .4);
-        border-radius: 30px;
-        padding: 9px 18px;
-        font-size: 1rem;
-        font-weight: 700;
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        backdrop-filter: blur(2px);
-    }
-
-    /* Rejilla de tarjetas */
-    .votacion-grid {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        align-items: stretch;
-        gap: 26px;
-        padding: 6px 0 26px 0;
-        max-width: 1200px;
-        margin: 0 auto;
-    }
-
-    .vot-separador {
-        text-align: center;
-        margin: 6px auto 30px auto;
-        max-width: 1200px;
-    }
-    .vot-separador span {
-        display: inline-block;
-        background: #fff;
-        border: 1px solid #e3e8e3;
-        border-radius: 40px;
-        padding: 10px 26px;
-        font-weight: 800;
-        font-size: 15px;
-        letter-spacing: .8px;
-        text-transform: uppercase;
-        color: var(--vot-azul);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, .06);
-    }
-    .vot-separador span i {
-        color: var(--vot-verde);
-        margin-right: 8px;
-    }
-
-    /* Tarjeta candidato */
-    .candidato-card {
-        width: 262px;
-        background: #fff;
-        border: 1px solid #e3e8e3;
-        border-radius: var(--vot-border);
-        overflow: hidden;
-        text-align: center;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, .06);
-        transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
-        position: relative;
-        display: flex;
-        flex-direction: column;
-    }
-    .candidato-card:hover {
-        transform: translateY(-4px);
-        box-shadow: var(--vot-sombra);
-        border-color: #cfe8cd;
-    }
-
-    /* Foto */
-    .candidato-foto {
-        position: relative;
-        height: 210px;
-        background: #f2f5f2;
-        overflow: hidden;
-        flex-shrink: 0;
-    }
-    .candidato-foto img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-    }
-    .candidato-foto.placeholder {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: linear-gradient(160deg, #e8f4e8, #d6e8d6);
-        color: #83a983;
-    }
-    .avatar-iniciales {
-        width: 104px;
-        height: 104px;
-        border-radius: 50%;
-        background: linear-gradient(135deg, #117f09, #00af00);
-        color: #fff;
-        font-family: Arial, Helvetica, sans-serif;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 40px;
-        font-weight: 800;
-        letter-spacing: 1px;
-        box-shadow: 0 10px 22px rgba(17, 127, 9, .35);
-        border: 4px solid #fff;
-        text-shadow: 0 2px 5px rgba(0, 0, 0, .25);
-    }
-    .candidato-num {
-        position: absolute;
-        top: 12px;
-        left: 12px;
-        background: rgba(15, 70, 8, .88);
-        color: #fff;
-        font-weight: 800;
-        font-size: 13px;
-        padding: 6px 13px;
-        border-radius: 30px;
-        letter-spacing: .6px;
-        backdrop-filter: blur(2px);
-        box-shadow: 0 2px 8px rgba(0, 0, 0, .28);
-        z-index: 2;
-        display: inline-flex;
-        align-items: center;
-    }
-    .candidato-num::before {
-        content: "\f2bd";
-        font-family: "Font Awesome 6 Free";
-        font-weight: 900;
-        margin-right: 6px;
-    }
-
-    /* Cuerpo de la tarjeta */
-    .candidato-info {
-        padding: 16px 16px 18px 16px;
-        display: flex;
-        flex-direction: column;
-        flex-grow: 1;
-    }
-    .candidato-nombre {
-        color: #17321a;
-        font-size: 15px;
-        font-weight: 800;
-        line-height: 1.35;
-        min-height: 42px;
-        letter-spacing: .2px;
-        margin-bottom: 5px;
-    }
-    .candidato-ficha {
-        color: #6b756b;
-        font-size: 12px;
-        margin-bottom: 10px;
-    }
-    .candidato-ficha i {
-        color: var(--vot-verde);
-        margin-right: 5px;
-    }
-    .candidato-lema {
-        background: #f6faf6;
-        border-left: 4px solid var(--vot-verde);
-        border-radius: 0 8px 8px 0;
-        padding: 8px 11px;
-        font-size: 12px;
-        font-style: italic;
-        color: #4c5a4c;
-        text-align: left;
-        line-height: 1.45;
-        margin: 0 0 14px 0;
-        flex-grow: 1;
-    }
-    .candidato-lema i {
-        color: var(--vot-verde);
-        margin-right: 4px;
-    }
-
-    /* Chip informativo (reemplaza el botón de votar) */
-    .candidato-info-chip {
-        width: 100%;
-        border: 2px solid #cdd5cd;
-        border-radius: 10px;
-        padding: 11px;
-        background: #fafbfa;
-        color: #6b756b;
-        font-weight: 700;
-        font-size: 12px;
-        letter-spacing: .8px;
-        text-transform: uppercase;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 7px;
-        cursor: default;
-    }
-    .candidato-info-chip i {
-        color: var(--vot-verde);
-    }
-
-    /* Tarjeta voto en blanco */
-    .candidato-card.card-blanca {
-        border: 2px dashed #b9c2b9;
-        background: #fafbfa;
-    }
-    .candidato-card.card-blanca:hover {
-        border-color: var(--vot-verde);
-        box-shadow: 0 18px 40px rgba(17, 127, 9, .14);
-    }
-    .card-blanca .candidato-foto {
-        background: linear-gradient(160deg, #ffffff, #edf1ed);
-        color: #a9b4a9;
-    }
-    .card-blanca .candidato-nombre {
-        color: #5b645b;
-    }
-    .card-blanca .candidato-lema {
-        border-left-color: #a9b4a9;
-    }
-    .icono-blanca {
-        width: 84px;
-        height: 84px;
-        border-radius: 50%;
-        background: #fff;
-        color: #a9b4a9;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 32px;
-        box-shadow: 0 8px 18px rgba(0, 0, 0, .08);
-        border: 2px dashed #cdd5cd;
-    }
-    .card-blanca .candidato-info-chip {
-        border-style: solid;
-        color: #4c5a4c;
-    }
-
-    /* Animación de entrada */
-    @keyframes aparecerVot {
-        from { opacity: 0; transform: translateY(18px); }
-        to   { opacity: 1; transform: translateY(0); }
-    }
-    .candidato-card {
-        animation: aparecerVot .5s ease both;
-    }
-    .candidato-card:nth-child(2) { animation-delay: .1s; }
-    .candidato-card:nth-child(3) { animation-delay: .2s; }
-    .candidato-card:nth-child(4) { animation-delay: .3s; }
-
-    .votacion-nota {
-        text-align: center;
-        color: #8a938a;
-        font-size: 13px;
-        margin: 6px 0 18px 0;
-    }
-    .votacion-nota i {
-        color: var(--vot-verde);
-        margin-right: 6px;
-    }
-
-    @media (max-width: 768px) {
-        .candidato-card { width: 100%; max-width: 300px; }
-        .candidato-foto { height: 180px; }
-    }
-
-    /* ===== IMPRESIÓN: solo el cartón electoral ===== */
-    @media print {
-        @page {
-            margin: 8mm;
-        }
-        html, body {
-            margin: 0 !important;
-            padding: 0 !important;
-            background: #ffffff !important;
-        }
-        * {
-            -webkit-print-color-adjust: exact;
-            print-color-adjust: exact;
-        }
-        .header-home,
-        .main-menu,
-        .footer-sena,
-        .btnayu,
-        #err,
-        .tit,
-        .vot-print-toolbar,
-        .votacion-intro,
-        .votacion-nota,
-        .vot-section-voceros {
-            display: none !important;
-        }
-        .contenido,
-        .contenido2 {
-            margin: 0 !important;
-            padding: 0 !important;
-        }
-        .vot-wrap {
-            max-width: 100%;
-            margin: 0;
-        }
-        .votacion-banner {
-            max-width: 100%;
-            margin: 0 0 12px 0;
-        }
-        .votacion-grid {
-            gap: 12px;
-            padding: 4px 0;
-        }
-        .candidato-card,
-        .votacion-banner {
-            page-break-inside: avoid;
-        }
-        .candidato-card {
-            width: 245px;
-            box-shadow: none;
-            animation: none;
-        }
-        .candidato-card:hover {
-            transform: none;
-            box-shadow: none;
-        }
-        .votacion-banner-info h4 {
-            font-size: 1.2rem;
-        }
-        .candidato-foto {
-            height: 170px;
-        }
-        a {
-            text-decoration: none !important;
-        }
-    }
-</style>
-
 <!-- Barra de acciones: imprimir -->
-<div class="vot-print-toolbar">
-    <span class="vot-info-periodo">
+<div class="max-w-[1200px] mx-auto mb-[22px] flex items-center justify-end flex-wrap gap-3 px-5 py-[14px] rounded-2xl bg-[linear-gradient(135deg,#0a3d1a_0%,#117f09_55%,#00af00_100%)] shadow-[0_10px_28px_rgba(10,61,26,0.18)] border-l-[6px] border-[#ffc800] relative overflow-hidden print:hidden">
+    <span class="inline-flex items-center gap-2 text-white text-[13.5px] font-semibold bg-white/15 border border-white/35 rounded-full px-[15px] py-[7px]">
         <i class="fa-solid <?= $periodoVotacion ? 'fa-door-open' : 'fa-lock'; ?>"></i>
         Periodo de votación: <strong><?= $periodoVotacion ? 'Abierto' : 'Cerrado'; ?></strong>
     </span>
-    <button type="button" class="btn-vot-print" onclick="window.print();">
+    <button type="button" class="inline-flex items-center gap-[9px] border-0 rounded-full px-6 py-[11px] bg-[#ffc800] text-[#17321a] font-extrabold text-sm uppercase tracking-wider shadow-[0_4px_14px_rgba(0,0,0,0.25)] cursor-pointer transition duration-200 hover:brightness-105 hover:-translate-y-0.5" onclick="window.print();">
         <i class="fa-solid fa-print"></i> Imprimir Cartón Electoral
     </button>
 </div>
 
 <!-- Contenido imprimible: el cartón electoral -->
-<div class="vot-wrap" id="carton-electoral">
+<div class="max-w-[1200px] mx-auto mb-[30px] print:max-w-full print:my-0" id="carton-electoral">
 
     <!-- ========== CARTÓN REPRESENTANTES ========== -->
-    <div class="votacion-banner">
-        <div class="votacion-banner-info">
-            <h4><i class="fa-solid fa-user-tie"></i> Candidatos a Representante de Aprendices</h4>
-            <p>Cartón informativo de la votación para elegir representante.</p>
+    <div class="isolate relative overflow-hidden mx-auto mb-[30px] max-w-[1040px] rounded-[18px] py-[22px] px-7 text-white bg-[linear-gradient(135deg,#0a3d1a_0%,#117f09_55%,#00af00_100%)] shadow-[0_10px_28px_rgba(10,61,26,0.35)] flex items-center justify-between flex-wrap gap-[14px] border-l-[6px] border-[#ffc800] print:max-w-full print:mb-3 print:[print-color-adjust:exact]">
+        <div>
+            <h4 class="m-0 mb-[5px] text-[1.45rem] font-extrabold text-white tracking-[0.3px] print:text-[1.2rem]">
+                <i class="fa-solid fa-user-tie"></i> Candidatos a Representante de Aprendices
+            </h4>
+            <p class="m-0 text-base text-[#e8f7e6]">Cartón informativo de la votación para elegir representante.</p>
         </div>
-        <div class="votacion-badge-total">
+        <div class="inline-flex items-center gap-2 bg-white/15 border border-white/40 rounded-full px-[18px] py-[9px] text-base font-bold">
             <i class="fa-solid fa-users"></i> <?= $datRepTar ? count($datRepTar) : 0; ?> Opciones
         </div>
+        <i class="fa-solid fa-users absolute -right-5 -bottom-9 text-[150px] text-white/5 -z-10 pointer-events-none"></i>
     </div>
 
-    <div class="votacion-grid">
+    <div class="flex flex-wrap justify-center items-stretch gap-[26px] pt-[6px] pb-[26px] max-w-[1200px] mx-auto print:gap-3 print:py-0">
         <?php
         if (!empty($datRepTar)) {
             foreach ($datRepTar as $d) {
@@ -522,40 +58,58 @@ if (!function_exists('inicialesNombres')) {
                 $ficha    = isset($d['idfic']) && !empty($d['idfic']) ? htmlspecialchars($d['idfic']) : '';
                 $programa = isset($d['nomfic']) && !empty($d['nomfic']) ? htmlspecialchars($d['nomfic']) : '';
                 $lema     = isset($d['lema']) && !empty($d['lema']) ? $d['lema'] : ($esBlanco ? 'No hay inclinación por ningún candidato.' : 'Compromiso y liderazgo al servicio de los aprendices.');
+
+                $cardCls  = 'w-[262px] max-md:w-full max-md:max-w-[300px] bg-white rounded-[18px] overflow-hidden text-center shadow-[0_4px_12px_rgba(0,0,0,0.06)] transition-transform duration-200 relative flex flex-col print:w-[245px] print:shadow-none print:hover:translate-y-0 print:hover:shadow-none';
+                $cardCls .= $esBlanco
+                    ? ' border-2 border-dashed border-[#b9c2b9] bg-[#fafbfa] hover:border-[#117f09] hover:shadow-[0_18px_40px_rgba(17,127,9,0.14)]'
+                    : ' border border-[#e3e8e3] hover:-translate-y-1 hover:border-[#cfe8cd] hover:shadow-[0_18px_40px_rgba(17,127,9,0.22)]';
+                $fotoCls  = 'relative shrink-0 h-[210px] max-md:h-[180px] print:h-[170px] bg-[#f2f5f2]';
+                $fotoPlace = $esBlanco
+                    ? 'flex items-center justify-center bg-[linear-gradient(160deg,#ffffff,#edf1ed)] text-[#a9b4a9]'
+                    : 'flex items-center justify-center bg-[linear-gradient(160deg,#e8f4e8,#d6e8d6)] text-[#83a983]';
+                $nomCls   = $esBlanco ? 'text-[#5b645b]' : 'text-[#17321a]';
+                $lemaCls  = $esBlanco ? 'border-l-[#a9b4a9]' : 'border-l-[#117f09]';
+                $chipCls  = $esBlanco ? 'text-[#4c5a4c] border-solid' : 'text-[#6b756b]';
+                $avatarCls = 'w-[104px] h-[104px] rounded-full bg-[linear-gradient(135deg,#117f09,#00af00)] text-white flex items-center justify-center text-[40px] font-extrabold tracking-wide shadow-[0_10px_22px_rgba(17,127,9,0.35)] border-4 border-white [text-shadow:0_2px_5px_rgba(0,0,0,0.25)] print:[print-color-adjust:exact]';
+                $numCls   = 'absolute top-3 left-3 z-[2] inline-flex items-center bg-[rgba(15,70,8,0.88)] text-white font-extrabold text-[13px] px-[13px] py-[6px] rounded-full tracking-[0.6px] shadow-[0_2px_8px_rgba(0,0,0,0.28)] print:[print-color-adjust:exact]';
                 ?>
-                <div class="candidato-card<?= $esBlanco ? ' card-blanca' : ''; ?>">
+                <div class="<?= $cardCls; ?>">
 
                     <?php if ($esBlanco) { ?>
-                        <div class="candidato-foto placeholder">
-                            <div class="icono-blanca"><i class="fa-solid fa-ban"></i></div>
+                        <div class="<?= $fotoCls . ' ' . $fotoPlace; ?>">
+                            <div class="w-[84px] h-[84px] rounded-full bg-white text-[#a9b4a9] flex items-center justify-center text-[32px] shadow-[0_8px_18px_rgba(0,0,0,0.08)] border-2 border-dashed border-[#cdd5cd]">
+                                <i class="fa-solid fa-ban"></i>
+                            </div>
                         </div>
                     <?php } elseif ($foto && $foto != 'image/usuario.png') { ?>
-                        <div class="candidato-foto">
-                            <span class="candidato-num"><?= $numCard; ?></span>
-                            <img src="<?= $foto; ?>" alt="<?= htmlspecialchars($nombre); ?>"
+                        <div class="<?= $fotoCls; ?>">
+                            <span class="<?= $numCls; ?>"><i class="fa-solid fa-id-card mr-[6px]"></i><?= $numCard; ?></span>
+                            <img src="<?= $foto; ?>" alt="<?= htmlspecialchars($nombre); ?>" class="block w-full h-full object-cover"
                                  onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                            <div class="avatar-iniciales" style="display:none;"><?= inicialesNombres($nombre); ?></div>
+                            <div class="hidden <?= $avatarCls; ?>"><?= inicialesNombres($nombre); ?></div>
                         </div>
                     <?php } else { ?>
-                        <div class="candidato-foto placeholder">
-                            <span class="candidato-num"><?= $numCard; ?></span>
-                            <div class="avatar-iniciales"><?= inicialesNombres($nombre); ?></div>
+                        <div class="<?= $fotoCls . ' ' . $fotoPlace; ?>">
+                            <span class="<?= $numCls; ?>"><i class="fa-solid fa-id-card mr-[6px]"></i><?= $numCard; ?></span>
+                            <div class="<?= $avatarCls; ?>"><?= inicialesNombres($nombre); ?></div>
                         </div>
                     <?php } ?>
 
-                    <div class="candidato-info">
-                        <div class="candidato-nombre"><?= strtoupper(htmlspecialchars($nombre)); ?></div>
-                        <div class="candidato-ficha">
+                    <div class="px-4 pt-4 pb-[18px] flex flex-col grow">
+                        <div class="<?= $nomCls; ?> text-[15px] font-extrabold leading-[1.35] min-h-[42px] tracking-[0.2px] mb-[5px]"><?= strtoupper(htmlspecialchars($nombre)); ?></div>
+                        <div class="text-[#6b756b] text-xs mb-[10px]">
                             <?php if ($esBlanco) { ?>
-                                <i class="fa-solid fa-file-circle-minus"></i> Opción democrática oficial
+                                <i class="fa-solid fa-file-circle-minus text-[#117f09] mr-[5px]"></i> Opción democrática oficial
                             <?php } else { ?>
-                                <?php if ($ficha) { ?><i class="fa-solid fa-hashtag"></i>Ficha <?= $ficha; ?><?php } ?>
-                                <?php if ($programa) { ?>&nbsp;·&nbsp;<i class="fa-solid fa-graduation-cap"></i><?= $programa; ?><?php } ?>
+                                <?php if ($ficha) { ?><i class="fa-solid fa-hashtag text-[#117f09] mr-[5px]"></i>Ficha <?= $ficha; ?><?php } ?>
+                                <?php if ($programa) { ?>&nbsp;·&nbsp;<i class="fa-solid fa-graduation-cap text-[#117f09] mr-[5px]"></i><?= $programa; ?><?php } ?>
                             <?php } ?>
                         </div>
-                        <div class="candidato-lema"><i class="fa-solid fa-quote-left"></i> <?= htmlspecialchars($lema); ?></div>
-                        <div class="candidato-info-chip">
-                            <i class="fa-solid fa-eye"></i> Consulta informativa
+                        <div class="<?= $lemaCls; ?> bg-[#f6faf6] border-l-4 rounded-r-[8px] px-[11px] py-2 text-xs italic text-[#4c5a4c] text-left leading-[1.45] mb-[14px] grow">
+                            <i class="fa-solid fa-quote-left text-[#117f09] mr-1"></i> <?= htmlspecialchars($lema); ?>
+                        </div>
+                        <div class="<?= $chipCls; ?> w-full border-2 border-[#cdd5cd] rounded-[10px] p-[11px] bg-[#fafbfa] font-bold text-xs tracking-[0.8px] uppercase inline-flex items-center justify-center gap-[7px] print:[print-color-adjust:exact]">
+                            <i class="fa-solid fa-eye text-[#117f09]"></i> Consulta informativa
                         </div>
                     </div>
                 </div>
@@ -563,7 +117,7 @@ if (!function_exists('inicialesNombres')) {
             }
         } else {
             ?>
-            <div class="alert alert-warning text-center" style="width:100%;">
+            <div class="alert alert-warning text-center w-full">
                 <i class="fa-solid fa-triangle-exclamation"></i> No hay candidatos a representante para mostrar.
             </div>
             <?php
@@ -573,22 +127,27 @@ if (!function_exists('inicialesNombres')) {
 
     <!-- ========== CARTÓN VOCEROS ========== -->
     <?php if (!empty($datVocTar)): ?>
-    <div class="vot-section-voceros">
-    <div class="vot-separador">
-        <span><i class="fa-solid fa-layer-group"></i> Segunda elección</span>
+    <div class="print:hidden">
+    <div class="text-center mx-auto mb-[30px] max-w-[1200px]">
+        <span class="inline-block bg-white border border-[#e3e8e3] rounded-[40px] px-[26px] py-[10px] font-extrabold text-[15px] tracking-[0.8px] uppercase text-[#123a1f] shadow-[0_4px_12px_rgba(0,0,0,0.06)]">
+            <i class="fa-solid fa-layer-group text-[#117f09] mr-2"></i> Segunda elección
+        </span>
     </div>
 
-    <div class="votacion-banner banner-voceros">
-        <div class="votacion-banner-info">
-            <h4><i class="fa-solid fa-bullhorn"></i> Candidatos a Vocero de Ficha</h4>
-            <p>Cartón informativo de la votación para elegir vocero.</p>
+    <div class="isolate relative overflow-hidden mx-auto mb-[30px] max-w-[1040px] rounded-[18px] py-[22px] px-7 text-white bg-[linear-gradient(135deg,#083a5e_0%,#0f5c8c_55%,#1b83bd_100%)] shadow-[0_10px_28px_rgba(8,58,94,0.35)] flex items-center justify-between flex-wrap gap-[14px] border-l-[6px] border-[#ffdd59] print:[print-color-adjust:exact]">
+        <div>
+            <h4 class="m-0 mb-[5px] text-[1.45rem] font-extrabold text-white tracking-[0.3px]">
+                <i class="fa-solid fa-bullhorn"></i> Candidatos a Vocero de Ficha
+            </h4>
+            <p class="m-0 text-base text-[#dceefb]">Cartón informativo de la votación para elegir vocero.</p>
         </div>
-        <div class="votacion-badge-total">
+        <div class="inline-flex items-center gap-2 bg-white/15 border border-white/40 rounded-full px-[18px] py-[9px] text-base font-bold">
             <i class="fa-solid fa-users"></i> <?= count($datVocTar); ?> Opciones
         </div>
+        <i class="fa-solid fa-bullhorn absolute -right-5 -bottom-9 text-[150px] text-white/5 -z-10 pointer-events-none"></i>
     </div>
 
-    <div class="votacion-grid">
+    <div class="flex flex-wrap justify-center items-stretch gap-[26px] pt-[6px] pb-[26px] max-w-[1200px] mx-auto">
         <?php
         foreach ($datVocTar as $v) {
             $esBlanco = !empty($v['esblanco']);
@@ -598,40 +157,58 @@ if (!function_exists('inicialesNombres')) {
             $ficha    = isset($v['idfic']) && !empty($v['idfic']) ? htmlspecialchars($v['idfic']) : '';
             $programa = isset($v['nomfic']) && !empty($v['nomfic']) ? htmlspecialchars($v['nomfic']) : '';
             $lema     = isset($v['lema']) && !empty($v['lema']) ? $v['lema'] : ($esBlanco ? 'No hay inclinación por ningún candidato.' : 'Compromiso y liderazgo al servicio de los aprendices.');
+
+            $cardCls  = 'w-[262px] max-md:w-full max-md:max-w-[300px] bg-white rounded-[18px] overflow-hidden text-center shadow-[0_4px_12px_rgba(0,0,0,0.06)] transition-transform duration-200 relative flex flex-col';
+            $cardCls .= $esBlanco
+                ? ' border-2 border-dashed border-[#b9c2b9] bg-[#fafbfa] hover:border-[#117f09] hover:shadow-[0_18px_40px_rgba(17,127,9,0.14)]'
+                : ' border border-[#e3e8e3] hover:-translate-y-1 hover:border-[#cfe8cd] hover:shadow-[0_18px_40px_rgba(17,127,9,0.22)]';
+            $fotoCls  = 'relative shrink-0 h-[210px] max-md:h-[180px] bg-[#f2f5f2]';
+            $fotoPlace = $esBlanco
+                ? 'flex items-center justify-center bg-[linear-gradient(160deg,#ffffff,#edf1ed)] text-[#a9b4a9]'
+                : 'flex items-center justify-center bg-[linear-gradient(160deg,#e8f4e8,#d6e8d6)] text-[#83a983]';
+            $nomCls   = $esBlanco ? 'text-[#5b645b]' : 'text-[#17321a]';
+            $lemaCls  = $esBlanco ? 'border-l-[#a9b4a9]' : 'border-l-[#117f09]';
+            $chipCls  = $esBlanco ? 'text-[#4c5a4c] border-solid' : 'text-[#6b756b]';
+            $avatarCls = 'w-[104px] h-[104px] rounded-full bg-[linear-gradient(135deg,#117f09,#00af00)] text-white flex items-center justify-center text-[40px] font-extrabold tracking-wide shadow-[0_10px_22px_rgba(17,127,9,0.35)] border-4 border-white [text-shadow:0_2px_5px_rgba(0,0,0,0.25)]';
+            $numCls   = 'absolute top-3 left-3 z-[2] inline-flex items-center bg-[rgba(15,70,8,0.88)] text-white font-extrabold text-[13px] px-[13px] py-[6px] rounded-full tracking-[0.6px] shadow-[0_2px_8px_rgba(0,0,0,0.28)]';
             ?>
-            <div class="candidato-card<?= $esBlanco ? ' card-blanca' : ''; ?>">
+            <div class="<?= $cardCls; ?>">
 
                 <?php if ($esBlanco) { ?>
-                    <div class="candidato-foto placeholder">
-                        <div class="icono-blanca"><i class="fa-solid fa-ban"></i></div>
+                    <div class="<?= $fotoCls . ' ' . $fotoPlace; ?>">
+                        <div class="w-[84px] h-[84px] rounded-full bg-white text-[#a9b4a9] flex items-center justify-center text-[32px] shadow-[0_8px_18px_rgba(0,0,0,0.08)] border-2 border-dashed border-[#cdd5cd]">
+                            <i class="fa-solid fa-ban"></i>
+                        </div>
                     </div>
                 <?php } elseif ($foto && $foto != 'image/usuario.png') { ?>
-                    <div class="candidato-foto">
-                        <span class="candidato-num"><?= $numCard; ?></span>
-                        <img src="<?= $foto; ?>" alt="<?= htmlspecialchars($nombre); ?>"
+                    <div class="<?= $fotoCls; ?>">
+                        <span class="<?= $numCls; ?>"><i class="fa-solid fa-id-card mr-[6px]"></i><?= $numCard; ?></span>
+                        <img src="<?= $foto; ?>" alt="<?= htmlspecialchars($nombre); ?>" class="block w-full h-full object-cover"
                              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="avatar-iniciales" style="display:none;"><?= inicialesNombres($nombre); ?></div>
+                        <div class="hidden <?= $avatarCls; ?>"><?= inicialesNombres($nombre); ?></div>
                     </div>
                 <?php } else { ?>
-                    <div class="candidato-foto placeholder">
-                        <span class="candidato-num"><?= $numCard; ?></span>
-                        <div class="avatar-iniciales"><?= inicialesNombres($nombre); ?></div>
+                    <div class="<?= $fotoCls . ' ' . $fotoPlace; ?>">
+                        <span class="<?= $numCls; ?>"><i class="fa-solid fa-id-card mr-[6px]"></i><?= $numCard; ?></span>
+                        <div class="<?= $avatarCls; ?>"><?= inicialesNombres($nombre); ?></div>
                     </div>
                 <?php } ?>
 
-                <div class="candidato-info">
-                    <div class="candidato-nombre"><?= strtoupper(htmlspecialchars($nombre)); ?></div>
-                    <div class="candidato-ficha">
+                <div class="px-4 pt-4 pb-[18px] flex flex-col grow">
+                    <div class="<?= $nomCls; ?> text-[15px] font-extrabold leading-[1.35] min-h-[42px] tracking-[0.2px] mb-[5px]"><?= strtoupper(htmlspecialchars($nombre)); ?></div>
+                    <div class="text-[#6b756b] text-xs mb-[10px]">
                         <?php if ($esBlanco) { ?>
-                            <i class="fa-solid fa-file-circle-minus"></i> Opción democrática oficial
+                            <i class="fa-solid fa-file-circle-minus text-[#117f09] mr-[5px]"></i> Opción democrática oficial
                         <?php } else { ?>
-                            <?php if ($ficha) { ?><i class="fa-solid fa-hashtag"></i>Ficha <?= $ficha; ?><?php } ?>
-                            <?php if ($programa) { ?>&nbsp;·&nbsp;<i class="fa-solid fa-graduation-cap"></i><?= $programa; ?><?php } ?>
+                            <?php if ($ficha) { ?><i class="fa-solid fa-hashtag text-[#117f09] mr-[5px]"></i>Ficha <?= $ficha; ?><?php } ?>
+                            <?php if ($programa) { ?>&nbsp;·&nbsp;<i class="fa-solid fa-graduation-cap text-[#117f09] mr-[5px]"></i><?= $programa; ?><?php } ?>
                         <?php } ?>
                     </div>
-                    <div class="candidato-lema"><i class="fa-solid fa-quote-left"></i> <?= htmlspecialchars($lema); ?></div>
-                    <div class="candidato-info-chip">
-                        <i class="fa-solid fa-eye"></i> Consulta informativa
+                    <div class="<?= $lemaCls; ?> bg-[#f6faf6] border-l-4 rounded-r-[8px] px-[11px] py-2 text-xs italic text-[#4c5a4c] text-left leading-[1.45] mb-[14px] grow">
+                        <i class="fa-solid fa-quote-left text-[#117f09] mr-1"></i> <?= htmlspecialchars($lema); ?>
+                    </div>
+                    <div class="<?= $chipCls; ?> w-full border-2 border-[#cdd5cd] rounded-[10px] p-[11px] bg-[#fafbfa] font-bold text-xs tracking-[0.8px] uppercase inline-flex items-center justify-center gap-[7px]">
+                        <i class="fa-solid fa-eye text-[#117f09]"></i> Consulta informativa
                     </div>
                 </div>
             </div>
@@ -643,15 +220,15 @@ if (!function_exists('inicialesNombres')) {
     <?php endif; ?>
 </div>
 
-<div class="votacion-intro">
-    <p class="votacion-sub">
-        <i class="fa-solid fa-circle-info"></i>
-        Esta es una vista <strong>informativa</strong> del cartón electoral. El ejercicio del voto se realiza
+<div class="text-center max-w-[760px] mx-auto mb-[30px] print:hidden">
+    <p class="text-[#5b635b] text-[14.5px] leading-[1.65]">
+        <i class="fa-solid fa-circle-info text-[#117f09] mr-[6px]"></i>
+        Esta es una vista <strong class="text-[#117f09]">informativa</strong> del cartón electoral. El ejercicio del voto se realiza
         desde las opciones habilitadas en cada proceso de votación.
     </p>
 </div>
 
-<p class="votacion-nota">
-    <i class="fa-solid fa-shield-halved"></i>
+<p class="text-center text-[#8a938a] text-[13px] my-[6px] mb-[18px] print:hidden">
+    <i class="fa-solid fa-shield-halved text-[#117f09] mr-[6px]"></i>
     El voto es personal, secreto e irreversible.
 </p>
