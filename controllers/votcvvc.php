@@ -74,7 +74,7 @@ $idfic = $idusu ? $votmvvc->getFichaUsuario($idusu) : null;
 // Consultar candidatos desde base de datos
 $candidatosBD = ($idfic && $idusu) ? $votmvvc->getVocerosMismaFicha($idfic, $idusu) : [];
 
-// Módulos de candidatos predeterminados con nombres inventados
+// Tres candidatos predeterminados con nombres inventados (completan la lista cuando la BD no tiene suficientes)
 $candidato1 = [
     'idusu' => 101,
     'nomusu' => 'Valentina Morales Gómez',
@@ -97,6 +97,17 @@ $candidato2 = [
     'is_blanco' => false
 ];
 
+$candidato3 = [
+    'idusu' => 103,
+    'nomusu' => 'Andrés Felipe Quintero Díaz',
+    'noca' => 3,
+    'idfic' => $idfic ? $idfic : '2670123',
+    'nomfic' => 'Análisis y Desarrollo de Software',
+    'fotcan' => 'img/user.jpg',
+    'lema' => 'Escucha activa, transparencia y gestión al servicio de nuestra ficha.',
+    'is_blanco' => false
+];
+
 $votoBlanco = [
     'idusu' => 999,
     'nomusu' => 'Voto en Blanco',
@@ -108,31 +119,50 @@ $votoBlanco = [
     'is_blanco' => true
 ];
 
-// Si la BD contiene candidatos de la ficha, adaptarlos; si no, utilizar los dos candidatos inventados
-if (!empty($candidatosBD) && count($candidatosBD) >= 2) {
-    $dat = [];
-    foreach ($candidatosBD as $idx => $cand) {
-        $dat[] = [
-            'idusu' => $cand['idusu'],
-            'nomusu' => $cand['nomusu'],
-            'noca' => !empty($cand['noca']) ? $cand['noca'] : ($idx + 1),
-            'idfic' => !empty($cand['idfic']) ? $cand['idfic'] : $idfic,
-            'nomfic' => !empty($cand['nomfic']) ? $cand['nomfic'] : 'Formación Titulada',
-            'fotcan' => 'img/user.jpg',
-            'lema' => 'Compromiso, dedicación y vocería activa en representación de la ficha.',
-            'is_blanco' => false
-        ];
-    }
-    // Agregar opción de voto en blanco
-    $dat[] = $votoBlanco;
-} else {
-    // Lista exacta solicitada: Dos candidatos con nombres inventados + Módulo de Voto en Blanco
-    $dat = [
-        $candidato1,
-        $candidato2,
-        $votoBlanco
+// Se muestran exactamente 3 candidatos + 1 voto en blanco
+$dat = [];
+$idsUsados = [];
+
+// 1) Candidatos reales de la misma ficha en la base de datos (máximo 3)
+foreach (array_slice($candidatosBD, 0, 3) as $idx => $cand) {
+    $dat[] = [
+        'idusu' => $cand['idusu'],
+        'nomusu' => $cand['nomusu'],
+        'noca' => !empty($cand['noca']) ? $cand['noca'] : ($idx + 1),
+        'idfic' => !empty($cand['idfic']) ? $cand['idfic'] : $idfic,
+        'nomfic' => !empty($cand['nomfic']) ? $cand['nomfic'] : 'Formación Titulada',
+        'fotcan' => 'img/user.jpg',
+        'lema' => 'Compromiso, dedicación y vocería activa en representación de la ficha.',
+        'is_blanco' => false
     ];
+    $idsUsados[] = $cand['idusu'];
 }
+
+// 2) Se completan los espacios que falten con los 3 candidatos predeterminados
+foreach (array($candidato1, $candidato2, $candidato3) as $candPred) {
+    if (count($dat) >= 3) {
+        break;
+    }
+    if (!in_array($candPred['idusu'], $idsUsados)) {
+        $dat[] = $candPred;
+        $idsUsados[] = $candPred['idusu'];
+    }
+}
+
+// 3) Respaldo final para garantizar siempre los 3 candidatos
+$numRespaldo = 4;
+while (count($dat) < 3) {
+    $candExtra = $candidato3;
+    $candExtra['idusu'] = 100 + $numRespaldo;
+    $candExtra['nomusu'] = 'Candidato Vocero ' . $numRespaldo;
+    $candExtra['noca'] = $numRespaldo;
+    $dat[] = $candExtra;
+    $idsUsados[] = $candExtra['idusu'];
+    $numRespaldo++;
+}
+
+// 4) Opción de voto en blanco
+$dat[] = $votoBlanco;
 
 // Si el usuario ya votó, asegurarse de que la opción votada esté presente en $dat
 if ($yaVoto && $candVotadoId) {

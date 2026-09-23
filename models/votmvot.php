@@ -32,8 +32,8 @@ class Mvot{
               INNER JOIN usupef AS up ON u.idusu=up.idusu
               INNER JOIN perfil AS p ON p.idper=up.idper
               INNER JOIN centro AS c ON u.idcen=c.idcen
-              INNER JOIN usufic AS uf ON u.idusu=uf.idusu AND uf.actfic='1'
-              INNER JOIN ficha AS f ON uf.idfic=f.idfic
+              LEFT JOIN usufic AS uf ON u.idusu=uf.idusu
+              LEFT JOIN ficha AS f ON uf.idfic=f.idfic
               LEFT JOIN valor AS v ON v.idval=f.jornada
               WHERE up.idper=3 AND u.actusu=1 AND u.noca<>'999' AND f.jornada=:jor
               GROUP BY u.idusu
@@ -46,23 +46,6 @@ class Mvot{
         $res=$result->fetchAll(PDO::FETCH_ASSOC);
         return $res;
     } 
-
-    // Devuelve una lista de candidatos de la jornada elegidos al azar.
-    // Si no hay suficientes, crea candidatos generados aleatoriamente para completar.
-    public function getCandidatosAleatorios($jornada=1, $cantidad=3){
-        $cands = $this->getAll($jornada);
-        if(!$cands){ $cands = array(); }
-        $faltan = $cantidad - count($cands);
-        if($faltan > 0){
-            for($i=0;$i<$faltan;$i++){
-                $this->crearCandidatoRandom($jornada);
-            }
-            $cands = $this->getAll($jornada);
-            if(!$cands){ $cands = array(); }
-        }
-        shuffle($cands);
-        return array_slice($cands, 0, $cantidad);
-    }
 
     // Devuelve la tarjeta "Voto en blanco" de la jornada, creandola si hace falta.
     public function getVotoBlanco($jornada=1){
@@ -87,77 +70,6 @@ class Mvot{
             $res = $result->fetch(PDO::FETCH_ASSOC);
         }
         return $res;
-    }
-
-    // Genera y guarda un candidato aleatorio (persona ficticia) para la jornada.
-    private function crearCandidatoRandom($jornada){
-        $modelo = new conexion();
-        $conexion = $modelo->get_conexion();
-
-        $nombres = array('CARLOS','MARIA','LUIS','ANA','JOSE','LUZ','JUAN','CARMEN','DIEGO',
-                         'PAULA','ANDRES','SOFIA','MIGUEL','VALENTINA','OSCAR','LAURA','JORGE',
-                         'CAMILA','SERGIO','DANIELA','FELIPE','NATALIA','SEBASTIAN','ANGELA',
-                         'ALEJANDRO','DIANA','RICARDO','CLAUDIA','MAURICIO','KAREN');
-        $apellidos = array('GOMEZ','RODRIGUEZ','MARTINEZ','LOPEZ','GARCIA','PEREZ','SANCHEZ',
-                           'RAMIREZ','TORRES','FLORES','RIVERA','CASTRO','CRUZ','ORTIZ','GUZMAN',
-                           'ROJAS','MORENO','HERRERA','MEDINA','ROMERO','JIMENEZ','ALVAREZ');
-
-        do {
-            $nomusu = $nombres[array_rand($nombres)].' '.$apellidos[array_rand($apellidos)].' '.$apellidos[array_rand($apellidos)];
-            $ndocusu = mt_rand(100000000, 1999999999);
-            $stmt = $conexion->prepare("SELECT COUNT(*) AS c FROM usuario WHERE ndocusu=:nd");
-            $stmt->bindParam(":nd", $ndocusu);
-            $stmt->execute();
-            $ocupado = $stmt->fetch(PDO::FETCH_ASSOC)['c'];
-        } while ($ocupado > 0);
-
-        // numero de candidato libre dentro de la jornada
-        do {
-            $noca = str_pad(mt_rand(1,998), 3, '0', STR_PAD_LEFT);
-            $stmt = $conexion->prepare("SELECT COUNT(*) AS c FROM usuario AS u
-                                        INNER JOIN usupef AS up ON u.idusu=up.idusu
-                                        INNER JOIN usufic AS uf ON u.idusu=uf.idusu
-                                        INNER JOIN ficha AS f ON uf.idfic=f.idfic
-                                        WHERE up.idper=3 AND u.noca=:noca AND f.jornada=:jor");
-            $stmt->bindParam(":noca", $noca);
-            $stmt->bindParam(":jor", $jornada, PDO::PARAM_INT);
-            $stmt->execute();
-            $ocupado = $stmt->fetch(PDO::FETCH_ASSOC)['c'];
-        } while ($ocupado > 0);
-
-        // ficha de la jornada (evita las de voto en blanco)
-        $stmt = $conexion->prepare("SELECT idfic FROM ficha WHERE jornada=:jor
-                                    AND nomfic NOT LIKE 'Voto%' AND idfic<>'100001'
-                                    ORDER BY RAND() LIMIT 1");
-        $stmt->bindParam(":jor", $jornada, PDO::PARAM_INT);
-        $stmt->execute();
-        $idfic = $stmt->fetchColumn();
-
-        $pasusu = sha1($ndocusu);
-        $idusu = $this->nextIdUsu($conexion);
-        $sql = "INSERT INTO usuario (idusu, ndocusu, nomusu, idper, pasusu, emausu, idcen, actusu, fotcan, telcan, noca)
-                VALUES (:idusu, :ndocusu, :nomusu, 3, :pasusu, NULL, 951310, 1, NULL, '', :noca)";
-        $result = $conexion->prepare($sql);
-        $result->bindParam(":idusu", $idusu);
-        $result->bindParam(":ndocusu", $ndocusu);
-        $result->bindParam(":nomusu", $nomusu);
-        $result->bindParam(":pasusu", $pasusu);
-        $result->bindParam(":noca", $noca);
-        $result->execute();
-
-        $sql = "INSERT INTO usupef (idusu, idper) VALUES (:idusu, 3)";
-        $result = $conexion->prepare($sql);
-        $result->bindParam(":idusu", $idusu);
-        $result->execute();
-
-        if($idfic){
-            $sql = "INSERT INTO usufic (idusu, idfic, actfic) VALUES (:idusu, :idfic, 1)";
-            $result = $conexion->prepare($sql);
-            $result->bindParam(":idusu", $idusu);
-            $result->bindParam(":idfic", $idfic);
-            $result->execute();
-        }
-        return $idusu;
     }
 
     // Calcula el siguiente idusu disponible (la tabla usuario no usa AUTO_INCREMENT).

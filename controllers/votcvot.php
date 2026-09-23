@@ -75,10 +75,10 @@
         'Transparencia, cercanía y dedicación al servicio de los aprendices.'
     );
 
-    // Se muestran 3 candidatos aleatorios + el voto en blanco
+    // Solo aparecen los representantes registrados en la vista Candidato (1206)
     $dat = array();
 
-    $candidatos = $mvot->getCandidatosAleatorios($jorn, 3);
+    $candidatos = $mvot->getAll($jorn);
     if ($candidatos) {
         foreach ($candidatos as $c) {
             $c['esblanco'] = false;
